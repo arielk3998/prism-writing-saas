@@ -1,16 +1,4 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Prism Writing - Professional Content & Technical Writing Services',
@@ -30,7 +18,15 @@ export const metadata: Metadata = {
   authors: [{ name: 'Prism Writing' }],
   creator: 'Prism Writing',
   publisher: 'Prism Writing',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   metadataBase: new URL('https://prismwriting.com'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Prism Writing - Professional Content & Technical Writing Services',
     description: 'Expert technical writing, content strategy, and documentation services. Transparent pricing, proven results, and honest statistics.',
@@ -38,7 +34,7 @@ export const metadata: Metadata = {
     siteName: 'Prism Writing',
     images: [
       {
-        url: '/og-image.svg',
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Prism Writing - Professional Writing Services',
@@ -50,34 +46,26 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Prism Writing - Professional Content & Technical Writing Services',
-    description: 'Expert technical writing, content strategy, and documentation services. Transparent pricing, proven results.',
-    images: ['/og-image.svg'],
+    description: 'Expert technical writing, content strategy, and documentation services. Transparent pricing, proven results, and honest statistics.',
+    images: ['/og-image.jpg'],
+    creator: '@prismwriting',
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
   },
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+  verification: {
+    google: 'your-google-verification-code',
+    yandex: 'your-yandex-verification-code',
+    yahoo: 'your-yahoo-verification-code',
+  },
 }

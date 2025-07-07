@@ -24,6 +24,14 @@ model User {
   leads     Lead[]
   orders    Order[]
   documents Document[]
+  
+  // Phase 6 Relations
+  projects         Project[]
+  assignedTasks    Task[]
+  uploadedDocuments ProjectDocument[]
+  sentCommunications Communication[] @relation("SentCommunications")
+  receivedCommunications Communication[] @relation("ReceivedCommunications")
+  blogPosts        BlogPost[]
 
   @@map("users")
 }
@@ -56,6 +64,10 @@ model Lead {
   // Relations
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
+  
+  // Phase 6 Relations
+  activities LeadActivity[]
+  scores     LeadScore[]
 
   @@map("leads")
 }
@@ -171,3 +183,223 @@ model Newsletter {
 
   @@map("newsletter")
 }
+
+// PHASE 6: Client Portal & Project Management
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  status      ProjectStatus @default(PLANNING)
+  priority    Priority      @default(MEDIUM)
+  startDate   DateTime?
+  dueDate     DateTime?
+  completedAt DateTime?
+  budget      Float?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  client       User           @relation(fields: [clientId], references: [id])
+  clientId     String
+  milestones   Milestone[]
+  tasks        Task[]
+  documents    ProjectDocument[]
+  communications Communication[]
+
+  @@map("projects")
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+model Milestone {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  completedAt DateTime?
+  isCompleted Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  // Relations
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  @@map("milestones")
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  priority    Priority   @default(MEDIUM)
+  dueDate     DateTime?
+  completedAt DateTime?
+  estimatedHours Float?
+  actualHours Float?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relations
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  assignee  User?   @relation(fields: [assigneeId], references: [id])
+  assigneeId String?
+
+  @@map("tasks")
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+model ProjectDocument {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  fileUrl     String
+  fileType    String
+  fileSize    Int?
+  version     String   @default("1.0")
+  isClientVisible Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  uploadedBy User    @relation(fields: [uploadedById], references: [id])
+  uploadedById String
+
+  @@map("project_documents")
+}
+
+model Communication {
+  id        String            @id @default(cuid())
+  subject   String
+  message   String
+  type      CommunicationType @default(MESSAGE)
+  isRead    Boolean           @default(false)
+  createdAt DateTime          @default(now())
+
+  // Relations
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  sender    User    @relation("SentCommunications", fields: [senderId], references: [id])
+  senderId  String
+  recipient User    @relation("ReceivedCommunications", fields: [recipientId], references: [id])
+  recipientId String
+
+  @@map("communications")
+}
+
+enum CommunicationType {
+  MESSAGE
+  UPDATE
+  NOTIFICATION
+  ALERT
+}
+
+// PHASE 6: Advanced CRM Features
+model LeadActivity {
+  id          String   @id @default(cuid())
+  activityType String
+  description String
+  metadata    String?  // JSON string for additional data
+  createdAt   DateTime @default(now())
+
+  // Relations
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId String
+
+  @@map("lead_activities")
+}
+
+model LeadScore {
+  id          String   @id @default(cuid())
+  score       Int
+  factors     String   // JSON string of scoring factors
+  calculatedAt DateTime @default(now())
+
+  // Relations
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId String
+
+  @@map("lead_scores")
+}
+
+// PHASE 6: Content Management System
+model BlogPost {
+  id           String      @id @default(cuid())
+  title        String
+  slug         String      @unique
+  excerpt      String?
+  content      String
+  status       PostStatus  @default(DRAFT)
+  publishedAt  DateTime?
+  featuredImage String?
+  tags         String?     // JSON string of tags
+  metaTitle    String?
+  metaDescription String?
+  readingTime  Int?        // in minutes
+  viewCount    Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  @@map("blog_posts")
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// PHASE 6: Advanced Analytics & Monitoring
+model SystemLog {
+  id        String   @id @default(cuid())
+  level     LogLevel
+  message   String
+  metadata  String?  // JSON string
+  userId    String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@map("system_logs")
+}
+
+enum LogLevel {
+  INFO
+  WARN
+  ERROR
+  CRITICAL
+}
+
+model PerformanceMetric {
+  id        String   @id @default(cuid())
+  metric    String
+  value     Float
+  unit      String?
+  timestamp DateTime @default(now())
+  metadata  String?  // JSON string
+
+  @@map("performance_metrics")
+}
+
+// Update existing User model relations for Phase 6
+// Note: These would be added to the existing User model in practice

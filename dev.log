@@ -1,0 +1,26 @@
+
+> prism-enterprise@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use, using available port 3001 instead.
+   ▲ Next.js 15.3.5 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.1.24:3001
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 912ms
+ ○ Compiling /api/contact ...
+ ✓ Compiled /api/contact in 712ms
+Email service not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASSWORD environment variables.
+Email service not configured. Would send email to: test@example.com Subject: ✨ Thank you for contacting Prism Writing - We'll be in touch soon!
+Email service not configured. Would send email to: hello@prismwriting.com Subject: 🚨 New Contact Form Submission from Test User
+Email automation results: { client: false, admin: false }
+New lead created with email automation: cmctocr3b00007lngpfe0k9vr
+ POST /api/contact 201 in 971ms
+ ✓ Compiled /api/analytics in 322ms
+ GET /api/analytics?type=dashboard 200 in 366ms
+ ✓ Compiled /api/client/projects in 308ms
+ GET /api/client/projects 200 in 349ms
+ ✓ Compiled /api/client/communications in 318ms
+ GET /api/client/communications 200 in 343ms

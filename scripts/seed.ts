@@ -114,10 +114,213 @@ async function main() {
     }),
   ])
 
+  // PHASE 6: Create sample users (admin and client)
+  const users = await Promise.all([
+    prisma.user.create({
+      data: {
+        email: 'admin@prismwriting.com',
+        name: 'Admin User',
+        role: 'ADMIN',
+        status: 'ACTIVE',
+      },
+    }),
+    prisma.user.create({
+      data: {
+        email: 'client@example.com',
+        name: 'Demo Client',
+        role: 'CLIENT',
+        status: 'ACTIVE',
+      },
+    })
+  ])
+
+  // Create sample projects
+  const projects = await Promise.all([
+    prisma.project.create({
+      data: {
+        title: 'API Documentation Project',
+        description: 'Comprehensive documentation for REST API endpoints including authentication, rate limiting, and response examples.',
+        status: 'ACTIVE',
+        priority: 'HIGH',
+        startDate: new Date('2025-01-01'),
+        dueDate: new Date('2025-02-15'),
+        budget: 5000,
+        clientId: users[1].id, // Demo client
+      },
+    }),
+    prisma.project.create({
+      data: {
+        title: 'User Manual Creation',
+        description: 'Create comprehensive user manuals for software application including screenshots, step-by-step guides, and troubleshooting.',
+        status: 'PLANNING',
+        priority: 'MEDIUM',
+        startDate: new Date('2025-01-15'),
+        dueDate: new Date('2025-03-01'),
+        budget: 3500,
+        clientId: users[1].id,
+      },
+    }),
+    prisma.project.create({
+      data: {
+        title: 'Business Proposal Writing',
+        description: 'Government contract proposal with compliance requirements and detailed technical specifications.',
+        status: 'COMPLETED',
+        priority: 'URGENT',
+        startDate: new Date('2024-12-01'),
+        dueDate: new Date('2024-12-31'),
+        completedAt: new Date('2024-12-28'),
+        budget: 8000,
+        clientId: users[1].id,
+      },
+    })
+  ])
+
+  // Create milestones for projects
+  await Promise.all([
+    // API Documentation milestones
+    prisma.milestone.create({
+      data: {
+        title: 'Research and Planning',
+        description: 'Initial research and project planning phase',
+        isCompleted: true,
+        projectId: projects[0].id,
+      },
+    }),
+    prisma.milestone.create({
+      data: {
+        title: 'API Endpoint Documentation',
+        description: 'Document all API endpoints with examples',
+        isCompleted: true,
+        dueDate: new Date('2025-01-20'),
+        projectId: projects[0].id,
+      },
+    }),
+    prisma.milestone.create({
+      data: {
+        title: 'Integration Guides',
+        description: 'Create integration guides and code examples',
+        isCompleted: false,
+        dueDate: new Date('2025-02-05'),
+        projectId: projects[0].id,
+      },
+    }),
+    prisma.milestone.create({
+      data: {
+        title: 'Final Review',
+        description: 'Final review and quality assurance',
+        isCompleted: false,
+        dueDate: new Date('2025-02-15'),
+        projectId: projects[0].id,
+      },
+    }),
+    // User Manual milestones
+    prisma.milestone.create({
+      data: {
+        title: 'Content Outline',
+        description: 'Create detailed content outline and structure',
+        isCompleted: false,
+        dueDate: new Date('2025-01-25'),
+        projectId: projects[1].id,
+      },
+    }),
+    prisma.milestone.create({
+      data: {
+        title: 'Screenshots and Media',
+        description: 'Capture and edit all required screenshots',
+        isCompleted: false,
+        dueDate: new Date('2025-02-10'),
+        projectId: projects[1].id,
+      },
+    })
+  ])
+
+  // Create sample blog posts for CMS
+  const blogPosts = await Promise.all([
+    prisma.blogPost.create({
+      data: {
+        title: 'The Complete Guide to Technical Writing in 2025',
+        slug: 'complete-guide-technical-writing-2025',
+        excerpt: 'Master the art of technical writing with our comprehensive guide covering best practices, tools, and industry trends.',
+        content: '# The Complete Guide to Technical Writing in 2025\n\nTechnical writing has evolved significantly...',
+        status: 'PUBLISHED',
+        publishedAt: new Date('2025-01-01'),
+        tags: JSON.stringify(['technical-writing', 'guide', 'best-practices']),
+        metaTitle: 'Complete Guide to Technical Writing in 2025 | Prism Writing',
+        metaDescription: 'Master technical writing with our 2025 guide. Learn best practices, tools, and trends.',
+        readingTime: 12,
+        viewCount: 1247,
+        authorId: users[0].id, // Admin user
+      },
+    }),
+    prisma.blogPost.create({
+      data: {
+        title: '10 Common API Documentation Mistakes to Avoid',
+        slug: 'api-documentation-mistakes-avoid',
+        excerpt: 'Learn about the most common API documentation mistakes and how to create better developer experiences.',
+        content: '# 10 Common API Documentation Mistakes to Avoid\n\nAPI documentation is crucial for developer adoption...',
+        status: 'PUBLISHED',
+        publishedAt: new Date('2025-01-05'),
+        tags: JSON.stringify(['api', 'documentation', 'mistakes', 'best-practices']),
+        metaTitle: '10 API Documentation Mistakes to Avoid | Prism Writing',
+        metaDescription: 'Avoid these common API documentation mistakes for better developer experience.',
+        readingTime: 8,
+        viewCount: 892,
+        authorId: users[0].id,
+      },
+    }),
+    prisma.blogPost.create({
+      data: {
+        title: 'Why Every SaaS Company Needs Professional Documentation',
+        slug: 'saas-professional-documentation-importance',
+        excerpt: 'Discover how professional documentation can reduce support costs and improve user experience.',
+        content: '# Why Every SaaS Company Needs Professional Documentation\n\nIn the competitive SaaS landscape...',
+        status: 'DRAFT',
+        tags: JSON.stringify(['saas', 'documentation', 'business']),
+        metaTitle: 'SaaS Documentation Importance | Prism Writing',
+        metaDescription: 'Learn why professional documentation is essential for SaaS success.',
+        readingTime: 6,
+        viewCount: 0,
+        authorId: users[0].id,
+      },
+    })
+  ])
+
+  // Create system logs for monitoring
+  await Promise.all([
+    prisma.systemLog.create({
+      data: {
+        level: 'INFO',
+        message: 'User login successful',
+        metadata: JSON.stringify({ userId: users[1].id, ip: '192.168.1.100' }),
+        userId: users[1].id,
+        ipAddress: '192.168.1.100',
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      },
+    }),
+    prisma.systemLog.create({
+      data: {
+        level: 'WARN',
+        message: 'High memory usage detected',
+        metadata: JSON.stringify({ usage: '85%', threshold: '80%' }),
+      },
+    }),
+    prisma.systemLog.create({
+      data: {
+        level: 'ERROR',
+        message: 'Failed to send email notification',
+        metadata: JSON.stringify({ error: 'SMTP timeout', recipient: 'test@example.com' }),
+      },
+    })
+  ])
+
   console.log('✅ Seeding completed!')
   console.log(`📧 Created ${leads.length} sample leads`)
   console.log(`📊 Created ${analytics.length} analytics entries`)
   console.log(`📰 Created ${newsletter.length} newsletter subscribers`)
+  console.log(`👥 Created ${users.length} sample users`)
+  console.log(`📁 Created ${projects.length} projects`)
+  console.log(` Created ${blogPosts.length} blog posts`)
+  console.log(`🏗️ Phase 6 enterprise features seeded successfully!`)
 }
 
 main()
