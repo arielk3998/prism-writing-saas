@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { emailService } from '@/lib/email'
 import { z } from 'zod'
 
 const contactSchema = z.object({
@@ -30,8 +31,28 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // In a real app, you would also send an email notification here
-    console.log('New lead created:', lead.id)
+    // Send automated emails (client confirmation + admin notification)
+    const emailData = {
+      name: validatedData.name,
+      email: validatedData.email,
+      company: validatedData.company,
+      message: validatedData.message,
+      submittedAt: new Date().toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        dateStyle: 'full',
+        timeStyle: 'short'
+      })
+    }
+
+    try {
+      const emailResults = await emailService.sendContactFormEmails(emailData)
+      console.log('Email automation results:', emailResults)
+    } catch (emailError) {
+      console.error('Email sending failed (non-critical):', emailError)
+      // Don't fail the API call if emails fail - log for admin review
+    }
+
+    console.log('New lead created with email automation:', lead.id)
 
     return NextResponse.json(
       { 
