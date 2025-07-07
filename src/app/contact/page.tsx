@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from "next/link"
 import { ArrowLeft, Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react"
 
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',

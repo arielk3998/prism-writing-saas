@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { BusinessIntelligenceDashboard } from "@/components/business-intelligence"
 import { 
   Users, 
   FileText, 
@@ -286,6 +287,14 @@ export default function AdminDashboard() {
               </div>
             </div>
           </>
+        )}
+
+        {/* Business Intelligence Section */}
+        {dashboardData && (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Business Intelligence</h2>
+            <BusinessIntelligenceDashboard />
+          </div>
         )}
 
         {/* Quick Actions */}
