@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIST Cybersecurity Framework Implementation Guide - Sample Documentation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: rgba(220, 38, 38, 0.6);
+            font-weight: bold;
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #dc3545;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+            margin: 20px 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #dc3545;
+            border-left: 4px solid #dc3545;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        .document-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .info-value {
+            color: #6c757d;
+        }
+        .section {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .nist-function {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .nist-function h3 {
+            color: white;
+            margin-top: 0;
+        }
+        .nist-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .category-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+        }
+        .category-id {
+            font-weight: bold;
+            color: #dc3545;
+            font-size: 14px;
+        }
+        .category-title {
+            font-weight: 600;
+            margin: 5px 0;
+        }
+        .category-desc {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .maturity-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 2px;
+        }
+        .tier-1 { background: #f8d7da; color: #721c24; }
+        .tier-2 { background: #fff3cd; color: #856404; }
+        .tier-3 { background: #d1ecf1; color: #0c5460; }
+        .tier-4 { background: #d4edda; color: #155724; }
+        .implementation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .implementation-table th, .implementation-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .implementation-table th {
+            background-color: #dc3545;
+            color: white;
+            font-weight: 600;
+        }
+        .implementation-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-complete { background: #28a745; }
+        .status-progress { background: #ffc107; }
+        .status-planned { background: #6c757d; }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #dc3545;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+        }
+        .sample-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    <div class="container">
+        <div class="sample-badge">SAMPLE DOCUMENT</div>
+        
+        <div class="header">
+            <div class="logo">PRISM WRITING</div>
+            <h1>NIST Cybersecurity Framework<br>
+            Implementation Guide</h1>
+            <p><strong>Professional Cybersecurity Documentation Sample</strong></p>
+        </div>
+
+        <div class="document-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Document ID:</span>
+                    <span class="info-value">CSF-2024-001</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">NIST Framework:</span>
+                    <span class="info-value">CSF 2.0 (2024)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Current Tier:</span>
+                    <span class="info-value">Tier 2 (Risk Informed)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Target Tier:</span>
+                    <span class="info-value">Tier 3 (Repeatable)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Implementation Date:</span>
+                    <span class="info-value">Q2 2024</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Review Cycle:</span>
+                    <span class="info-value">Annual</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="strategic-break"><h2>1. Framework Overview</h2></div>
+            <p>The NIST Cybersecurity Framework provides a policy framework of computer security guidance for how private sector organizations can assess and improve their ability to prevent, detect, and respond to cyber attacks.</p>
+            
+            <h3>1.1 Framework Structure</h3>
+            <p>The Framework consists of six core functions that provide a high-level view of cybersecurity risk management:</p>
+            <div class="nist-categories">
+                <div class="category-card">
+                    <div class="category-id">GV</div>
+                    <div class="category-title">GOVERN</div>
+                    <div class="category-desc">Organizational cybersecurity risk management strategy</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-id">ID</div>
+                    <div class="category-title">IDENTIFY</div>
+                    <div class="category-desc">Asset and risk management understanding</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-id">PR</div>
+                    <div class="category-title">PROTECT</div>
+                    <div class="category-desc">Safeguards and protective measures</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-id">DE</div>
+                    <div class="category-title">DETECT</div>
+                    <div class="category-desc">Monitoring and detection capabilities</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-id">RS</div>
+                    <div class="category-title">RESPOND</div>
+                    <div class="category-desc">Incident response and mitigation</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-id">RC</div>
+                    <div class="category-title">RECOVER</div>
+                    <div class="category-desc">Recovery planning and resilience</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="strategic-break"><h2>2. Implementation Tiers</h2></div>
+            <h3>2.1 Current State Assessment</h3>
+            <p>Implementation Tiers describe the degree to which cybersecurity risk management practices exhibit characteristics defined in the Framework:</p>
+            
+            <div style="margin: 20px 0;">
+                <span class="maturity-level tier-1">Tier 1: Partial</span>
+                <span class="maturity-level tier-2">Tier 2: Risk Informed</span>
+                <span class="maturity-level tier-3">Tier 3: Repeatable</span>
+                <span class="maturity-level tier-4">Tier 4: Adaptive</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="nist-function">
+                <h3>GOVERN (GV) Function</h3>
+                <p>The organization's cybersecurity risk management strategy, expectations, and policy are established, communicated, and monitored.</p>
+            </div>
+            
+            <table class="implementation-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Subcategory</th>
+                        <th>Current State</th>
+                        <th>Implementation Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GV.OC:</strong> Organizational Context</td>
+                        <td>GV.OC-01: Organizational mission is understood</td>
+                        <td>Tier 3</td>
+                        <td><span class="status-indicator status-complete"></span>Complete</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GV.RM:</strong> Risk Management Strategy</td>
+                        <td>GV.RM-01: Risk management objectives are established</td>
+                        <td>Tier 2</td>
+                        <td><span class="status-indicator status-progress"></span>In Progress</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GV.RR:</strong> Roles and Responsibilities</td>
+                        <td>GV.RR-01: Organizational leadership is responsible for cybersecurity risk</td>
+                        <td>Tier 3</td>
+                        <td><span class="status-indicator status-complete"></span>Complete</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GV.PO:</strong> Policy</td>
+                        <td>GV.PO-01: Policy for managing cybersecurity risks is established</td>
+                        <td>Tier 2</td>
+                        <td><span class="status-indicator status-progress"></span>In Progress</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="nist-function">
+                <h3>IDENTIFY (ID) Function</h3>
+                <p>The organization's current cybersecurity posture is understood by identifying and managing cybersecurity risks to systems, people, assets, data, and capabilities.</p>
+            </div>
+            
+            <table class="implementation-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Implementation Priority</th>
+                        <th>Target Date</th>
+                        <th>Owner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ID.AM:</strong> Asset Management</td>
+                        <td>High</td>
+                        <td>Q3 2024</td>
+                        <td>IT Security Team</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ID.BE:</strong> Business Environment</td>
+                        <td>Medium</td>
+                        <td>Q4 2024</td>
+                        <td>Risk Management</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ID.GV:</strong> Governance</td>
+                        <td>High</td>
+                        <td>Q2 2024</td>
+                        <td>CISO Office</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ID.RA:</strong> Risk Assessment</td>
+                        <td>Critical</td>
+                        <td>Q2 2024</td>
+                        <td>Security Operations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ID.RM:</strong> Risk Management Strategy</td>
+                        <td>High</td>
+                        <td>Q3 2024</td>
+                        <td>Executive Leadership</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ID.SC:</strong> Supply Chain Risk Management</td>
+                        <td>Medium</td>
+                        <td>Q4 2024</td>
+                        <td>Procurement</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="strategic-break"><h2>3. Gap Analysis and Roadmap</h2></div>
+            <h3>3.1 Priority Implementation Areas</h3>
+            <p>Based on risk assessment and current maturity levels, the following areas require immediate attention:</p>
+            
+            <ol>
+                <li><strong>Asset Inventory and Classification (ID.AM)</strong>
+                    <ul>
+                        <li>Complete hardware and software asset discovery</li>
+                        <li>Implement data classification framework</li>
+                        <li>Establish asset ownership and accountability</li>
+                    </ul>
+                </li>
+                <li><strong>Access Control Enhancement (PR.AC)</strong>
+                    <ul>
+                        <li>Deploy multi-factor authentication</li>
+                        <li>Implement privileged access management</li>
+                        <li>Regular access reviews and certification</li>
+                    </ul>
+                </li>
+                <li><strong>Detection and Response (DE.CM, RS.RP)</strong>
+                    <ul>
+                        <li>24/7 security monitoring implementation</li>
+                        <li>Incident response plan testing</li>
+                        <li>Threat intelligence integration</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <p><strong>Sample Document Created by Prism Writing</strong></p>
+            <p>This is a professional documentation sample demonstrating NIST Cybersecurity Framework implementation.<br>
+            Contact us for custom cybersecurity documentation and risk management services.</p>
+            <p><strong>📧 Email:</strong> ariel.pk@outlook.com</p>
+            <p><em>© 2024 Prism Writing Cooperative - Professional Technical Documentation</em></p>
+        </div>
+    </div>
+</body>
+</html>

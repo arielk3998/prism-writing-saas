@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MediTech Procedures Manual Sample</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #059669;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 72px;
+            color: rgba(5, 150, 105, 0.1);
+            z-index: -1;
+            font-weight: bold;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #059669;
+            margin-bottom: 10px;
+        }
+        h1 { color: #1F2937; font-size: 28px; margin-bottom: 10px; }
+        h2 { color: #374151; font-size: 20px; margin-top: 30px; border-bottom: 1px solid #E5E7EB; padding-bottom: 5px; }
+        h3 { color: #4B5563; font-size: 16px; margin-top: 20px; }
+        .procedure-box {
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #FEF3C7;
+            border: 1px solid #FDE68A;
+            border-left: 4px solid #F59E0B;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .critical-box {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+            border-left: 4px solid #EF4444;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .step {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .step-number {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #059669;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .checklist {
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #E5E7EB;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #F9FAFB;
+            font-weight: 600;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+            text-align: center;
+            color: #6B7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">🔷 Prism Writing</div>
+        <h1>MediTech Electronic Health Records</h1>
+        <h2>Standard Operating Procedures Manual</h2>
+        <p style="color: #6B7280; margin: 0;">HIPAA-Compliant Documentation - Sample</p>
+    </div>
+
+    <div class="critical-box">
+        <h3>⚠️ CONFIDENTIAL - HIPAA COMPLIANCE REQUIRED</h3>
+        <p>This document contains procedures for handling protected health information (PHI). All personnel must complete HIPAA training before accessing patient data systems.</p>
+    </div>
+
+    <h2>📋 Purpose and Scope</h2>
+    <p>This Standard Operating Procedures (SOP) manual provides MediTech Healthcare staff with standardized protocols for electronic health record (EHR) management, ensuring HIPAA compliance, patient data security, and optimal clinical workflow efficiency.</p>
+
+    <div class="procedure-box">
+        <h3>🎯 Document Objectives</h3>
+        <ul>
+            <li>Ensure HIPAA compliance in all EHR activities</li>
+            <li>Standardize clinical documentation workflows</li>
+            <li>Maintain patient data integrity and security</li>
+            <li>Optimize healthcare delivery efficiency</li>
+            <li>Support regulatory audit requirements</li>
+        </ul>
+    </div>
+
+    <h2>🔐 User Authentication and Access Control</h2>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <h3>Initial System Login</h3>
+        <p><strong>Frequency:</strong> Beginning of each shift</p>
+        <p><strong>Personnel:</strong> All clinical and administrative staff</p>
+        
+        <h4>Procedure:</h4>
+        <ol>
+            <li>Navigate to MediTech EHR login portal</li>
+            <li>Enter unique user ID and password</li>
+            <li>Complete two-factor authentication if prompted</li>
+            <li>Review and acknowledge daily security notice</li>
+            <li>Verify correct user role and department assignment</li>
+        </ol>
+    </div>
+
+    <div class="warning-box">
+        <h4>⚠️ Security Reminder</h4>
+        <p>Never share login credentials. Log out or lock workstation when stepping away. Report suspected security breaches immediately to IT Security (ext. 5555).</p>
+    </div>
+
+    <h2>👥 Patient Registration and Demographics</h2>
+
+    <div class="step">
+        <div class="step-number">2</div>
+        <h3>New Patient Registration</h3>
+        <p><strong>Department:</strong> Registration/Reception</p>
+        <p><strong>Time Requirement:</strong> 10-15 minutes</p>
+        
+        <h4>Required Information:</h4>
+        <table>
+            <tr>
+                <th>Data Field</th>
+                <th>Required</th>
+                <th>Validation Rule</th>
+            </tr>
+            <tr>
+                <td>Patient Last Name</td>
+                <td>Yes</td>
+                <td>Alphabetic characters only</td>
+            </tr>
+            <tr>
+                <td>Patient First Name</td>
+                <td>Yes</td>
+                <td>Alphabetic characters only</td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td>Yes</td>
+                <td>MM/DD/YYYY format</td>
+            </tr>
+            <tr>
+                <td>Social Security Number</td>
+                <td>Yes</td>
+                <td>XXX-XX-XXXX format</td>
+            </tr>
+            <tr>
+                <td>Insurance Information</td>
+                <td>Yes</td>
+                <td>Valid policy number</td>
+            </tr>
+            <tr>
+                <td>Emergency Contact</td>
+                <td>Yes</td>
+                <td>Name and phone number</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="checklist">
+        <h4>📝 Registration Checklist</h4>
+        <ul>
+            <li>Verify patient identity with photo ID</li>
+            <li>Scan and attach ID copy to patient record</li>
+            <li>Confirm insurance eligibility in real-time</li>
+            <li>Obtain patient signature on HIPAA authorization</li>
+            <li>Schedule follow-up appointments if needed</li>
+            <li>Provide patient with portal access instructions</li>
+        </ul>
+    </div>
+
+    <h2>🩺 Clinical Documentation Standards</h2>
+
+    <div class="step">
+        <div class="step-number">3</div>
+        <h3>Progress Note Documentation</h3>
+        <p><strong>Personnel:</strong> Licensed clinical staff</p>
+        <p><strong>Timing:</strong> Within 24 hours of patient encounter</p>
+        
+        <h4>SOAP Note Structure:</h4>
+        <div style="margin-left: 20px;">
+            <p><strong>S - Subjective:</strong> Patient's reported symptoms and concerns</p>
+            <p><strong>O - Objective:</strong> Clinical observations and examination findings</p>
+            <p><strong>A - Assessment:</strong> Clinical diagnosis and differential considerations</p>
+            <p><strong>P - Plan:</strong> Treatment plan, medications, and follow-up instructions</p>
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <h4>⚠️ Documentation Requirements</h4>
+        <p>All entries must include date, time, and electronic signature. Use only approved medical abbreviations. Avoid copy-paste from previous notes without clinical review.</p>
+    </div>
+
+    <h2>💊 Medication Management</h2>
+
+    <div class="procedure-box">
+        <h3>e-Prescribing Protocol</h3>
+        <ol>
+            <li>Verify patient identity and allergies</li>
+            <li>Check for drug interactions using built-in screening</li>
+            <li>Confirm appropriate dosage and frequency</li>
+            <li>Select patient's preferred pharmacy</li>
+            <li>Electronically transmit prescription</li>
+            <li>Document prescription in patient's medication list</li>
+        </ol>
+    </div>
+
+    <h2>🔍 Quality Assurance and Audit Compliance</h2>
+
+    <div class="step">
+        <div class="step-number">4</div>
+        <h3>Monthly Audit Procedures</h3>
+        <p><strong>Responsible Party:</strong> Quality Assurance Team</p>
+        <p><strong>Frequency:</strong> Monthly, last week of each month</p>
+        
+        <h4>Audit Checklist:</h4>
+        <div class="checklist">
+            <ul>
+                <li>Review random sample of 50 patient records</li>
+                <li>Verify documentation completeness and timeliness</li>
+                <li>Check for appropriate use of electronic signatures</li>
+                <li>Confirm HIPAA compliance in all patient interactions</li>
+                <li>Validate medication reconciliation accuracy</li>
+                <li>Review access logs for unusual activity patterns</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>🚨 Emergency Procedures</h2>
+
+    <div class="critical-box">
+        <h3>System Downtime Protocol</h3>
+        <p><strong>Immediate Actions:</strong></p>
+        <ol>
+            <li>Switch to paper-based documentation forms</li>
+            <li>Notify IT Help Desk immediately (ext. 4444)</li>
+            <li>Continue patient care with manual processes</li>
+            <li>Document all activities for later EHR entry</li>
+            <li>Alert department supervisor and nursing management</li>
+        </ol>
+        
+        <p><strong>Recovery Actions:</strong></p>
+        <ol>
+            <li>Wait for official "system restored" notification</li>
+            <li>Enter all paper documentation into EHR within 4 hours</li>
+            <li>Verify all critical information was captured</li>
+            <li>Complete incident report for quality review</li>
+        </ol>
+    </div>
+
+    <h2>📞 Support and Training Resources</h2>
+    
+    <table>
+        <tr>
+            <th>Support Type</th>
+            <th>Contact</th>
+            <th>Hours</th>
+            <th>Response Time</th>
+        </tr>
+        <tr>
+            <td>Technical Support</td>
+            <td>Help Desk (ext. 4444)</td>
+            <td>24/7</td>
+            <td>< 15 minutes</td>
+        </tr>
+        <tr>
+            <td>Clinical Support</td>
+            <td>Clinical Informatics (ext. 6666)</td>
+            <td>Mon-Fri 7AM-7PM</td>
+            <td>< 30 minutes</td>
+        </tr>
+        <tr>
+            <td>HIPAA Compliance</td>
+            <td>Privacy Officer (ext. 5555)</td>
+            <td>Mon-Fri 8AM-5PM</td>
+            <td>< 2 hours</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        <p><strong>📄 This is a sample document created by Prism Writing</strong></p>
+        <p>For complete healthcare documentation and compliance consulting, contact us at info@prismwriting.com</p>
+        <p>© 2024 Prism Writing Cooperative. All rights reserved.</p>
+        <br>
+        <p><em>Document Version: 2.1 | Last Updated: January 2024 | Next Review: July 2024</em></p>
+    </div>
+</body>
+</html>

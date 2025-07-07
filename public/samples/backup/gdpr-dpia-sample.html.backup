@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GDPR Data Protection Impact Assessment Sample</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2D3748;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(59, 130, 246, 0.08);
+            z-index: -1;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #3182CE;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #3182CE;
+            margin-bottom: 15px;
+        }
+        .doc-info {
+            background: #EDF2F7;
+            border: 1px solid #CBD5E0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .doc-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .doc-info td {
+            padding: 8px;
+            border-bottom: 1px solid #CBD5E0;
+        }
+        .doc-info td:first-child {
+            font-weight: bold;
+            width: 150px;
+            color: #4A5568;
+        }
+        h1 { 
+            color: #1A202C; 
+            font-size: 32px; 
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        h2 { 
+            color: #2D3748; 
+            font-size: 24px; 
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #CBD5E0;
+            padding-bottom: 10px;
+        }
+        h3 { 
+            color: #4A5568; 
+            font-size: 18px; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .section-number {
+            color: #3182CE;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .gdpr-article {
+            background: #E6FFFA;
+            border-left: 4px solid #319795;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .gdpr-article strong {
+            color: #234E52;
+        }
+        .risk-assessment {
+            background: #FFF5F5;
+            border: 1px solid #FEB2B2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .risk-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .risk-high { background: #FED7D7; color: #C53030; }
+        .risk-medium { background: #FEEBC8; color: #DD6B20; }
+        .risk-low { background: #C6F6D5; color: #22543D; }
+        .mitigation-measures {
+            background: #F0FFF4;
+            border: 1px solid #9AE6B4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .data-flow {
+            background: #FFFAF0;
+            border: 1px solid #F6E05E;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .step-list {
+            counter-reset: step-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #3182CE;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #CBD5E0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #EDF2F7;
+            font-weight: 600;
+            color: #2D3748;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #CBD5E0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .confidential {
+            background: #FED7D7;
+            border: 1px solid #FEB2B2;
+            color: #C53030;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .checkbox-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .checkbox-list li {
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .checkbox-list li::before {
+            content: "☑";
+            position: absolute;
+            left: 0;
+            color: #48BB78;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">🛡️ PRISM WRITING COOPERATIVE</div>
+        <h1>Data Protection Impact Assessment (DPIA)</h1>
+        <p style="font-size: 18px; color: #718096; margin: 0;">GDPR Article 35 Compliance Documentation</p>
+    </div>
+
+    <div class="confidential">
+        CONFIDENTIAL - SAMPLE DOCUMENT - FOR DEMONSTRATION PURPOSES ONLY
+    </div>
+
+    <div class="doc-info">
+        <table>
+            <tr>
+                <td>Document ID:</td>
+                <td>DPIA-2025-001</td>
+            </tr>
+            <tr>
+                <td>Version:</td>
+                <td>1.0</td>
+            </tr>
+            <tr>
+                <td>Assessment Date:</td>
+                <td>January 15, 2025</td>
+            </tr>
+            <tr>
+                <td>Review Date:</td>
+                <td>January 15, 2026</td>
+            </tr>
+            <tr>
+                <td>DPO Approval:</td>
+                <td>Sarah Johnson, Data Protection Officer</td>
+            </tr>
+            <tr>
+                <td>Legal Basis:</td>
+                <td>GDPR Article 35</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2><span class="section-number">1.</span>Executive Summary</h2>
+    
+    <h3><span class="section-number">1.1</span>Project Overview</h3>
+    <p>This Data Protection Impact Assessment (DPIA) has been conducted for the implementation of a new Customer Relationship Management (CRM) system that will process personal data of customers, prospects, and business contacts. The assessment evaluates privacy risks and outlines measures to ensure compliance with the General Data Protection Regulation (GDPR).</p>
+
+    <div class="gdpr-article">
+        <strong>GDPR Article 35(1):</strong> Where a type of processing in particular using new technologies, and taking into account the nature, scope, context and purposes of the processing, is likely to result in a high risk to the rights and freedoms of natural persons, the controller shall, prior to the processing, carry out an assessment of the impact of the envisaged processing operations on the protection of personal data.
+    </div>
+
+    <h3><span class="section-number">1.2</span>DPIA Necessity Assessment</h3>
+    <p>This DPIA is required because the processing operation meets the following criteria:</p>
+    <ul class="checkbox-list">
+        <li>Systematic monitoring of data subjects</li>
+        <li>Processing of personal data on a large scale</li>
+        <li>Use of new technologies for automated decision making</li>
+        <li>Processing of special categories of personal data</li>
+    </ul>
+
+    <h2><span class="section-number">2.</span>Description of Processing Operations</h2>
+
+    <h3><span class="section-number">2.1</span>Nature of Processing</h3>
+    <div class="data-flow">
+        <h4>Data Processing Activities</h4>
+        <ol class="step-list">
+            <li>Collection of personal data through web forms, phone calls, and email interactions</li>
+            <li>Storage and organization of data in cloud-based CRM database</li>
+            <li>Analysis and profiling for marketing and sales purposes</li>
+            <li>Automated lead scoring and customer segmentation</li>
+            <li>Integration with third-party marketing and analytics platforms</li>
+        </ol>
+    </div>
+
+    <h3><span class="section-number">2.2</span>Scope and Context</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Aspect</th>
+                <th>Description</th>
+                <th>Volume/Scale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data Subjects</td>
+                <td>Customers, prospects, business contacts</td>
+                <td>~50,000 individuals</td>
+            </tr>
+            <tr>
+                <td>Geographic Scope</td>
+                <td>EU/EEA, United States, Canada</td>
+                <td>Global operations</td>
+            </tr>
+            <tr>
+                <td>Processing Duration</td>
+                <td>Active customers: 7 years post-relationship</td>
+                <td>Long-term retention</td>
+            </tr>
+            <tr>
+                <td>Data Categories</td>
+                <td>Contact info, preferences, transaction history</td>
+                <td>Standard business data</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3><span class="section-number">2.3</span>Purposes of Processing</h3>
+    <p>The personal data will be processed for the following purposes:</p>
+    <ul>
+        <li><strong>Customer Management:</strong> Maintaining customer relationships and service delivery</li>
+        <li><strong>Sales Operations:</strong> Lead generation, opportunity tracking, and sales forecasting</li>
+        <li><strong>Marketing Activities:</strong> Targeted campaigns, market research, and customer analytics</li>
+        <li><strong>Legal Compliance:</strong> Regulatory reporting and audit requirements</li>
+        <li><strong>Business Intelligence:</strong> Performance metrics and strategic planning</li>
+    </ul>
+
+    <h2><span class="section-number">3.</span>Risk Assessment</h2>
+
+    <h3><span class="section-number">3.1</span>Identified Risks</h3>
+
+    <div class="risk-assessment">
+        <h4>Risk 1: Unauthorized Access to Personal Data</h4>
+        <p><strong>Description:</strong> Potential for unauthorized individuals to access the CRM system and view/extract personal data.</p>
+        <p><strong>Impact:</strong> High - Could result in identity theft, privacy violations, and regulatory penalties.</p>
+        <p><strong>Likelihood:</strong> Medium - Standard security measures in place but external threats persist.</p>
+        <p><strong>Risk Level:</strong> <span class="risk-level risk-high">High Risk</span></p>
+    </div>
+
+    <div class="risk-assessment">
+        <h4>Risk 2: Data Profiling and Discrimination</h4>
+        <p><strong>Description:</strong> Automated profiling algorithms may create biased customer segments leading to discriminatory treatment.</p>
+        <p><strong>Impact:</strong> Medium - Could affect individuals' access to services or pricing.</p>
+        <p><strong>Likelihood:</strong> Low - Algorithms are monitored and audited regularly.</p>
+        <p><strong>Risk Level:</strong> <span class="risk-level risk-medium">Medium Risk</span></p>
+    </div>
+
+    <div class="risk-assessment">
+        <h4>Risk 3: Third-Party Data Sharing</h4>
+        <p><strong>Description:</strong> Integration with external platforms may result in uncontrolled data sharing.</p>
+        <p><strong>Impact:</strong> Medium - Loss of control over personal data processing.</p>
+        <p><strong>Likelihood:</strong> Low - Strict data processing agreements in place.</p>
+        <p><strong>Risk Level:</strong> <span class="risk-level risk-medium">Medium Risk</span></p>
+    </div>
+
+    <h3><span class="section-number">3.2</span>Risk Analysis Matrix</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Risk Category</th>
+                <th>Impact Level</th>
+                <th>Likelihood</th>
+                <th>Risk Score</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data Breach</td>
+                <td>High (4)</td>
+                <td>Medium (3)</td>
+                <td>12</td>
+                <td>Critical</td>
+            </tr>
+            <tr>
+                <td>Algorithmic Bias</td>
+                <td>Medium (3)</td>
+                <td>Low (2)</td>
+                <td>6</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>Third-Party Risk</td>
+                <td>Medium (3)</td>
+                <td>Low (2)</td>
+                <td>6</td>
+                <td>Medium</td>
+            </tr>
+            <tr>
+                <td>Data Retention</td>
+                <td>Low (2)</td>
+                <td>Medium (3)</td>
+                <td>6</td>
+                <td>Low</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2><span class="section-number">4.</span>Mitigation Measures</h2>
+
+    <div class="mitigation-measures">
+        <h3>Technical Safeguards</h3>
+        <ol class="step-list">
+            <li><strong>Encryption:</strong> End-to-end encryption for data in transit and at rest using AES-256 standard</li>
+            <li><strong>Access Controls:</strong> Role-based access control (RBAC) with multi-factor authentication</li>
+            <li><strong>Monitoring:</strong> 24/7 security monitoring with automated threat detection</li>
+            <li><strong>Data Minimization:</strong> Collect only necessary data fields for specified purposes</li>
+            <li><strong>Pseudonymization:</strong> Replace identifying information with artificial identifiers where possible</li>
+        </ol>
+    </div>
+
+    <div class="mitigation-measures">
+        <h3>Organizational Measures</h3>
+        <ol class="step-list">
+            <li><strong>Privacy by Design:</strong> Implement privacy considerations in system architecture</li>
+            <li><strong>Staff Training:</strong> Regular GDPR awareness training for all personnel</li>
+            <li><strong>Data Processing Agreements:</strong> Comprehensive agreements with all third-party processors</li>
+            <li><strong>Incident Response:</strong> Established procedures for data breach notification and response</li>
+            <li><strong>Regular Audits:</strong> Quarterly privacy audits and annual penetration testing</li>
+        </ol>
+    </div>
+
+    <h2><span class="section-number">5.</span>Consultation and Approval</h2>
+
+    <h3><span class="section-number">5.1</span>Stakeholder Consultation</h3>
+    <p>The following stakeholders have been consulted during this DPIA process:</p>
+    <ul>
+        <li>Data Protection Officer (DPO)</li>
+        <li>Information Security Team</li>
+        <li>Legal and Compliance Department</li>
+        <li>IT Development Team</li>
+        <li>Business Operations Manager</li>
+    </ul>
+
+    <h3><span class="section-number">5.2</span>Supervisory Authority Consultation</h3>
+    <div class="gdpr-article">
+        <strong>GDPR Article 36:</strong> Based on the risk assessment, consultation with the supervisory authority is not required as the identified risks can be adequately mitigated through the proposed technical and organizational measures.
+    </div>
+
+    <h2><span class="section-number">6.</span>Conclusion and Recommendations</h2>
+
+    <p>This DPIA concludes that the proposed CRM system implementation can proceed with acceptable privacy risks, provided that all identified mitigation measures are implemented and maintained. The assessment recommends:</p>
+
+    <ol>
+        <li>Implementation of all technical safeguards before system go-live</li>
+        <li>Completion of staff training program within 30 days</li>
+        <li>Establishment of ongoing monitoring and review procedures</li>
+        <li>Annual review and update of this DPIA</li>
+    </ol>
+
+    <div class="footer">
+        <p><strong>This is a sample document created by Prism Writing Cooperative</strong></p>
+        <p>Demonstrating professional GDPR compliance documentation</p>
+        <p style="margin-top: 10px; font-style: italic;">© 2025 Prism Writing Cooperative - Professional Technical Documentation Services</p>
+    </div>
+</body>
+</html>

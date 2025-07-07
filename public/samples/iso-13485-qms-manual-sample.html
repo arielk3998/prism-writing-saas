@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ISO 13485 Quality Management System Manual Sample</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(220, 38, 38, 0.6);
+            z-index: -1;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2563EB;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2563EB;
+            margin-bottom: 15px;
+            font-family: Arial, sans-serif;
+        }
+        .doc-info {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .doc-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .doc-info td {
+            padding: 8px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .doc-info td:first-child {
+            font-weight: bold;
+            width: 150px;
+            color: #475569;
+        }
+        h1 { 
+            color: #1E293B; 
+            font-size: 32px; 
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        h2 { 
+            color: #334155; 
+            font-size: 24px; 
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 10px;
+        }
+        h3 { 
+            color: #475569; 
+            font-size: 18px; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #64748B;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .section-number {
+            color: #2563EB;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .requirement {
+            background: #FEF7CD;
+            border-left: 4px solid #F59E0B;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .requirement strong {
+            color: #92400E;
+        }
+        .procedure {
+            background: #F0F9FF;
+            border: 1px solid #7DD3FC;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .procedure-steps {
+            counter-reset: step-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        .procedure-steps li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .procedure-steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2563EB;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #D1D5DB;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #F8FAFC;
+            font-weight: 600;
+            color: #374151;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #E2E8F0;
+            text-align: center;
+            color: #64748B;
+            font-size: 14px;
+        }
+        .confidential {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+            color: #991B1B;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .iso-clause {
+            background: #F1F5F9;
+            border-left: 4px solid #475569;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">🏥 PRISM WRITING COOPERATIVE</div>
+        <h1>Quality Management System Manual</h1>
+        <p style="font-size: 18px; color: #64748B; margin: 0;">ISO 13485:2016 Compliant Documentation</p>
+    </div>
+
+    <div class="confidential">
+        CONFIDENTIAL - SAMPLE DOCUMENT - FOR DEMONSTRATION PURPOSES ONLY
+    </div>
+
+    <div class="doc-info">
+        <table>
+            <tr>
+                <td>Document ID:</td>
+                <td>QMS-MAN-001</td>
+            </tr>
+            <tr>
+                <td>Version:</td>
+                <td>3.2</td>
+            </tr>
+            <tr>
+                <td>Effective Date:</td>
+                <td>January 15, 2025</td>
+            </tr>
+            <tr>
+                <td>Review Date:</td>
+                <td>January 15, 2026</td>
+            </tr>
+            <tr>
+                <td>Approved By:</td>
+                <td>Jane Smith, Quality Manager</td>
+            </tr>
+            <tr>
+                <td>ISO Standard:</td>
+                <td>ISO 13485:2016</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">1.</span>Introduction and Scope</h2></div>
+    
+    <h3><span class="section-number">1.1</span>Purpose</h3>
+    <p>This Quality Management System (QMS) Manual describes the quality management system of [Company Name] and demonstrates our commitment to meeting ISO 13485:2016 requirements for medical devices. This manual serves as the foundational document for our quality management system and provides the framework for all quality-related activities.</p>
+
+    <div class="iso-clause">
+        <strong>ISO 13485:2016 Clause 4.2.2:</strong> The organization shall establish and maintain a quality manual that includes the scope of the quality management system, documented procedures established for the quality management system, and a description of the interaction between the processes of the quality management system.
+    </div>
+
+    <h3><span class="section-number">1.2</span>Scope of Application</h3>
+    <p>This QMS applies to all activities related to the design, development, production, installation, and servicing of medical devices at [Company Name]. The scope includes:</p>
+    <ul>
+        <li>Class I and Class II medical devices</li>
+        <li>Software as Medical Device (SaMD)</li>
+        <li>Manufacturing processes and controls</li>
+        <li>Post-market surveillance activities</li>
+        <li>Regulatory compliance management</li>
+    </ul>
+
+    <div class="strategic-break"><h2><span class="section-number">2.</span>Quality Policy and Objectives</h2></div>
+
+    <h3><span class="section-number">2.1</span>Quality Policy Statement</h3>
+    <div class="requirement">
+        <strong>Quality Policy:</strong> [Company Name] is committed to designing, manufacturing, and distributing medical devices that consistently meet customer requirements and applicable regulatory standards. We continuously improve our quality management system to enhance customer satisfaction and ensure patient safety.
+    </div>
+
+    <h3><span class="section-number">2.2</span>Quality Objectives</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Objective</th>
+                    <th>Target</th>
+                    <th>Measurement Method</th>
+                    <th>Responsibility</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Customer Satisfaction</td>
+                    <td>≥ 95% satisfaction rating</td>
+                    <td>Annual customer survey</td>
+                    <td>Quality Manager</td>
+                </tr>
+                <tr>
+                    <td>Product Quality</td>
+                    <td>≤ 0.1% defect rate</td>
+                    <td>Statistical process control</td>
+                    <td>Production Manager</td>
+                </tr>
+                <tr>
+                    <td>Regulatory Compliance</td>
+                    <td>Zero regulatory violations</td>
+                    <td>Internal audits & inspections</td>
+                    <td>Regulatory Affairs</td>
+                </tr>
+                <tr>
+                    <td>Corrective Actions</td>
+                    <td>100% completion within 30 days</td>
+                    <td>CAPA tracking system</td>
+                    <td>Quality Assurance</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="strategic-break"><h2><span class="section-number">3.</span>Organizational Structure and Responsibilities</h2></div>
+
+    <h3><span class="section-number">3.1</span>Management Responsibility</h3>
+    <p>Top management demonstrates leadership and commitment with respect to the quality management system by:</p>
+
+    <div class="procedure">
+        <h4>Management Responsibilities</h4>
+        <ol class="procedure-steps">
+            <li>Establishing and maintaining the quality policy and quality objectives</li>
+            <li>Ensuring customer and regulatory requirements are determined and met</li>
+            <li>Conducting management reviews at planned intervals</li>
+            <li>Ensuring the availability of necessary resources</li>
+            <li>Promoting awareness of regulatory requirements throughout the organization</li>
+        </ol>
+    </div>
+
+    <h3><span class="section-number">3.2</span>Quality Management Representative</h3>
+    <div class="requirement">
+        <strong>Appointment:</strong> The Quality Manager serves as the management representative with responsibility and authority for ensuring that processes needed for the quality management system are established, implemented, and maintained.
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">4.</span>Document Control and Records Management</h2></div>
+
+    <h3><span class="section-number">4.1</span>Document Control Procedure</h3>
+    <p>All quality system documents are controlled in accordance with procedure DOC-CTRL-001. The document control system ensures:</p>
+
+    <div class="procedure">
+        <h4>Document Control Process</h4>
+        <ol class="procedure-steps">
+            <li>Documents are approved for adequacy prior to issue</li>
+            <li>Documents are reviewed, updated, and re-approved as necessary</li>
+            <li>Changes and current revision status are identified</li>
+            <li>Relevant versions are available at points of use</li>
+            <li>Documents are legible and readily identifiable</li>
+            <li>External documents are identified and controlled</li>
+            <li>Obsolete documents are prevented from unintended use</li>
+        </ol>
+    </div>
+
+    <h3><span class="section-number">4.2</span>Records Management</h3>
+    <p>Quality records provide evidence of conformity to requirements and effective operation of the quality management system. Records are maintained according to the Record Control Matrix (RCM-001).</p>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Record Type</th>
+                    <th>Retention Period</th>
+                    <th>Storage Location</th>
+                    <th>Access Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Design History Files</td>
+                    <td>Lifetime of device + 2 years</td>
+                    <td>Quality Vault</td>
+                    <td>Controlled</td>
+                </tr>
+                <tr>
+                    <td>Manufacturing Records</td>
+                    <td>5 years minimum</td>
+                    <td>Production Archive</td>
+                    <td>Controlled</td>
+                </tr>
+                <tr>
+                    <td>Complaint Records</td>
+                    <td>7 years minimum</td>
+                    <td>Quality Database</td>
+                    <td>Restricted</td>
+                </tr>
+                <tr>
+                    <td>Training Records</td>
+                    <td>3 years post-employment</td>
+                    <td>HR System</td>
+                    <td>Confidential</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">5.</span>Risk Management</h2></div>
+
+    <h3><span class="section-number">5.1</span>Risk Management Process</h3>
+    <p>Risk management activities are conducted in accordance with ISO 14971:2019 and are integrated throughout the product lifecycle. The risk management process includes:</p>
+
+    <div class="procedure">
+        <h4>Risk Management Activities</h4>
+        <ol class="procedure-steps">
+            <li>Risk analysis and evaluation during design and development</li>
+            <li>Risk control measure implementation and verification</li>
+            <li>Residual risk evaluation and acceptability assessment</li>
+            <li>Risk management file maintenance and updates</li>
+            <li>Post-market surveillance data integration</li>
+        </ol>
+    </div>
+
+    <div class="iso-clause">
+        <strong>ISO 13485:2016 Clause 7.1:</strong> The organization shall establish documented procedures for risk management in design and development. Risk management activities shall be documented in the design and development files.
+    </div>
+
+    <div class="footer">
+        <p><strong>This is a sample document created by Prism Writing Cooperative</strong></p>
+        <p>Demonstrating professional ISO 13485:2016 compliant documentation</p>
+        <p style="margin-top: 10px; font-style: italic;">© 2025 Prism Writing Cooperative - Professional Technical Documentation Services</p>
+    </div>
+</body>
+</html>

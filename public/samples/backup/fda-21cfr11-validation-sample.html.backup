@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FDA 21 CFR Part 11 Electronic Records Validation Protocol</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #1a365d;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(59, 130, 246, 0.08);
+            z-index: -1;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2B6CB0;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #2B6CB0 0%, #3182CE 100%);
+            color: white;
+            margin: -30px -30px 40px -30px;
+            padding: 40px 30px 30px 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .fda-seal {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2B6CB0;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .doc-info {
+            background: #EBF8FF;
+            border: 1px solid #90CDF4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #2B6CB0;
+        }
+        .doc-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .doc-info td {
+            padding: 8px;
+            border-bottom: 1px solid #90CDF4;
+        }
+        .doc-info td:first-child {
+            font-weight: bold;
+            width: 180px;
+            color: #2D3748;
+        }
+        h1 { 
+            color: white; 
+            font-size: 28px; 
+            margin: 15px 0;
+            text-align: center;
+        }
+        h2 { 
+            color: #2B6CB0; 
+            font-size: 24px; 
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2B6CB0;
+            padding-bottom: 10px;
+        }
+        h3 { 
+            color: #2D3748; 
+            font-size: 18px; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #4A5568;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .section-number {
+            color: #2B6CB0;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .fda-requirement {
+            background: #F0FFF4;
+            border-left: 4px solid #38A169;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .fda-requirement strong {
+            color: #2F855A;
+        }
+        .validation-protocol {
+            background: #FFFAF0;
+            border: 1px solid #F6E05E;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .test-case {
+            background: #F7FAFC;
+            border: 1px solid #CBD5E0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4299E1;
+        }
+        .validation-steps {
+            counter-reset: validation-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        .validation-steps li {
+            counter-increment: validation-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .validation-steps li::before {
+            content: "V" counter(validation-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2B6CB0;
+            color: white;
+            width: 30px;
+            height: 25px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #CBD5E0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #EBF8FF;
+            font-weight: 600;
+            color: #2D3748;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #CBD5E0;
+            text-align: center;
+            color: #4A5568;
+            font-size: 14px;
+        }
+        .confidential {
+            background: #FED7D7;
+            border: 1px solid #FEB2B2;
+            color: #C53030;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .test-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .passed { background: #C6F6D5; color: #22543D; }
+        .failed { background: #FED7D7; color: #C53030; }
+        .pending { background: #FFF3CD; color: #975A16; }
+        .not-tested { background: #E2E8F0; color: #4A5568; }
+        .audit-trail {
+            background: #F7FAFC;
+            border: 2px solid #2B6CB0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .audit-trail-header {
+            background: #2B6CB0;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .audit-trail-content {
+            padding: 20px;
+        }
+        .signature-requirements {
+            background: #FFF5F5;
+            border: 1px solid #FEB2B2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin: 15px 0;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .gmp-badge {
+            background: #2B6CB0;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">
+            <div class="fda-seal">FDA</div>
+            <div>
+                <div>💊 PRISM WRITING COOPERATIVE</div>
+                <div style="font-size: 16px; font-weight: normal; opacity: 0.9;">Pharmaceutical Regulatory Documentation Specialists</div>
+            </div>
+        </div>
+        <h1>Electronic Records Validation Protocol</h1>
+        <p style="font-size: 18px; margin: 0; opacity: 0.9;">21 CFR Part 11 Compliance Documentation</p>
+        <div style="margin-top: 15px;">
+            <span class="gmp-badge">GMP</span>
+            <span class="gmp-badge">FDA</span>
+            <span class="gmp-badge">21 CFR Part 11</span>
+            <span class="gmp-badge">GAMP 5</span>
+        </div>
+    </div>
+
+    <div class="confidential">
+        PROPRIETARY AND CONFIDENTIAL - SAMPLE PHARMACEUTICAL VALIDATION DOCUMENT
+    </div>
+
+    <div class="doc-info">
+        <table>
+            <tr>
+                <td>Protocol Number:</td>
+                <td>VP-21CFR11-2025-001</td>
+            </tr>
+            <tr>
+                <td>System Name:</td>
+                <td>Laboratory Information Management System (LIMS)</td>
+            </tr>
+            <tr>
+                <td>FDA Regulation:</td>
+                <td>21 CFR Part 11 - Electronic Records and Signatures</td>
+            </tr>
+            <tr>
+                <td>GAMP Category:</td>
+                <td>Category 4 - Configured Products</td>
+            </tr>
+            <tr>
+                <td>Protocol Version:</td>
+                <td>1.0</td>
+            </tr>
+            <tr>
+                <td>Effective Date:</td>
+                <td>January 15, 2025</td>
+            </tr>
+            <tr>
+                <td>Validation Team Lead:</td>
+                <td>Dr. Sarah Martinez, Validation Manager</td>
+            </tr>
+            <tr>
+                <td>System Owner:</td>
+                <td>Quality Control Department</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2><span class="section-number">1.</span>Introduction and Objective</h2>
+    
+    <h3><span class="section-number">1.1</span>Purpose</h3>
+    <p>This Validation Protocol defines the approach, methodology, and acceptance criteria for validating the Laboratory Information Management System (LIMS) in compliance with FDA 21 CFR Part 11 regulations for electronic records and electronic signatures. The validation ensures that the system maintains data integrity, security, and regulatory compliance throughout its operational lifecycle.</p>
+
+    <div class="fda-requirement">
+        <strong>21 CFR Part 11.10(a):</strong> Validation of systems to ensure accuracy, reliability, consistent intended performance, and the ability to discern invalid or altered records.
+    </div>
+
+    <h3><span class="section-number">1.2</span>Scope and Applicability</h3>
+    <p>This validation covers the following system components and functionalities:</p>
+    <ul>
+        <li>Electronic record creation, modification, and retention</li>
+        <li>Electronic signature implementation and verification</li>
+        <li>Audit trail functionality and integrity</li>
+        <li>System access controls and user authentication</li>
+        <li>Data backup and recovery procedures</li>
+        <li>System security and change control</li>
+    </ul>
+
+    <h2><span class="section-number">2.</span>Regulatory Requirements</h2>
+
+    <h3><span class="section-number">2.1</span>21 CFR Part 11 Key Requirements</h3>
+
+    <div class="validation-protocol">
+        <h4>Electronic Records Requirements (§11.10)</h4>
+        <ol class="validation-steps">
+            <li><strong>System Validation:</strong> Computer systems must be validated to ensure accuracy, reliability, and consistent performance</li>
+            <li><strong>Record Integrity:</strong> Ability to generate accurate and complete copies of records in human readable form</li>
+            <li><strong>Record Protection:</strong> Protection of records to enable their accurate and ready retrieval throughout the record retention period</li>
+            <li><strong>Access Limitation:</strong> Limiting system access to authorized individuals</li>
+            <li><strong>Audit Trails:</strong> Use of secure, computer-generated, time-stamped audit trails</li>
+            <li><strong>Operational Checks:</strong> Use of appropriate controls over systems documentation</li>
+        </ol>
+    </div>
+
+    <h3><span class="section-number">2.2</span>Electronic Signatures Requirements</h3>
+
+    <div class="fda-requirement">
+        <strong>21 CFR Part 11.50:</strong> Signed electronic records shall contain information associated with the signing that clearly indicates all of the following: (1) The printed name of the signer; (2) The date and time when the signature was executed; (3) The meaning (such as review, approval, responsibility, or authorship) associated with the signature.
+    </div>
+
+    <h2><span class="section-number">3.</span>System Description</h2>
+
+    <h3><span class="section-number">3.1</span>LIMS Architecture</h3>
+    <p>The Laboratory Information Management System is a configured commercial off-the-shelf (COTS) solution designed for pharmaceutical quality control laboratories. The system architecture includes:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>Technology</th>
+                <th>Function</th>
+                <th>21 CFR Part 11 Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Database Server</td>
+                <td>Oracle 19c</td>
+                <td>Data storage and retrieval</td>
+                <td>Electronic records storage</td>
+            </tr>
+            <tr>
+                <td>Application Server</td>
+                <td>Windows Server 2022</td>
+                <td>Business logic execution</td>
+                <td>Access control enforcement</td>
+            </tr>
+            <tr>
+                <td>Web Interface</td>
+                <td>HTML5/JavaScript</td>
+                <td>User interaction</td>
+                <td>Electronic signature capture</td>
+            </tr>
+            <tr>
+                <td>Integration Layer</td>
+                <td>REST APIs</td>
+                <td>External system connectivity</td>
+                <td>Data integrity assurance</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3><span class="section-number">3.2</span>Critical Business Processes</h3>
+    <p>The following laboratory processes utilize electronic records subject to 21 CFR Part 11:</p>
+    <ul>
+        <li>Sample registration and chain of custody</li>
+        <li>Test method execution and results recording</li>
+        <li>Certificate of Analysis (COA) generation and approval</li>
+        <li>Laboratory investigation documentation</li>
+        <li>Stability study data management</li>
+        <li>Method validation and transfer activities</li>
+    </ul>
+
+    <h2><span class="section-number">4.</span>Validation Test Cases</h2>
+
+    <h3><span class="section-number">4.1</span>Electronic Records Validation</h3>
+
+    <div class="test-case">
+        <h4>Test Case ER-001: Record Creation and Integrity</h4>
+        <p><strong>Objective:</strong> Verify that electronic records are created with all required metadata and maintain integrity throughout their lifecycle.</p>
+        <p><strong>Test Steps:</strong></p>
+        <ol>
+            <li>Create a new sample record with all required fields</li>
+            <li>Verify automatic timestamp and user ID capture</li>
+            <li>Confirm record is saved with digital signature</li>
+            <li>Attempt unauthorized modification</li>
+            <li>Verify system prevents unauthorized changes</li>
+        </ol>
+        <p><strong>Acceptance Criteria:</strong> Records created with complete metadata, unauthorized changes prevented</p>
+        <p><strong>Status:</strong> <span class="test-status passed">Passed</span></p>
+    </div>
+
+    <div class="test-case">
+        <h4>Test Case ER-002: Audit Trail Functionality</h4>
+        <p><strong>Objective:</strong> Validate that all user actions are captured in a secure, tamper-evident audit trail.</p>
+        <p><strong>Test Steps:</strong></p>
+        <ol>
+            <li>Perform various system operations (create, modify, approve, delete)</li>
+            <li>Review audit trail entries for completeness</li>
+            <li>Verify timestamp accuracy and user identification</li>
+            <li>Test audit trail export functionality</li>
+            <li>Confirm audit records cannot be modified</li>
+        </ol>
+        <p><strong>Acceptance Criteria:</strong> All actions logged with complete information, audit trail immutable</p>
+        <p><strong>Status:</strong> <span class="test-status passed">Passed</span></p>
+    </div>
+
+    <div class="test-case">
+        <h4>Test Case ES-001: Electronic Signature Implementation</h4>
+        <p><strong>Objective:</strong> Verify electronic signatures meet 21 CFR Part 11 requirements for identification and authentication.</p>
+        <p><strong>Test Steps:</strong></p>
+        <ol>
+            <li>Configure user accounts with appropriate signature privileges</li>
+            <li>Test signature application to various record types</li>
+            <li>Verify signature binding to specific records</li>
+            <li>Confirm signature information display requirements</li>
+            <li>Test signature verification processes</li>
+        </ol>
+        <p><strong>Acceptance Criteria:</strong> Signatures properly bound to records with complete identification</p>
+        <p><strong>Status:</strong> <span class="test-status pending">Pending</span></p>
+    </div>
+
+    <h3><span class="section-number">4.2</span>System Security Validation</h3>
+
+    <div class="validation-protocol">
+        <h4>Security Test Matrix</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Test Case ID</th>
+                    <th>Security Requirement</th>
+                    <th>Test Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SEC-001</td>
+                    <td>User Authentication</td>
+                    <td>Multi-factor authentication testing</td>
+                    <td><span class="test-status passed">Passed</span></td>
+                </tr>
+                <tr>
+                    <td>SEC-002</td>
+                    <td>Password Policy</td>
+                    <td>Complex password requirements enforcement</td>
+                    <td><span class="test-status passed">Passed</span></td>
+                </tr>
+                <tr>
+                    <td>SEC-003</td>
+                    <td>Role-Based Access</td>
+                    <td>User privilege verification</td>
+                    <td><span class="test-status failed">Failed</span></td>
+                </tr>
+                <tr>
+                    <td>SEC-004</td>
+                    <td>Session Management</td>
+                    <td>Automatic logout and session timeout</td>
+                    <td><span class="test-status passed">Passed</span></td>
+                </tr>
+                <tr>
+                    <td>SEC-005</td>
+                    <td>Data Encryption</td>
+                    <td>Data at rest and in transit encryption</td>
+                    <td><span class="test-status pending">Pending</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2><span class="section-number">5.</span>Audit Trail Analysis</h2>
+
+    <div class="audit-trail">
+        <div class="audit-trail-header">
+            Sample Audit Trail Entry - 21 CFR Part 11 Compliance
+        </div>
+        <div class="audit-trail-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>User ID</th>
+                        <th>Action</th>
+                        <th>Record ID</th>
+                        <th>Old Value</th>
+                        <th>New Value</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-01-15 14:30:22.456 UTC</td>
+                        <td>jsmith@company.com</td>
+                        <td>MODIFY</td>
+                        <td>SAMPLE-2025-001234</td>
+                        <td>Status: In Progress</td>
+                        <td>Status: Complete</td>
+                        <td>Testing completed per SOP-QC-001</td>
+                    </tr>
+                    <tr>
+                        <td>2025-01-15 14:31:45.789 UTC</td>
+                        <td>mjohnson@company.com</td>
+                        <td>APPROVE</td>
+                        <td>SAMPLE-2025-001234</td>
+                        <td>Approval: Pending</td>
+                        <td>Approval: Approved</td>
+                        <td>Results reviewed and approved</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h2><span class="section-number">6.</span>Validation Results Summary</h2>
+
+    <h3><span class="section-number">6.1</span>Test Execution Summary</h3>
+    <div class="validation-protocol">
+        <table>
+            <thead>
+                <tr>
+                    <th>Test Category</th>
+                    <th>Total Tests</th>
+                    <th>Passed</th>
+                    <th>Failed</th>
+                    <th>Pending</th>
+                    <th>Pass Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Electronic Records</td>
+                    <td>25</td>
+                    <td>23</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>92%</td>
+                </tr>
+                <tr>
+                    <td>Electronic Signatures</td>
+                    <td>15</td>
+                    <td>12</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td>80%</td>
+                </tr>
+                <tr>
+                    <td>System Security</td>
+                    <td>20</td>
+                    <td>17</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>85%</td>
+                </tr>
+                <tr>
+                    <td>Audit Trail</td>
+                    <td>12</td>
+                    <td>12</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100%</td>
+                </tr>
+                <tr style="font-weight: bold; background: #EBF8FF;">
+                    <td>TOTAL</td>
+                    <td>72</td>
+                    <td>64</td>
+                    <td>4</td>
+                    <td>4</td>
+                    <td>89%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">6.2</span>Deviation and Corrective Actions</h3>
+    <p>The following deviations were identified during validation testing:</p>
+
+    <div class="test-case">
+        <h4>Deviation DEV-001: Role-Based Access Control</h4>
+        <p><strong>Description:</strong> Test case SEC-003 failed - users were able to access functions beyond their assigned roles.</p>
+        <p><strong>Impact:</strong> Medium - Potential unauthorized access to critical functions</p>
+        <p><strong>Root Cause:</strong> Incorrect role configuration in user management module</p>
+        <p><strong>Corrective Action:</strong> Reconfigure user roles and re-test access controls</p>
+        <p><strong>Target Completion:</strong> February 1, 2025</p>
+    </div>
+
+    <h2><span class="section-number">7.</span>Conclusion and Recommendations</h2>
+
+    <h3><span class="section-number">7.1</span>Validation Conclusion</h3>
+    <p>Based on the validation testing performed, the LIMS system demonstrates substantial compliance with 21 CFR Part 11 requirements. The system successfully:</p>
+    <ul>
+        <li>Maintains electronic record integrity and authenticity</li>
+        <li>Provides comprehensive audit trail functionality</li>
+        <li>Implements secure electronic signature capabilities</li>
+        <li>Enforces appropriate access controls and security measures</li>
+    </ul>
+
+    <h3><span class="section-number">7.2</span>Recommendations</h3>
+    <ol>
+        <li>Complete remediation of identified deviations before production release</li>
+        <li>Implement ongoing periodic review of system compliance</li>
+        <li>Establish procedures for change control and revalidation</li>
+        <li>Conduct user training on 21 CFR Part 11 requirements</li>
+    </ol>
+
+    <div class="signature-requirements">
+        <h3>Validation Team Approval</h3>
+        <div class="signature-line">
+            <span><strong>Validation Manager:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Dr. Sarah Martinez, Validation Manager</p>
+
+        <div class="signature-line">
+            <span><strong>Quality Assurance:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Michael Chen, QA Director</p>
+
+        <div class="signature-line">
+            <span><strong>System Owner:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Dr. Lisa Rodriguez, QC Laboratory Manager</p>
+    </div>
+
+    <div class="footer">
+        <p><strong>This is a sample document created by Prism Writing Cooperative</strong></p>
+        <p>Demonstrating professional FDA 21 CFR Part 11 validation documentation</p>
+        <p style="margin-top: 10px; font-style: italic;">© 2025 Prism Writing Cooperative - Pharmaceutical Regulatory Documentation Specialists</p>
+    </div>
+</body>
+</html>

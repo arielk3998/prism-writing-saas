@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NASA Software Engineering Standards - Module Development Guide</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(59, 130, 246, 0.08);
+            z-index: -1;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #0B3D91;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #0B3D91 0%, #1a5cb8 100%);
+            color: white;
+            margin: -30px -30px 40px -30px;
+            padding: 40px 30px 30px 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .nasa-logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0B3D91;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .doc-info {
+            background: #F8F9FA;
+            border: 1px solid #DEE2E6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #0B3D91;
+        }
+        .doc-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .doc-info td {
+            padding: 8px;
+            border-bottom: 1px solid #DEE2E6;
+        }
+        .doc-info td:first-child {
+            font-weight: bold;
+            width: 180px;
+            color: #495057;
+        }
+        h1 { 
+            color: white; 
+            font-size: 28px; 
+            margin: 15px 0;
+            text-align: center;
+        }
+        h2 { 
+            color: #0B3D91; 
+            font-size: 24px; 
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #0B3D91;
+            padding-bottom: 10px;
+        }
+        h3 { 
+            color: #495057; 
+            font-size: 18px; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #6C757D;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .section-number {
+            color: #0B3D91;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .nasa-requirement {
+            background: #E7F3FF;
+            border-left: 4px solid #0B3D91;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .nasa-requirement strong {
+            color: #0B3D91;
+        }
+        .code-standards {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #0B3D91;
+            overflow-x: auto;
+        }
+        .code-standards pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .verification-matrix {
+            background: #F8F9FA;
+            border: 1px solid #DEE2E6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .requirement-steps {
+            counter-reset: req-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        .requirement-steps li {
+            counter-increment: req-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .requirement-steps li::before {
+            content: "R" counter(req-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #0B3D91;
+            color: white;
+            width: 30px;
+            height: 25px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #DEE2E6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #F8F9FA;
+            font-weight: 600;
+            color: #495057;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #DEE2E6;
+            text-align: center;
+            color: #6C757D;
+            font-size: 14px;
+        }
+        .confidential {
+            background: #F8D7DA;
+            border: 1px solid #F5C2C7;
+            color: #842029;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .criticality-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .critical { background: #F8D7DA; color: #842029; }
+        .high { background: #FFF3CD; color: #997404; }
+        .medium { background: #D1ECF1; color: #0C5460; }
+        .low { background: #D4EDDA; color: #155724; }
+        .compliance-checklist {
+            background: #E7F3FF;
+            border: 1px solid #B8DAFF;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .checklist-item {
+            list-style: none;
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .checklist-item::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28A745;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .test-matrix {
+            background: #F8F9FA;
+            border: 2px solid #0B3D91;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .test-matrix-header {
+            background: #0B3D91;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .test-matrix-content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">
+            <div class="nasa-logo">NASA</div>
+            <div>
+                <div>🚀 PRISM WRITING COOPERATIVE</div>
+                <div style="font-size: 16px; font-weight: normal; opacity: 0.9;">Aerospace & Defense Documentation Specialists</div>
+            </div>
+        </div>
+        <h1>Software Engineering Standards</h1>
+        <p style="font-size: 18px; margin: 0; opacity: 0.9;">Module Development Guide - NPR 7150.2D Compliance</p>
+    </div>
+
+    <div class="confidential">
+        CONTROLLED DOCUMENT - SAMPLE DEMONSTRATION - NOT FOR OPERATIONAL USE
+    </div>
+
+    <div class="doc-info">
+        <table>
+            <tr>
+                <td>Document Number:</td>
+                <td>SWE-STD-001-Rev-C</td>
+            </tr>
+            <tr>
+                <td>NASA Policy Reference:</td>
+                <td>NPR 7150.2D</td>
+            </tr>
+            <tr>
+                <td>Classification Level:</td>
+                <td>NASA Technical Standard</td>
+            </tr>
+            <tr>
+                <td>Effective Date:</td>
+                <td>January 15, 2025</td>
+            </tr>
+            <tr>
+                <td>Review Cycle:</td>
+                <td>Annual</td>
+            </tr>
+            <tr>
+                <td>Responsible Office:</td>
+                <td>NASA Software Engineering Laboratory</td>
+            </tr>
+            <tr>
+                <td>Applicable Missions:</td>
+                <td>All NASA Software Development Projects</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2><span class="section-number">1.</span>Introduction and Scope</h2>
+    
+    <h3><span class="section-number">1.1</span>Purpose and Authority</h3>
+    <p>This Software Engineering Standards document establishes the technical requirements, procedures, and guidelines for NASA software development in accordance with NASA Procedural Requirements (NPR) 7150.2D. This standard ensures that all NASA software development activities meet the highest levels of safety, reliability, and mission success criteria.</p>
+
+    <div class="nasa-requirement">
+        <strong>NPR 7150.2D Requirement SWE-1:</strong> NASA software shall be developed in accordance with software engineering standards that address software life cycle processes, software safety, software security, and software quality assurance appropriate to the classification of the software.
+    </div>
+
+    <h3><span class="section-number">1.2</span>Applicability and Classification</h3>
+    <p>This standard applies to all NASA software development projects classified as:</p>
+    <ul>
+        <li><strong>Class A:</strong> Loss of human life <span class="criticality-level critical">Critical</span></li>
+        <li><strong>Class B:</strong> Loss of major mission objectives <span class="criticality-level high">High</span></li>
+        <li><strong>Class C:</strong> Loss of minor mission objectives <span class="criticality-level medium">Medium</span></li>
+        <li><strong>Class D:</strong> Minimal impact <span class="criticality-level low">Low</span></li>
+    </ul>
+
+    <h2><span class="section-number">2.</span>Software Development Life Cycle Requirements</h2>
+
+    <h3><span class="section-number">2.1</span>Life Cycle Model Selection</h3>
+    <p>NASA software development shall follow a structured life cycle model appropriate to the project's complexity, schedule, and risk profile. The following models are approved for NASA projects:</p>
+
+    <div class="verification-matrix">
+        <h4>Approved Life Cycle Models</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Life Cycle Model</th>
+                    <th>Applicable Classification</th>
+                    <th>Key Characteristics</th>
+                    <th>Verification Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Waterfall</td>
+                    <td>Class A, B</td>
+                    <td>Sequential phases, formal reviews</td>
+                    <td>SRR, PDR, CDR, TRR, ORR</td>
+                </tr>
+                <tr>
+                    <td>Incremental</td>
+                    <td>Class B, C</td>
+                    <td>Iterative development, early delivery</td>
+                    <td>Build reviews, integration testing</td>
+                </tr>
+                <tr>
+                    <td>Agile (Modified)</td>
+                    <td>Class C, D</td>
+                    <td>Adaptive planning, continuous delivery</td>
+                    <td>Sprint reviews, continuous integration</td>
+                </tr>
+                <tr>
+                    <td>Spiral</td>
+                    <td>Class A, B (High Risk)</td>
+                    <td>Risk-driven, prototyping</td>
+                    <td>Risk assessments, prototype reviews</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">2.2</span>Software Requirements Engineering</h3>
+
+    <div class="nasa-requirement">
+        <strong>NPR 7150.2D Requirement SWE-3:</strong> Software requirements shall be documented, reviewed, and approved by the appropriate authority. Requirements shall be traceable throughout the software development life cycle.
+    </div>
+
+    <ol class="requirement-steps">
+        <li><strong>Requirements Elicitation:</strong> Systematic gathering of stakeholder needs, constraints, and interfaces</li>
+        <li><strong>Requirements Analysis:</strong> Decomposition, prioritization, and feasibility assessment</li>
+        <li><strong>Requirements Specification:</strong> Documentation in standardized format with acceptance criteria</li>
+        <li><strong>Requirements Validation:</strong> Verification that requirements meet stakeholder needs</li>
+        <li><strong>Requirements Management:</strong> Change control and traceability maintenance</li>
+    </ol>
+
+    <h2><span class="section-number">3.</span>Coding Standards and Practices</h2>
+
+    <h3><span class="section-number">3.1</span>NASA Coding Standards</h3>
+    <p>All software code shall conform to NASA-approved coding standards based on the programming language and classification level. The following standards are mandatory:</p>
+
+    <div class="code-standards">
+        <pre>
+// NASA C Coding Standard - Example Module Header
+/**
+ * @file: navigation_controller.c
+ * @brief: Spacecraft Navigation Control Module
+ * @author: [Developer Name]
+ * @date: 2025-01-15
+ * @version: 2.1.0
+ * @classification: Class A - Flight Critical
+ * @requirements: REQ-NAV-001 through REQ-NAV-045
+ * @test_procedures: TP-NAV-001
+ * @review_status: APPROVED
+ */
+
+#include "navigation_controller.h"
+#include "nasa_safety_lib.h"
+
+// Global variables (minimize usage)
+static bool g_navigation_initialized = false;
+static uint32_t g_system_status = NAV_STATUS_UNKNOWN;
+
+/**
+ * @brief Initialize navigation control system
+ * @param config Pointer to navigation configuration structure
+ * @return NAV_SUCCESS on success, error code on failure
+ * @requirements REQ-NAV-001, REQ-NAV-002
+ * @safety_critical YES
+ */
+nav_result_t nav_initialize(const nav_config_t* config)
+{
+    // Input validation (required for all NASA functions)
+    if (config == NULL) {
+        log_error("nav_initialize: NULL configuration pointer");
+        return NAV_ERROR_INVALID_PARAM;
+    }
+    
+    // Safety checks
+    if (g_navigation_initialized) {
+        log_warning("nav_initialize: System already initialized");
+        return NAV_ERROR_ALREADY_INIT;
+    }
+    
+    // Implementation continues...
+    return NAV_SUCCESS;
+}
+        </pre>
+    </div>
+
+    <h3><span class="section-number">3.2</span>Code Review Requirements</h3>
+
+    <div class="compliance-checklist">
+        <h4>Mandatory Code Review Checklist</h4>
+        <ul style="list-style: none; padding-left: 0;">
+            <li class="checklist-item">All functions have complete header documentation</li>
+            <li class="checklist-item">Input parameter validation implemented</li>
+            <li class="checklist-item">Error handling and logging included</li>
+            <li class="checklist-item">Memory management follows NASA guidelines</li>
+            <li class="checklist-item">No dynamic memory allocation in flight software</li>
+            <li class="checklist-item">All global variables justified and documented</li>
+            <li class="checklist-item">Coding standard compliance verified</li>
+            <li class="checklist-item">Requirements traceability maintained</li>
+            <li class="checklist-item">Safety-critical code identified and protected</li>
+            <li class="checklist-item">Unit tests developed and executed</li>
+        </ul>
+    </div>
+
+    <h2><span class="section-number">4.</span>Testing and Verification</h2>
+
+    <h3><span class="section-number">4.1</span>Testing Strategy</h3>
+
+    <div class="nasa-requirement">
+        <strong>NPR 7150.2D Requirement SWE-7:</strong> Software testing shall be performed at the unit, integration, and system levels. Test procedures and results shall be documented and reviewed.
+    </div>
+
+    <div class="test-matrix">
+        <div class="test-matrix-header">
+            NASA Software Testing Matrix
+        </div>
+        <div class="test-matrix-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Level</th>
+                        <th>Class A</th>
+                        <th>Class B</th>
+                        <th>Class C</th>
+                        <th>Class D</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unit Testing</td>
+                        <td>100% code coverage</td>
+                        <td>95% code coverage</td>
+                        <td>85% code coverage</td>
+                        <td>70% code coverage</td>
+                    </tr>
+                    <tr>
+                        <td>Integration Testing</td>
+                        <td>All interfaces tested</td>
+                        <td>Critical interfaces</td>
+                        <td>Major interfaces</td>
+                        <td>Basic interfaces</td>
+                    </tr>
+                    <tr>
+                        <td>System Testing</td>
+                        <td>Full operational profile</td>
+                        <td>Normal + boundary conditions</td>
+                        <td>Normal conditions</td>
+                        <td>Basic functionality</td>
+                    </tr>
+                    <tr>
+                        <td>Acceptance Testing</td>
+                        <td>Customer + Independent V&V</td>
+                        <td>Customer + IV&V review</td>
+                        <td>Customer acceptance</td>
+                        <td>Developer verification</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3><span class="section-number">4.2</span>Verification and Validation Requirements</h3>
+    <p>Independent Verification and Validation (IV&V) is required for Class A and Class B software. The IV&V process includes:</p>
+
+    <ol class="requirement-steps">
+        <li><strong>Requirements Verification:</strong> Ensure requirements are complete, consistent, and testable</li>
+        <li><strong>Design Verification:</strong> Validate design meets requirements and follows standards</li>
+        <li><strong>Code Verification:</strong> Static analysis, peer review, and compliance checking</li>
+        <li><strong>Test Verification:</strong> Independent test case review and execution</li>
+        <li><strong>System Validation:</strong> End-to-end system behavior verification</li>
+    </ol>
+
+    <h2><span class="section-number">5.</span>Configuration Management</h2>
+
+    <h3><span class="section-number">5.1</span>Version Control Requirements</h3>
+
+    <div class="nasa-requirement">
+        <strong>NPR 7150.2D Requirement SWE-6:</strong> Software configuration management shall control changes to software work products throughout the software life cycle.
+    </div>
+
+    <p>All NASA software projects shall implement configuration management using approved tools and procedures:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Artifact Type</th>
+                <th>Version Control</th>
+                <th>Change Approval</th>
+                <th>Baseline Control</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Requirements Documents</td>
+                <td>Git/SVN</td>
+                <td>CCB Required</td>
+                <td>Formal Baseline</td>
+            </tr>
+            <tr>
+                <td>Design Documents</td>
+                <td>Git/SVN</td>
+                <td>Technical Lead</td>
+                <td>Controlled Baseline</td>
+            </tr>
+            <tr>
+                <td>Source Code</td>
+                <td>Git/SVN</td>
+                <td>Peer Review</td>
+                <td>Tagged Releases</td>
+            </tr>
+            <tr>
+                <td>Test Procedures</td>
+                <td>Git/SVN</td>
+                <td>QA Approval</td>
+                <td>Test Baseline</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2><span class="section-number">6.</span>Safety and Security Requirements</h2>
+
+    <h3><span class="section-number">6.1</span>Software Safety</h3>
+    <p>Flight-critical software (Class A) shall implement multiple layers of safety protection:</p>
+
+    <div class="verification-matrix">
+        <h4>Safety Implementation Requirements</h4>
+        <ul style="list-style: none; padding-left: 0;">
+            <li class="checklist-item">Fault detection and isolation mechanisms</li>
+            <li class="checklist-item">Graceful degradation capabilities</li>
+            <li class="checklist-item">Watchdog timers and health monitoring</li>
+            <li class="checklist-item">Redundancy for critical functions</li>
+            <li class="checklist-item">Safe state identification and transition</li>
+            <li class="checklist-item">Hazard analysis and mitigation</li>
+        </ul>
+    </div>
+
+    <h3><span class="section-number">6.2</span>Cybersecurity Requirements</h3>
+
+    <div class="nasa-requirement">
+        <strong>NPR 7150.2D Requirement SWE-9:</strong> Software shall implement appropriate cybersecurity controls based on the software classification and operational environment.
+    </div>
+
+    <h2><span class="section-number">7.</span>Documentation Requirements</h2>
+
+    <h3><span class="section-number">7.1</span>Required Documentation</h3>
+    <p>The following documentation artifacts are required for NASA software projects:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Document Type</th>
+                <th>Class A</th>
+                <th>Class B</th>
+                <th>Class C</th>
+                <th>Class D</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Software Requirements Specification</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Recommended</td>
+            </tr>
+            <tr>
+                <td>Software Design Document</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Recommended</td>
+                <td>Optional</td>
+            </tr>
+            <tr>
+                <td>Test Plans and Procedures</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Basic Required</td>
+            </tr>
+            <tr>
+                <td>User Documentation</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Required</td>
+                <td>Required</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p><strong>This is a sample document created by Prism Writing Cooperative</strong></p>
+        <p>Demonstrating professional NASA/Aerospace documentation standards</p>
+        <p style="margin-top: 10px; font-style: italic;">© 2025 Prism Writing Cooperative - Aerospace & Defense Documentation Specialists</p>
+    </div>
+</body>
+</html>

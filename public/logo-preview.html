@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prism Writing Logo Preview</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .logo-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .logo-section.dark {
+            background: #1f2937;
+            border-color: #374151;
+        }
+        .logo-section h2 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #374151;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .logo-section.dark h2 {
+            color: #f9fafb;
+        }
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+        .logo-item {
+            text-align: center;
+        }
+        .logo-item img {
+            margin-bottom: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+        }
+        .dark .logo-item img {
+            border-color: #4b5563;
+            background: #374151;
+        }
+        .logo-item h3 {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .dark .logo-item h3 {
+            color: #d1d5db;
+        }
+        .design-notes {
+            background: #f8fafc;
+            border-left: 4px solid #6366f1;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 0 8px 8px 0;
+        }
+        .design-notes h3 {
+            margin-top: 0;
+            color: #1e293b;
+        }
+        .design-notes ul {
+            color: #475569;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prism Writing Logo Collection</h1>
+        
+        <!-- Light Mode Logos -->
+        <div class="logo-section">
+            <h2>Light Mode Versions</h2>
+            <div class="logo-grid">
+                <div class="logo-item">
+                    <img src="logo.svg" alt="Full Logo Light" width="200" height="80">
+                    <h3>Full Logo (logo.svg)</h3>
+                </div>
+                <div class="logo-item">
+                    <img src="logo-icon.svg" alt="Icon Only" width="64" height="64">
+                    <h3>Icon Only (logo-icon.svg)</h3>
+                </div>
+                <div class="logo-item">
+                    <img src="favicon.svg" alt="Favicon" width="32" height="32">
+                    <h3>Favicon (favicon.svg)</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dark Mode Logos -->
+        <div class="logo-section dark">
+            <h2>Dark Mode Version</h2>
+            <div class="logo-grid">
+                <div class="logo-item">
+                    <img src="logo-dark.svg" alt="Full Logo Dark" width="200" height="80">
+                    <h3>Full Logo Dark (logo-dark.svg)</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Design Notes -->
+        <div class="design-notes">
+            <h3>Design Philosophy (Inspired by Rob Janoff)</h3>
+            <ul>
+                <li><strong>Simplicity:</strong> Clean, geometric shapes that are instantly recognizable</li>
+                <li><strong>Symbolic Meaning:</strong> The prism represents transformation - complex information becomes clear, accessible content</li>
+                <li><strong>Color Story:</strong> Rainbow spectrum emerging from the prism symbolizes the diverse range of technical writing services</li>
+                <li><strong>Memorable:</strong> Simple enough to work at any size, from business cards to billboards</li>
+                <li><strong>Versatile:</strong> Multiple versions for different contexts (full logo, icon, favicon)</li>
+                <li><strong>Professional:</strong> Modern gradient and typography that conveys expertise and innovation</li>
+                <li><strong>Meaningful:</strong> The light rays represent clarity, understanding, and illumination - core values of technical writing</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

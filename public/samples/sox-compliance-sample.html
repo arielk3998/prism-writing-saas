@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOX Compliance Internal Controls Documentation</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(220, 38, 38, 0.6);
+            z-index: -1;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #8B5000;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #8B5000 0%, #DAA520 100%);
+            color: white;
+            margin: -30px -30px 40px -30px;
+            padding: 40px 30px 30px 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .doc-info {
+            background: #FFF8E1;
+            border: 1px solid #FFE082;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #8B5000;
+        }
+        .doc-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .doc-info td {
+            padding: 8px;
+            border-bottom: 1px solid #FFE082;
+        }
+        .doc-info td:first-child {
+            font-weight: bold;
+            width: 180px;
+            color: #5D4037;
+        }
+        h1 { 
+            color: white; 
+            font-size: 28px; 
+            margin: 15px 0;
+            text-align: center;
+        }
+        h2 { 
+            color: #8B5000; 
+            font-size: 24px; 
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #8B5000;
+            padding-bottom: 10px;
+        }
+        h3 { 
+            color: #5D4037; 
+            font-size: 18px; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #795548;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .section-number {
+            color: #8B5000;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .sox-requirement {
+            background: #E8F5E8;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .sox-requirement strong {
+            color: #2E7D32;
+        }
+        .control-matrix {
+            background: #F5F5F5;
+            border: 1px solid #E0E0E0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .risk-assessment {
+            background: #FFF3E0;
+            border: 1px solid #FFB74D;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .control-steps {
+            counter-reset: control-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        .control-steps li {
+            counter-increment: control-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .control-steps li::before {
+            content: "C" counter(control-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #8B5000;
+            color: white;
+            width: 30px;
+            height: 25px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #E0E0E0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #FFF8E1;
+            font-weight: 600;
+            color: #5D4037;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #E0E0E0;
+            text-align: center;
+            color: #795548;
+            font-size: 14px;
+        }
+        .confidential {
+            background: #FFEBEE;
+            border: 1px solid #FFCDD2;
+            color: #C62828;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .effectiveness-rating {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .effective { background: #C8E6C9; color: #2E7D32; }
+        .needs-improvement { background: #FFF9C4; color: #F57F17; }
+        .ineffective { background: #FFCDD2; color: #C62828; }
+        .testing-matrix {
+            background: #F3E5F5;
+            border: 1px solid #CE93D8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .deficiency-alert {
+            background: #FFEBEE;
+            border: 2px solid #F44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #C62828;
+        }
+        .remediation-plan {
+            background: #E8F5E8;
+            border: 1px solid #81C784;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .signature-block {
+            background: #F5F5F5;
+            border: 2px solid #8B5000;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin: 15px 0;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">
+            <span style="font-size: 40px;">⚖️</span>
+            <div>
+                <div>PRISM WRITING COOPERATIVE</div>
+                <div style="font-size: 16px; font-weight: normal; opacity: 0.9;">Financial Compliance Documentation Specialists</div>
+            </div>
+        </div>
+        <h1>Internal Controls Documentation</h1>
+        <p style="font-size: 18px; margin: 0; opacity: 0.9;">Sarbanes-Oxley Act Section 404 Compliance</p>
+    </div>
+
+    <div class="confidential">
+        CONFIDENTIAL - INTERNAL USE ONLY - SAMPLE DOCUMENTATION
+    </div>
+
+    <div class="doc-info">
+        <table>
+            <tr>
+                <td>Document ID:</td>
+                <td>SOX-ICFR-2025-001</td>
+            </tr>
+            <tr>
+                <td>SOX Section:</td>
+                <td>Section 404 - Internal Controls</td>
+            </tr>
+            <tr>
+                <td>Assessment Period:</td>
+                <td>Fiscal Year 2025</td>
+            </tr>
+            <tr>
+                <td>Effective Date:</td>
+                <td>January 1, 2025</td>
+            </tr>
+            <tr>
+                <td>Next Review Date:</td>
+                <td>December 31, 2025</td>
+            </tr>
+            <tr>
+                <td>Responsible Officer:</td>
+                <td>Chief Financial Officer</td>
+            </tr>
+            <tr>
+                <td>Auditor:</td>
+                <td>External Independent Auditor</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">1.</span>Executive Summary</h2></div>
+    
+    <h3><span class="section-number">1.1</span>Assessment Overview</h3>
+    <p>This Internal Controls over Financial Reporting (ICFR) documentation has been prepared in compliance with Section 404 of the Sarbanes-Oxley Act of 2002. The assessment evaluates the effectiveness of internal controls designed to provide reasonable assurance regarding the reliability of financial reporting and preparation of financial statements for external purposes.</p>
+
+    <div class="sox-requirement">
+        <strong>SOX Section 404(a):</strong> Management shall establish and maintain an adequate internal control structure and procedures for financial reporting and include in the company's annual report an assessment of the effectiveness of the internal control structure and procedures for financial reporting.
+    </div>
+
+    <h3><span class="section-number">1.2</span>Management Assessment Conclusion</h3>
+    <p>Based on our evaluation of internal controls over financial reporting as of December 31, 2024, management has concluded that our internal controls are effective and provide reasonable assurance that:</p>
+    <ul>
+        <li>Financial reporting is reliable and accurate</li>
+        <li>Transactions are properly authorized and recorded</li>
+        <li>Assets are adequately safeguarded</li>
+        <li>Applicable laws and regulations are followed</li>
+    </ul>
+
+    <div class="strategic-break"><h2><span class="section-number">2.</span>Internal Control Framework</h2></div>
+
+    <h3><span class="section-number">2.1</span>COSO Framework Implementation</h3>
+    <p>Our internal control system is based on the Committee of Sponsoring Organizations of the Treadway Commission (COSO) 2013 framework. The framework consists of five integrated components:</p>
+
+    <div class="control-matrix">
+        <h4>COSO Framework Components</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Key Principles</th>
+                    <th>Implementation Status</th>
+                    <th>Effectiveness Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Control Environment</td>
+                    <td>Integrity, ethics, competence</td>
+                    <td>Fully Implemented</td>
+                    <td><span class="effectiveness-rating effective">Effective</span></td>
+                </tr>
+                <tr>
+                    <td>Risk Assessment</td>
+                    <td>Objective setting, risk identification</td>
+                    <td>Fully Implemented</td>
+                    <td><span class="effectiveness-rating effective">Effective</span></td>
+                </tr>
+                <tr>
+                    <td>Control Activities</td>
+                    <td>Policies, procedures, authorization</td>
+                    <td>Fully Implemented</td>
+                    <td><span class="effectiveness-rating effective">Effective</span></td>
+                </tr>
+                <tr>
+                    <td>Information & Communication</td>
+                    <td>Relevant, quality information</td>
+                    <td>Implemented with gaps</td>
+                    <td><span class="effectiveness-rating needs-improvement">Needs Improvement</span></td>
+                </tr>
+                <tr>
+                    <td>Monitoring Activities</td>
+                    <td>Ongoing, separate evaluations</td>
+                    <td>Fully Implemented</td>
+                    <td><span class="effectiveness-rating effective">Effective</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">2.2</span>Significant Accounts and Processes</h3>
+    <p>The following accounts and processes have been identified as significant to our financial reporting:</p>
+
+    <ol class="control-steps">
+        <li><strong>Revenue Recognition:</strong> Order-to-cash process, contract management, and revenue cutoff procedures</li>
+        <li><strong>Accounts Receivable:</strong> Customer credit evaluation, collection procedures, and allowance estimation</li>
+        <li><strong>Inventory Management:</strong> Physical inventory controls, costing methodologies, and obsolescence reserves</li>
+        <li><strong>Fixed Assets:</strong> Capital expenditure approval, depreciation calculations, and impairment testing</li>
+        <li><strong>Accounts Payable:</strong> Vendor management, three-way matching, and accrual processes</li>
+        <li><strong>Payroll and Benefits:</strong> Time reporting, approval hierarchies, and benefits administration</li>
+        <li><strong>Financial Close:</strong> Period-end procedures, journal entries, and management review processes</li>
+    </ol>
+
+    <div class="strategic-break"><h2><span class="section-number">3.</span>Key Financial Reporting Controls</h2></div>
+
+    <h3><span class="section-number">3.1</span>Revenue Recognition Controls</h3>
+
+    <div class="risk-assessment">
+        <h4>Control Objective</h4>
+        <p>Ensure that revenue is recognized in accordance with applicable accounting standards (ASC 606) and that all revenue transactions are properly authorized, recorded, and reported in the correct accounting period.</p>
+
+        <h4>Key Controls</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Control ID</th>
+                    <th>Control Description</th>
+                    <th>Control Owner</th>
+                    <th>Testing Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>REV-001</td>
+                    <td>Sales contracts reviewed for revenue recognition criteria</td>
+                    <td>Revenue Manager</td>
+                    <td>No exceptions noted</td>
+                </tr>
+                <tr>
+                    <td>REV-002</td>
+                    <td>Monthly revenue cutoff testing performed</td>
+                    <td>Accounting Manager</td>
+                    <td>No exceptions noted</td>
+                </tr>
+                <tr>
+                    <td>REV-003</td>
+                    <td>Performance obligations identified and tracked</td>
+                    <td>Finance Director</td>
+                    <td>2 minor exceptions - remediated</td>
+                </tr>
+                <tr>
+                    <td>REV-004</td>
+                    <td>Contract modifications properly evaluated</td>
+                    <td>Legal Department</td>
+                    <td>No exceptions noted</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">3.2</span>Financial Close and Reporting Controls</h3>
+
+    <div class="control-matrix">
+        <h4>Month-End Close Process Controls</h4>
+        <ol class="control-steps">
+            <li><strong>Account Reconciliations:</strong> All balance sheet accounts reconciled and reviewed monthly</li>
+            <li><strong>Journal Entry Review:</strong> All manual journal entries require dual approval</li>
+            <li><strong>Management Review:</strong> Financial statements reviewed by CFO before issuance</li>
+            <li><strong>Variance Analysis:</strong> Significant variances investigated and documented</li>
+            <li><strong>Supporting Documentation:</strong> All adjustments supported by appropriate documentation</li>
+        </ol>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">4.</span>Control Testing and Results</h2></div>
+
+    <h3><span class="section-number">4.1</span>Testing Methodology</h3>
+    <p>Internal control testing was performed using a risk-based approach with the following methodologies:</p>
+
+    <div class="testing-matrix">
+        <h4>Testing Approach by Control Type</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Control Type</th>
+                    <th>Testing Method</th>
+                    <th>Sample Size</th>
+                    <th>Testing Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Management Review Controls</td>
+                    <td>Inquiry and observation</td>
+                    <td>12 months</td>
+                    <td>Monthly</td>
+                </tr>
+                <tr>
+                    <td>Automated System Controls</td>
+                    <td>Inspection of system reports</td>
+                    <td>25 samples</td>
+                    <td>Quarterly</td>
+                </tr>
+                <tr>
+                    <td>Transaction-Level Controls</td>
+                    <td>Inspection of documentation</td>
+                    <td>40 samples</td>
+                    <td>Quarterly</td>
+                </tr>
+                <tr>
+                    <td>Entity-Level Controls</td>
+                    <td>Inquiry and observation</td>
+                    <td>All instances</td>
+                    <td>Annual</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">4.2</span>Control Deficiencies Identified</h3>
+
+    <div class="deficiency-alert">
+        <h4>🚨 Material Weakness Identified</h4>
+        <p><strong>Control ID:</strong> INFO-002</p>
+        <p><strong>Description:</strong> Insufficient controls over the completeness and accuracy of financial data extracted from multiple systems for management reporting purposes.</p>
+        <p><strong>Impact:</strong> Could result in material misstatement of financial reports.</p>
+        <p><strong>Root Cause:</strong> Manual data extraction processes lack adequate review and reconciliation.</p>
+    </div>
+
+    <div class="remediation-plan">
+        <h4>Remediation Plan</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Action Item</th>
+                    <th>Responsible Party</th>
+                    <th>Target Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Implement automated data reconciliation</td>
+                    <td>IT Director</td>
+                    <td>March 31, 2025</td>
+                    <td>In Progress</td>
+                </tr>
+                <tr>
+                    <td>Develop data validation procedures</td>
+                    <td>Finance Manager</td>
+                    <td>February 28, 2025</td>
+                    <td>Planned</td>
+                </tr>
+                <tr>
+                    <td>Train staff on new procedures</td>
+                    <td>HR Department</td>
+                    <td>April 15, 2025</td>
+                    <td>Planned</td>
+                </tr>
+                <tr>
+                    <td>Test effectiveness of new controls</td>
+                    <td>Internal Audit</td>
+                    <td>May 31, 2025</td>
+                    <td>Planned</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">5.</span>Management Certifications</h2></div>
+
+    <h3><span class="section-number">5.1</span>CEO and CFO Certifications</h3>
+
+    <div class="sox-requirement">
+        <strong>SOX Section 302:</strong> The CEO and CFO must certify the accuracy of financial reports and the effectiveness of internal controls on a quarterly basis.
+    </div>
+
+    <div class="signature-block">
+        <h4>Chief Executive Officer Certification</h4>
+        <p>I, [CEO Name], certify that:</p>
+        <ul>
+            <li>I have reviewed this annual report on internal controls</li>
+            <li>Based on my knowledge, this report does not contain any material misstatements</li>
+            <li>The internal controls are effective as of the end of the period covered by this report</li>
+        </ul>
+        <div class="signature-line">
+            <span>Signature: _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p style="margin-top: 10px;"><strong>[CEO Name], Chief Executive Officer</strong></p>
+    </div>
+
+    <div class="signature-block">
+        <h4>Chief Financial Officer Certification</h4>
+        <p>I, [CFO Name], certify that:</p>
+        <ul>
+            <li>I have reviewed this annual report on internal controls</li>
+            <li>The financial statements fairly present the financial condition and results of operations</li>
+            <li>Any material weaknesses in internal controls have been disclosed</li>
+        </ul>
+        <div class="signature-line">
+            <span>Signature: _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p style="margin-top: 10px;"><strong>[CFO Name], Chief Financial Officer</strong></p>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">6.</span>Continuous Monitoring Program</h2></div>
+
+    <h3><span class="section-number">6.1</span>Ongoing Assessment Activities</h3>
+    <p>To maintain the effectiveness of internal controls, the following ongoing monitoring activities are performed:</p>
+
+    <div class="control-matrix">
+        <table>
+            <thead>
+                <tr>
+                    <th>Monitoring Activity</th>
+                    <th>Frequency</th>
+                    <th>Responsible Party</th>
+                    <th>Documentation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Management Self-Assessment</td>
+                    <td>Quarterly</td>
+                    <td>Process Owners</td>
+                    <td>Control Testing Workpapers</td>
+                </tr>
+                <tr>
+                    <td>Internal Audit Reviews</td>
+                    <td>Annual</td>
+                    <td>Internal Audit</td>
+                    <td>Audit Reports</td>
+                </tr>
+                <tr>
+                    <td>Key Risk Indicator Monitoring</td>
+                    <td>Monthly</td>
+                    <td>Risk Management</td>
+                    <td>Risk Dashboards</td>
+                </tr>
+                <tr>
+                    <td>External Audit Testing</td>
+                    <td>Annual</td>
+                    <td>External Auditors</td>
+                    <td>Management Letters</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p><strong>This is a sample document created by Prism Writing Cooperative</strong></p>
+        <p>Demonstrating professional SOX compliance documentation</p>
+        <p style="margin-top: 10px; font-style: italic;">© 2025 Prism Writing Cooperative - Financial Compliance Documentation Specialists</p>
+    </div>
+</body>
+</html>

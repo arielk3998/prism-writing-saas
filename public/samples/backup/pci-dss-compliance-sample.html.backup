@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCI DSS Compliance Documentation - Sample Implementation Guide</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: rgba(40, 167, 69, 0.08);
+            font-weight: bold;
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+            margin: 20px 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #28a745;
+            border-left: 4px solid #28a745;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        .document-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .info-value {
+            color: #6c757d;
+        }
+        .section {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .pci-requirement {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .pci-requirement h3 {
+            color: white;
+            margin-top: 0;
+        }
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .requirement-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            height: fit-content;
+        }
+        .req-number {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .req-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .req-desc {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        .compliance-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .status-compliant { background: #d4edda; color: #155724; }
+        .status-partial { background: #fff3cd; color: #856404; }
+        .status-non-compliant { background: #f8d7da; color: #721c24; }
+        .status-na { background: #e2e3e5; color: #495057; }
+        .control-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .control-table th, .control-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .control-table th {
+            background-color: #28a745;
+            color: white;
+            font-weight: 600;
+        }
+        .control-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .vulnerability-scan {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .scan-title {
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 8px;
+        }
+        .assessment-matrix {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1px;
+            background: #dee2e6;
+            margin: 20px 0;
+        }
+        .matrix-header {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .matrix-cell {
+            background: white;
+            padding: 12px;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #28a745;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+        }
+        .sample-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">SAMPLE</div>
+    <div class="container">
+        <div class="sample-badge">SAMPLE DOCUMENT</div>
+        
+        <div class="header">
+            <div class="logo">PRISM WRITING</div>
+            <h1>PCI DSS Compliance Documentation<br>
+            Version 4.0 Implementation Guide</h1>
+            <p><strong>Payment Card Industry Data Security Standard</strong></p>
+        </div>
+
+        <div class="document-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Document ID:</span>
+                    <span class="info-value">PCI-DSS-4.0-IMPL</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">PCI DSS Version:</span>
+                    <span class="info-value">4.0 (March 2022)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Merchant Level:</span>
+                    <span class="info-value">Level 2</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">SAQ Type:</span>
+                    <span class="info-value">SAQ D</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Assessment Date:</span>
+                    <span class="info-value">Q1 2024</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Next Assessment:</span>
+                    <span class="info-value">Q1 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>1. Executive Summary</h2>
+            <p>This document outlines our organization's implementation of PCI DSS version 4.0 requirements to protect cardholder data and maintain compliance with payment card industry standards. Our comprehensive approach ensures secure processing, transmission, and storage of payment card information.</p>
+            
+            <h3>1.1 Scope of Cardholder Data Environment (CDE)</h3>
+            <p>The CDE includes all network components, servers, and applications that store, process, or transmit cardholder data, as well as any connected systems that could impact CDE security.</p>
+            
+            <div class="vulnerability-scan">
+                <div class="scan-title">Current Compliance Status: 94% Compliant</div>
+                <p>Last assessment completed January 2024. Remaining items scheduled for completion by March 2024.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. PCI DSS Requirements Implementation</h2>
+            
+            <div class="requirements-grid">
+                <div class="requirement-card">
+                    <div class="req-number">Requirement 1</div>
+                    <div class="req-title">Install and maintain network security controls</div>
+                    <div class="req-desc">Firewalls and routers protect cardholder data by controlling traffic between networks and restricting connections.</div>
+                    <span class="compliance-status status-compliant">Compliant</span>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="req-number">Requirement 2</div>
+                    <div class="req-title">Apply secure configurations to all system components</div>
+                    <div class="req-desc">Default passwords and security parameters must be changed, and systems hardened according to industry standards.</div>
+                    <span class="compliance-status status-compliant">Compliant</span>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="req-number">Requirement 3</div>
+                    <div class="req-title">Protect stored cardholder data</div>
+                    <div class="req-desc">Cardholder data storage is minimized and protected through encryption and truncation where stored.</div>
+                    <span class="compliance-status status-partial">Partially Compliant</span>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="req-number">Requirement 4</div>
+                    <div class="req-title">Protect cardholder data with strong cryptography during transmission</div>
+                    <div class="req-desc">Strong cryptography and security protocols protect cardholder data during transmission over open networks.</div>
+                    <span class="compliance-status status-compliant">Compliant</span>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="req-number">Requirement 5</div>
+                    <div class="req-title">Protect all systems and networks from malicious software</div>
+                    <div class="req-desc">Anti-virus software is deployed and maintained on all commonly affected systems.</div>
+                    <span class="compliance-status status-compliant">Compliant</span>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="req-number">Requirement 6</div>
+                    <div class="req-title">Develop and maintain secure systems and software</div>
+                    <div class="req-desc">Security vulnerabilities are identified and systems are protected from known vulnerabilities.</div>
+                    <span class="compliance-status status-partial">Partially Compliant</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="pci-requirement">
+                <h3>Requirement 7: Restrict access to cardholder data by business need to know</h3>
+                <p>Access to cardholder data and systems is restricted based on individuals' job responsibilities and the minimum necessary for business operations.</p>
+            </div>
+            
+            <table class="control-table">
+                <thead>
+                    <tr>
+                        <th>Control</th>
+                        <th>Implementation</th>
+                        <th>Evidence</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7.1 Processes and mechanisms for restricting access</td>
+                        <td>Role-based access control system</td>
+                        <td>Access control matrix, RBAC documentation</td>
+                        <td><span class="compliance-status status-compliant">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>7.2 Access to system components and cardholder data</td>
+                        <td>Principle of least privilege</td>
+                        <td>User access reviews, privilege escalation logs</td>
+                        <td><span class="compliance-status status-compliant">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>7.3 Access to databases containing cardholder data</td>
+                        <td>Database access controls and monitoring</td>
+                        <td>Database audit logs, access reports</td>
+                        <td><span class="compliance-status status-partial">○</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>3. Security Assessment Results</h2>
+            
+            <div class="assessment-matrix">
+                <div class="matrix-header">Requirement</div>
+                <div class="matrix-header">Current Status</div>
+                <div class="matrix-header">Target Date</div>
+                <div class="matrix-header">Owner</div>
+                
+                <div class="matrix-cell"><strong>Req 8:</strong> Multi-factor Authentication</div>
+                <div class="matrix-cell">95% Complete</div>
+                <div class="matrix-cell">Feb 2024</div>
+                <div class="matrix-cell">IT Security</div>
+                
+                <div class="matrix-cell"><strong>Req 9:</strong> Physical Access Controls</div>
+                <div class="matrix-cell">100% Complete</div>
+                <div class="matrix-cell">Completed</div>
+                <div class="matrix-cell">Facilities</div>
+                
+                <div class="matrix-cell"><strong>Req 10:</strong> Network Activity Logging</div>
+                <div class="matrix-cell">90% Complete</div>
+                <div class="matrix-cell">Mar 2024</div>
+                <div class="matrix-cell">Security Operations</div>
+                
+                <div class="matrix-cell"><strong>Req 11:</strong> Security Testing</div>
+                <div class="matrix-cell">85% Complete</div>
+                <div class="matrix-cell">Mar 2024</div>
+                <div class="matrix-cell">Security Testing Team</div>
+                
+                <div class="matrix-cell"><strong>Req 12:</strong> Security Policies</div>
+                <div class="matrix-cell">100% Complete</div>
+                <div class="matrix-cell">Completed</div>
+                <div class="matrix-cell">Compliance Office</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Remediation Plan</h2>
+            <h3>4.1 Outstanding Items</h3>
+            <ol>
+                <li><strong>Requirement 3.4:</strong> PAN masking in payment application logs
+                    <ul>
+                        <li>Target: February 28, 2024</li>
+                        <li>Owner: Application Development Team</li>
+                        <li>Status: 75% complete - testing in progress</li>
+                    </ul>
+                </li>
+                <li><strong>Requirement 6.2:</strong> Automated vulnerability scanning integration
+                    <ul>
+                        <li>Target: March 15, 2024</li>
+                        <li>Owner: DevSecOps Team</li>
+                        <li>Status: 60% complete - tool configuration ongoing</li>
+                    </ul>
+                </li>
+                <li><strong>Requirement 11.3:</strong> Quarterly penetration testing program
+                    <ul>
+                        <li>Target: March 31, 2024</li>
+                        <li>Owner: External Security Consultant</li>
+                        <li>Status: Vendor selection complete, testing scheduled</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>5. Validation Testing Schedule</h2>
+            <div class="vulnerability-scan">
+                <div class="scan-title">Quarterly Security Testing Calendar</div>
+                <ul>
+                    <li><strong>Q1 2024:</strong> External vulnerability scan, Internal penetration test</li>
+                    <li><strong>Q2 2024:</strong> Application security assessment, Network segmentation validation</li>
+                    <li><strong>Q3 2024:</strong> Wireless security assessment, Social engineering test</li>
+                    <li><strong>Q4 2024:</strong> Annual comprehensive security assessment, Business continuity test</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Sample Document Created by Prism Writing</strong></p>
+            <p>This is a professional documentation sample demonstrating PCI DSS 4.0 compliance implementation.<br>
+            Contact us for custom payment security documentation and compliance services.</p>
+            <p><em>© 2024 Prism Writing Cooperative - Professional Technical Documentation</em></p>
+        </div>
+    </div>
+</body>
+</html>

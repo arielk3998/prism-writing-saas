@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DO-178C Software Development Plan - Avionics Flight Control System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 80px;
+            color: rgba(220, 38, 38, 0.6);
+            z-index: -1;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #0066CC;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #0066CC 0%, #003D7A 100%);
+            color: white;
+            margin: -30px -30px 40px -30px;
+            padding: 40px 30px 30px 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .rtca-seal {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0066CC;
+            font-weight: bold;
+            font-size: 14px;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .doc-info {
+            background: #EBF4FF;
+            border: 1px solid #7F9CF5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 5px solid #0066CC;
+        }
+        .doc-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .doc-info td {
+            padding: 8px;
+            border-bottom: 1px solid #7F9CF5;
+        }
+        .doc-info td:first-child {
+            font-weight: bold;
+            width: 180px;
+            color: #1a365d;
+        }
+        h1 { 
+            color: white; 
+            font-size: 28px; 
+            margin: 15px 0;
+            text-align: center;
+        }
+        h2 { 
+            color: #0066CC; 
+            font-size: 24px; 
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #0066CC;
+            padding-bottom: 10px;
+        }
+        h3 { 
+            color: #1a365d; 
+            font-size: 18px; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h4 {
+            color: #4A5568;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .section-number {
+            color: #0066CC;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .do178c-requirement {
+            background: #F0FFF4;
+            border-left: 4px solid #38A169;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .do178c-requirement strong {
+            color: #2F855A;
+        }
+        .safety-level {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin: 5px;
+        }
+        .dal-a { background: #FED7D7; color: #C53030; }
+        .dal-b { background: #FEEBC8; color: #DD6B20; }
+        .dal-c { background: #FFF3CD; color: #975A16; }
+        .dal-d { background: #E6FFFA; color: #234E52; }
+        .dal-e { background: #E2E8F0; color: #4A5568; }
+        .process-matrix {
+            background: #F7FAFC;
+            border: 1px solid #CBD5E0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .verification-activities {
+            background: #EDF2F7;
+            border: 1px solid #A0AEC0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .lifecycle-steps {
+            counter-reset: lifecycle-counter;
+            padding-left: 0;
+            list-style: none;
+        }
+        .lifecycle-steps li {
+            counter-increment: lifecycle-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .lifecycle-steps li::before {
+            content: counter(lifecycle-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #0066CC;
+            color: white;
+            width: 30px;
+            height: 25px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #CBD5E0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #EBF4FF;
+            font-weight: 600;
+            color: #2D3748;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #CBD5E0;
+            text-align: center;
+            color: #4A5568;
+            font-size: 14px;
+        }
+        .confidential {
+            background: #FED7D7;
+            border: 1px solid #FEB2B2;
+            color: #C53030;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        .compliance-matrix {
+            background: #F7FAFC;
+            border: 2px solid #0066CC;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .compliance-matrix-header {
+            background: #0066CC;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .compliance-matrix-content {
+            padding: 20px;
+        }
+        .objective-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+        .satisfied { background: #C6F6D5; color: #22543D; }
+        .not-applicable { background: #E2E8F0; color: #4A5568; }
+        .pending { background: #FFF3CD; color: #975A16; }
+        .configuration-item {
+            background: #FFFAF0;
+            border: 1px solid #F6E05E;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #D69E2E;
+        }
+        .traceability-matrix {
+            font-size: 12px;
+            margin: 20px 0;
+        }
+        .certification-block {
+            background: #F0FFF4;
+            border: 2px solid #38A169;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin: 15px 0;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">
+            <div class="rtca-seal">
+                RTCA<br>DO-178C
+            </div>
+            <div>
+                <div>✈️ PRISM WRITING COOPERATIVE</div>
+                <div style="font-size: 16px; font-weight: normal; opacity: 0.9;">Aviation Software Documentation Specialists</div>
+            </div>
+        </div>
+        <h1>Software Development Plan</h1>
+        <p style="font-size: 18px; margin: 0; opacity: 0.9;">DO-178C Compliance for Avionics Flight Control System</p>
+        <div style="margin-top: 15px;">
+            <span class="safety-level dal-a">DAL A</span>
+            <span class="safety-level dal-b">DAL B</span>
+            <span class="safety-level dal-c">DAL C</span>
+            <span class="safety-level dal-d">DAL D</span>
+            <span class="safety-level dal-e">DAL E</span>
+        </div>
+    </div>
+
+    <div class="confidential">
+        RESTRICTED - AVIATION SAFETY CRITICAL SYSTEM - SAMPLE DOCUMENTATION
+    </div>
+
+    <div class="doc-info">
+        <table>
+            <tr>
+                <td>Document Number:</td>
+                <td>SDP-AFCS-2025-001</td>
+            </tr>
+            <tr>
+                <td>System:</td>
+                <td>Advanced Flight Control System (AFCS)</td>
+            </tr>
+            <tr>
+                <td>DO-178C Standard:</td>
+                <td>Software Considerations in Airborne Systems and Equipment Certification</td>
+            </tr>
+            <tr>
+                <td>Development Assurance Level:</td>
+                <td>Level A (Catastrophic Failure Condition)</td>
+            </tr>
+            <tr>
+                <td>Document Version:</td>
+                <td>2.1</td>
+            </tr>
+            <tr>
+                <td>Effective Date:</td>
+                <td>January 15, 2025</td>
+            </tr>
+            <tr>
+                <td>Project Manager:</td>
+                <td>Dr. James Chen, Avionics Systems Lead</td>
+            </tr>
+            <tr>
+                <td>Certification Authority:</td>
+                <td>Federal Aviation Administration (FAA)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">1.</span>Introduction and Scope</h2></div>
+    
+    <h3><span class="section-number">1.1</span>Purpose</h3>
+    <p>This Software Development Plan (SDP) defines the processes, procedures, and activities for developing safety-critical avionics software in accordance with RTCA DO-178C standards. The plan ensures that the Advanced Flight Control System (AFCS) software meets the highest level of safety assurance required for commercial aviation applications.</p>
+
+    <div class="do178c-requirement">
+        <strong>DO-178C Section 2.1:</strong> The software development plan should define the software development environment and life cycle(s) to satisfy the software requirements. It should also define the software development standards, methods, tools, and techniques to be used.
+    </div>
+
+    <h3><span class="section-number">1.2</span>System Overview</h3>
+    <p>The Advanced Flight Control System provides automated flight control capabilities including:</p>
+    <ul>
+        <li>Primary flight control surface management</li>
+        <li>Flight envelope protection</li>
+        <li>Automatic trim and stability augmentation</li>
+        <li>Emergency and degraded mode operations</li>
+        <li>Interface with pilot control inputs and autopilot systems</li>
+    </ul>
+
+    <h3><span class="section-number">1.3</span>Development Assurance Level</h3>
+    <p>The AFCS software has been assigned <strong>Development Assurance Level A</strong> based on the safety assessment that identifies potential failure conditions as catastrophic. This requires the highest level of software development assurance including:</p>
+
+    <div class="process-matrix">
+        <h4>DAL A Requirements Summary</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Process Area</th>
+                    <th>Requirements</th>
+                    <th>Verification Method</th>
+                    <th>Independence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Requirements Development</td>
+                    <td>High-level and low-level requirements</td>
+                    <td>Review and analysis</td>
+                    <td>Independent verification</td>
+                </tr>
+                <tr>
+                    <td>Software Design</td>
+                    <td>Software architecture and detailed design</td>
+                    <td>Design reviews and analysis</td>
+                    <td>Independent verification</td>
+                </tr>
+                <tr>
+                    <td>Code Implementation</td>
+                    <td>Source code with full traceability</td>
+                    <td>Code reviews and static analysis</td>
+                    <td>Independent code review</td>
+                </tr>
+                <tr>
+                    <td>Testing</td>
+                    <td>Complete structural coverage (MC/DC)</td>
+                    <td>Unit, integration, system testing</td>
+                    <td>Independent testing</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">2.</span>Software Life Cycle and Planning</h2></div>
+
+    <h3><span class="section-number">2.1</span>Software Life Cycle Model</h3>
+    <p>The AFCS software development follows a modified V-Model approach aligned with DO-178C guidance. The life cycle includes the following phases:</p>
+
+    <ol class="lifecycle-steps">
+        <li><strong>System Requirements Analysis:</strong> Define system-level requirements and safety objectives</li>
+        <li><strong>High-Level Requirements:</strong> Develop software high-level requirements from system requirements</li>
+        <li><strong>Software Architecture:</strong> Define software architecture and interfaces</li>
+        <li><strong>Low-Level Requirements:</strong> Develop detailed software requirements</li>
+        <li><strong>Source Code Development:</strong> Implement software components</li>
+        <li><strong>Unit Testing:</strong> Test individual software units</li>
+        <li><strong>Integration Testing:</strong> Test integrated software components</li>
+        <li><strong>System Testing:</strong> Test complete software system</li>
+        <li><strong>Certification Activities:</strong> Prepare for certification authority review</li>
+    </ol>
+
+    <h3><span class="section-number">2.2</span>Development Environment</h3>
+    <p>The software development environment consists of the following components:</p>
+
+    <div class="configuration-item">
+        <h4>Development Tools Configuration</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool Category</th>
+                    <th>Tool Name/Version</th>
+                    <th>DO-178C Classification</th>
+                    <th>Qualification Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Compiler</td>
+                    <td>Green Hills MULTI 2024.1</td>
+                    <td>Development Tool</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Static Analysis</td>
+                    <td>LDRA Testbed 9.7</td>
+                    <td>Verification Tool</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Code Coverage</td>
+                    <td>VectorCAST 2024</td>
+                    <td>Verification Tool</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Requirements Management</td>
+                    <td>IBM DOORS Next 7.0</td>
+                    <td>Development Tool</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Configuration Management</td>
+                    <td>Git with Gerrit 3.8</td>
+                    <td>Development Tool</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">3.</span>Software Development Standards</h2></div>
+
+    <h3><span class="section-number">3.1</span>Requirements Standards</h3>
+
+    <div class="do178c-requirement">
+        <strong>DO-178C Section 5.1.1:</strong> High-level requirements should be developed from the system requirements allocated to software. These requirements should include functional, performance, and safety requirements.
+    </div>
+
+    <div class="verification-activities">
+        <h4>Requirements Development Guidelines</h4>
+        <ul>
+            <li><strong>Completeness:</strong> All system requirements allocated to software must be addressed</li>
+            <li><strong>Accuracy:</strong> Requirements must correctly reflect system needs</li>
+            <li><strong>Consistency:</strong> No conflicting requirements</li>
+            <li><strong>Verifiability:</strong> Requirements must be testable</li>
+            <li><strong>Traceability:</strong> Bidirectional traceability maintained throughout development</li>
+        </ul>
+    </div>
+
+    <h3><span class="section-number">3.2</span>Design Standards</h3>
+    <p>Software design shall comply with the following standards and practices:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Design Aspect</th>
+                <th>Standard/Practice</th>
+                <th>Rationale</th>
+                <th>Verification Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Architecture Pattern</td>
+                <td>Layered architecture with defined interfaces</td>
+                <td>Promotes modularity and testability</td>
+                <td>Design review and analysis</td>
+            </tr>
+            <tr>
+                <td>Memory Management</td>
+                <td>Static allocation, no dynamic memory</td>
+                <td>Deterministic behavior for safety-critical systems</td>
+                <td>Static analysis verification</td>
+            </tr>
+            <tr>
+                <td>Error Handling</td>
+                <td>Defensive programming with graceful degradation</td>
+                <td>Maintains system safety in error conditions</td>
+                <td>Testing and code review</td>
+            </tr>
+            <tr>
+                <td>Timing Constraints</td>
+                <td>Worst-case execution time analysis</td>
+                <td>Ensures real-time performance requirements</td>
+                <td>Timing analysis and testing</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">3.3</span>Coding Standards</h3>
+    <p>Source code development follows MISRA C:2012 guidelines with project-specific deviations. Key coding requirements include:</p>
+
+    <div class="process-matrix">
+        <h4>Coding Standard Requirements</h4>
+        <ul>
+            <li>No dynamic memory allocation (malloc, free)</li>
+            <li>No recursion or unbounded loops</li>
+            <li>Explicit initialization of all variables</li>
+            <li>Single entry and exit points for functions</li>
+            <li>Comprehensive error checking and handling</li>
+            <li>Complete function and variable documentation</li>
+            <li>Consistent naming conventions and formatting</li>
+        </ul>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">4.</span>Verification and Validation</h2></div>
+
+    <h3><span class="section-number">4.1</span>Testing Strategy</h3>
+
+    <div class="do178c-requirement">
+        <strong>DO-178C Section 6.4:</strong> For Level A software, structural coverage analysis should achieve Modified Condition/Decision Coverage (MC/DC) to demonstrate that the software structure is exercised to the degree required.
+    </div>
+
+    <div class="compliance-matrix">
+        <div class="compliance-matrix-header">
+            DO-178C Testing Objectives for DAL A
+        </div>
+        <div class="compliance-matrix-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Objective</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Evidence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A-1</td>
+                        <td>High-level requirements coverage by test</td>
+                        <td><span class="objective-status satisfied">Satisfied</span></td>
+                        <td>Test-to-requirement matrix</td>
+                    </tr>
+                    <tr>
+                        <td>A-2</td>
+                        <td>Low-level requirements coverage by test</td>
+                        <td><span class="objective-status satisfied">Satisfied</span></td>
+                        <td>Unit test procedures</td>
+                    </tr>
+                    <tr>
+                        <td>A-3</td>
+                        <td>MC/DC structural coverage achieved</td>
+                        <td><span class="objective-status satisfied">Satisfied</span></td>
+                        <td>Coverage analysis reports</td>
+                    </tr>
+                    <tr>
+                        <td>A-4</td>
+                        <td>Decision coverage achieved</td>
+                        <td><span class="objective-status satisfied">Satisfied</span></td>
+                        <td>Coverage analysis reports</td>
+                    </tr>
+                    <tr>
+                        <td>A-5</td>
+                        <td>Statement coverage achieved</td>
+                        <td><span class="objective-status satisfied">Satisfied</span></td>
+                        <td>Coverage analysis reports</td>
+                    </tr>
+                    <tr>
+                        <td>A-6</td>
+                        <td>Robustness testing performed</td>
+                        <td><span class="objective-status pending">Pending</span></td>
+                        <td>Robustness test procedures</td>
+                    </tr>
+                    <tr>
+                        <td>A-7</td>
+                        <td>Dead code analysis performed</td>
+                        <td><span class="objective-status satisfied">Satisfied</span></td>
+                        <td>Static analysis reports</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3><span class="section-number">4.2</span>Independent Verification</h3>
+    <p>Independent verification and validation activities are performed by qualified personnel who are not part of the development team. IV&V activities include:</p>
+
+    <div class="verification-activities">
+        <ol class="lifecycle-steps">
+            <li><strong>Requirements Review:</strong> Independent assessment of requirements completeness and correctness</li>
+            <li><strong>Design Review:</strong> Evaluation of software architecture and detailed design</li>
+            <li><strong>Code Review:</strong> Independent examination of source code for compliance and quality</li>
+            <li><strong>Test Review:</strong> Assessment of test procedures and results</li>
+            <li><strong>Configuration Audit:</strong> Verification of configuration management and baselines</li>
+        </ol>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">5.</span>Configuration Management</h2></div>
+
+    <h3><span class="section-number">5.1</span>Configuration Items</h3>
+    <p>The following software configuration items are under formal configuration control:</p>
+
+    <div class="traceability-matrix">
+        <table>
+            <thead>
+                <tr>
+                    <th>Configuration Item</th>
+                    <th>Identifier</th>
+                    <th>Version Control</th>
+                    <th>Approval Authority</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Software Development Plan</td>
+                    <td>SDP-AFCS-2025-001</td>
+                    <td>Git repository with signed tags</td>
+                    <td>Project Manager</td>
+                </tr>
+                <tr>
+                    <td>Software Requirements Specification</td>
+                    <td>SRS-AFCS-2025-001</td>
+                    <td>DOORS baseline</td>
+                    <td>Chief Engineer</td>
+                </tr>
+                <tr>
+                    <td>Software Design Description</td>
+                    <td>SDD-AFCS-2025-001</td>
+                    <td>Git repository with signed tags</td>
+                    <td>Software Architect</td>
+                </tr>
+                <tr>
+                    <td>Source Code</td>
+                    <td>SRC-AFCS-2025-*</td>
+                    <td>Git with code review process</td>
+                    <td>Lead Developer</td>
+                </tr>
+                <tr>
+                    <td>Test Procedures</td>
+                    <td>TP-AFCS-2025-*</td>
+                    <td>Git repository with signed tags</td>
+                    <td>Test Manager</td>
+                </tr>
+                <tr>
+                    <td>Executable Object Code</td>
+                    <td>EOC-AFCS-2025-*</td>
+                    <td>Binary repository with checksums</td>
+                    <td>Configuration Manager</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3><span class="section-number">5.2</span>Change Control Process</h3>
+    <p>All changes to configuration items follow a formal change control process including:</p>
+    <ul>
+        <li>Change request documentation and approval</li>
+        <li>Impact analysis and safety assessment</li>
+        <li>Implementation and verification</li>
+        <li>Configuration audit and baseline update</li>
+    </ul>
+
+    <div class="strategic-break"><h2><span class="section-number">6.</span>Process Assurance</h2></div>
+
+    <h3><span class="section-number">6.1</span>Quality Assurance Activities</h3>
+    <p>Software Quality Assurance provides independent oversight of the software development process to ensure compliance with DO-178C objectives and company procedures.</p>
+
+    <div class="process-matrix">
+        <h4>SQA Monitoring Activities</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Frequency</th>
+                    <th>Deliverable</th>
+                    <th>Responsible</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Process Compliance Audit</td>
+                    <td>Monthly</td>
+                    <td>Audit reports and corrective actions</td>
+                    <td>SQA Manager</td>
+                </tr>
+                <tr>
+                    <td>Document Review</td>
+                    <td>Per milestone</td>
+                    <td>Review comments and approvals</td>
+                    <td>SQA Engineers</td>
+                </tr>
+                <tr>
+                    <td>Tool Qualification Oversight</td>
+                    <td>As needed</td>
+                    <td>Tool qualification data</td>
+                    <td>SQA Manager</td>
+                </tr>
+                <tr>
+                    <td>Certification Liaison</td>
+                    <td>Ongoing</td>
+                    <td>Authority coordination</td>
+                    <td>Certification Engineer</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="strategic-break"><h2><span class="section-number">7.</span>Certification and Approval</h2></div>
+
+    <div class="certification-block">
+        <h3>DO-178C Compliance Statement</h3>
+        <p>This Software Development Plan has been prepared in accordance with RTCA DO-178C "Software Considerations in Airborne Systems and Equipment Certification" and establishes the framework for developing Level A safety-critical avionics software.</p>
+
+        <h4>Approval Signatures</h4>
+        <div class="signature-line">
+            <span><strong>Project Manager:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Dr. James Chen, Avionics Systems Lead</p>
+
+        <div class="signature-line">
+            <span><strong>Chief Engineer:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Maria Rodriguez, Chief Systems Engineer</p>
+
+        <div class="signature-line">
+            <span><strong>SQA Manager:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Robert Kim, Software Quality Assurance Manager</p>
+
+        <div class="signature-line">
+            <span><strong>Certification Manager:</strong> _________________________</span>
+            <span>Date: _____________</span>
+        </div>
+        <p>Dr. Susan Liu, Certification and Regulatory Affairs</p>
+    </div>
+
+    <div class="footer">
+        <p><strong>This is a sample document created by Prism Writing Cooperative</strong></p>
+        <p>Demonstrating professional DO-178C avionics software documentation</p>
+        <p style="margin-top: 10px; font-style: italic;">© 2025 Prism Writing Cooperative - Aviation Software Documentation Specialists</p>
+    </div>
+</body>
+</html>

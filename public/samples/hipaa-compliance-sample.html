@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIPAA Privacy and Security Rules Compliance Guide - Sample Documentation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: rgba(220, 38, 38, 0.6);
+            font-weight: bold;
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 8px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #6f42c1;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6f42c1;
+            margin-bottom: 10px;
+        }
+        h1 {
+            color: #333;
+            margin: 20px 0;
+            font-size: 28px;
+        }
+        h2 {
+            color: #6f42c1;
+            border-left: 4px solid #6f42c1;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        .document-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .info-value {
+            color: #6c757d;
+        }
+        .section {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .hipaa-rule {
+            background: linear-gradient(135deg, #6f42c1, #8e44ad);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .hipaa-rule h3 {
+            color: white;
+            margin-top: 0;
+        }
+        .safeguards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .safeguard-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #6f42c1;
+            height: fit-content;
+        }
+        .safeguard-type {
+            font-weight: bold;
+            color: #6f42c1;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .safeguard-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .safeguard-desc {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        .compliance-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .level-required { background: #f8d7da; color: #721c24; }
+        .level-addressable { background: #fff3cd; color: #856404; }
+        .level-implemented { background: #d4edda; color: #155724; }
+        .phi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .phi-table th, .phi-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .phi-table th {
+            background-color: #6f42c1;
+            color: white;
+            font-weight: 600;
+        }
+        .phi-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .risk-assessment {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .risk-title {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 8px;
+        }
+        .privacy-matrix {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1px;
+            background: #dee2e6;
+            margin: 20px 0;
+        }
+        .matrix-header {
+            background: #6f42c1;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .matrix-cell {
+            background: white;
+            padding: 12px;
+            text-align: center;
+        }
+        .breach-notification {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .breach-title {
+            font-weight: bold;
+            color: #f57c00;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #6f42c1;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            position: relative;
+            z-index: 2;
+        }
+        .sample-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+        }
+        /* Enhanced Protection Strategy CSS */
+        .strategic-break {
+            page-break-before: always;
+            border-top: 3px solid #dc3545;
+            padding-top: 20px;
+            margin-top: 40px;
+        }
+        .content-teaser {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #6c757d;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .consultation-call-out {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .consultation-call-out h3 {
+            margin-top: 0;
+            color: white;
+            border: none;
+            padding: 0;
+        }
+        .consultation-call-out ul {
+            text-align: left;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        .cta-button {
+            background: white;
+            color: #007bff;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .protected-section {
+            position: relative;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .protected-section::after {
+            content: "COMPLETE IMPLEMENTATION DETAILS AVAILABLE WITH CONSULTATION";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 10;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">SAMPLE</div>
+    <div class="container">
+        <div class="sample-badge">SAMPLE DOCUMENT</div>
+        
+        <div class="header">
+            <div class="logo">PRISM WRITING</div>
+            <h1>HIPAA Privacy and Security Rules<br>
+            Compliance Implementation Guide</h1>
+            <p><strong>Healthcare Information Protection Documentation</strong></p>
+        </div>
+
+        <div class="document-info">
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Document ID:</span>
+                    <span class="info-value">HIPAA-COMP-2024</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Regulation:</span>
+                    <span class="info-value">45 CFR Parts 160, 162, 164</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Entity Type:</span>
+                    <span class="info-value">Covered Entity</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Risk Assessment:</span>
+                    <span class="info-value">Annual</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Updated:</span>
+                    <span class="info-value">January 2024</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Privacy Officer:</span>
+                    <span class="info-value">Jane Smith, MSN</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>1. HIPAA Overview and Applicability</h2>
+            <p>The Health Insurance Portability and Accountability Act (HIPAA) establishes national standards for protecting individually identifiable health information. Our organization operates as a covered entity under HIPAA and implements comprehensive privacy and security measures to protect Protected Health Information (PHI).</p>
+            
+            <h3>1.1 Protected Health Information (PHI) Definition</h3>
+            <p>PHI includes any individually identifiable health information held or transmitted by a covered entity or business associate in any form or media, whether electronic, paper, or oral.</p>
+            
+            <div class="risk-assessment">
+                <div class="risk-title">Current Compliance Status: 96% Compliant</div>
+                <p>Last risk assessment completed December 2023. Minor gaps identified in workforce training documentation and business associate agreement updates.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. HIPAA Privacy Rule Implementation</h2>
+            
+            <div class="hipaa-rule">
+                <h3>Privacy Rule (45 CFR Part 164, Subpart E)</h3>
+                <p>Establishes standards for the protection of PHI and gives patients rights over their health information, including rights to examine and obtain copies of their health records and request corrections.</p>
+            </div>
+            
+            <table class="phi-table">
+                <thead>
+                    <tr>
+                        <th>Privacy Standard</th>
+                        <th>Implementation</th>
+                        <th>Documentation</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>§164.502</strong> - Uses and Disclosures</td>
+                        <td>Minimum necessary standard implemented</td>
+                        <td>Privacy policies, workforce training</td>
+                        <td><span class="compliance-level level-implemented">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>§164.506</strong> - Treatment, Payment, Operations</td>
+                        <td>TPO procedures established</td>
+                        <td>Authorization forms, use agreements</td>
+                        <td><span class="compliance-level level-implemented">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>§164.508</strong> - Patient Authorization</td>
+                        <td>Authorization forms and processes</td>
+                        <td>Form templates, tracking systems</td>
+                        <td><span class="compliance-level level-implemented">✓ Complete</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>§164.510</strong> - Uses without Authorization</td>
+                        <td>Facility directories, emergency situations</td>
+                        <td>Directory policies, emergency procedures</td>
+                        <td><span class="compliance-level level-addressable">○ Review Needed</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>§164.512</strong> - Public Interest Disclosures</td>
+                        <td>Legal and regulatory reporting</td>
+                        <td>Reporting procedures, legal guidelines</td>
+                        <td><span class="compliance-level level-implemented">✓ Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>3. HIPAA Security Rule Implementation</h2>
+            
+            <div class="safeguards-grid">
+                <div class="safeguard-card">
+                    <div class="safeguard-type">ADMINISTRATIVE SAFEGUARDS</div>
+                    <div class="safeguard-title">§164.308 - Administrative Safeguards</div>
+                    <div class="safeguard-desc">Policies and procedures to manage the selection, development, implementation, and maintenance of security measures.</div>
+                    <span class="compliance-level level-required">Required</span>
+                </div>
+                
+                <div class="safeguard-card">
+                    <div class="safeguard-type">PHYSICAL SAFEGUARDS</div>
+                    <div class="safeguard-title">§164.310 - Physical Safeguards</div>
+                    <div class="safeguard-desc">Physical measures to protect electronic information systems and related buildings and equipment from unauthorized access.</div>
+                    <span class="compliance-level level-required">Required</span>
+                </div>
+                
+                <div class="safeguard-card">
+                    <div class="safeguard-type">TECHNICAL SAFEGUARDS</div>
+                    <div class="safeguard-title">§164.312 - Technical Safeguards</div>
+                    <div class="safeguard-desc">Technology and related policies to protect ePHI and control access to it.</div>
+                    <span class="compliance-level level-required">Required</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Break and Consultation Call-Out -->
+        <div class="consultation-call-out">
+            <h3>🎯 Need Complete HIPAA Security Implementation?</h3>
+            <p>This sample demonstrates our comprehensive approach to HIPAA compliance documentation. Prism Writing provides:</p>
+            <ul>
+                <li>Complete Security Rule implementation guides</li>
+                <li>Custom policy and procedure development</li>
+                <li>Risk assessment frameworks and templates</li>
+                <li>Ongoing compliance monitoring documentation</li>
+                <li>Staff training materials and programs</li>
+            </ul>
+            <a href="/contact" class="cta-button">Get Complete Compliance Solution</a>
+        </div>
+
+        <div class="section strategic-break">
+            <h2>4. Security Safeguards Implementation Matrix (Sample)</h2>
+            
+            <div class="privacy-matrix">
+                <div class="matrix-header">Security Standard</div>
+                <div class="matrix-header">Implementation Status</div>
+                <div class="matrix-header">R/A</div>
+                <div class="matrix-header">Review Date</div>
+                
+                <div class="matrix-cell"><strong>Security Officer (§164.308(a)(2))</strong></div>
+                <div class="matrix-cell">Assigned - John Doe, CISSP</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Annual</div>
+                
+                <div class="matrix-cell"><strong>Workforce Training (§164.308(a)(5))</strong></div>
+                <div class="matrix-cell">95% completion rate</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Quarterly</div>
+                
+                <div class="matrix-cell"><strong>Access Management (§164.308(a)(4))</strong></div>
+                <div class="matrix-cell">Role-based access implemented</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Monthly</div>
+            </div>
+        </div>
+
+        <div class="content-teaser">
+            <h3>📋 Complete Security Controls Implementation</h3>
+            <p>Our full HIPAA documentation includes detailed implementation guides for all 18 security standards, with step-by-step procedures, compliance checklists, and audit templates.</p>
+            <p><em>Contact Prism Writing for complete technical implementation documentation.</em></p>
+        </div>
+
+        <div class="protected-section">
+            <h3>4.2 Detailed Control Implementation</h3>
+            <p>Complete implementation details including technical specifications, configuration guidelines, and audit procedures are available through our consultation services.</p>
+            
+            <div class="privacy-matrix">
+                <div class="matrix-header">Security Standard</div>
+                <div class="matrix-header">Implementation Status</div>
+                <div class="matrix-header">R/A</div>
+                <div class="matrix-header">Review Date</div>
+                
+                <div class="matrix-cell"><strong>Facility Access (§164.310(a)(1))</strong></div>
+                <div class="matrix-cell">Card access system active</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Quarterly</div>
+                
+                <div class="matrix-cell"><strong>Workstation Use (§164.310(b))</strong></div>
+                <div class="matrix-cell">Policies and controls in place</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Semi-Annual</div>
+                
+                <div class="matrix-cell"><strong>Device Controls (§164.310(d)(1))</strong></div>
+                <div class="matrix-cell">Mobile device management</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Monthly</div>
+                
+                <div class="matrix-cell"><strong>Access Control (§164.312(a)(1))</strong></div>
+                <div class="matrix-cell">Unique user identification</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Monthly</div>
+                
+                <div class="matrix-cell"><strong>Audit Controls (§164.312(b))</strong></div>
+                <div class="matrix-cell">Comprehensive logging enabled</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Weekly</div>
+                
+                <div class="matrix-cell"><strong>Integrity (§164.312(c)(1))</strong></div>
+                <div class="matrix-cell">Electronic signature system</div>
+                <div class="matrix-cell">A</div>
+                <div class="matrix-cell">Annual</div>
+                
+                <div class="matrix-cell"><strong>Transmission Security (§164.312(e)(1))</strong></div>
+                <div class="matrix-cell">End-to-end encryption</div>
+                <div class="matrix-cell">R</div>
+                <div class="matrix-cell">Quarterly</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Business Associate Management</h2>
+            <h3>5.1 Business Associate Agreements (BAAs)</h3>
+            <p>All business associates who handle PHI on behalf of our organization have executed compliant BAAs that include:</p>
+            <ul>
+                <li>Permitted uses and disclosures of PHI</li>
+                <li>Prohibition of use or disclosure of PHI other than as permitted</li>
+                <li>Requirement to implement appropriate safeguards</li>
+                <li>Requirement to report security incidents and breaches</li>
+                <li>Return or destruction of PHI upon contract termination</li>
+            </ul>
+            
+            <div class="risk-assessment">
+                <div class="risk-title">Business Associate Oversight</div>
+                <p>Currently managing 23 business associate relationships with annual compliance assessments and quarterly risk reviews.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Breach Notification Procedures</h2>
+            
+            <div class="breach-notification">
+                <div class="breach-title">HIPAA Breach Notification Rule (§164.400-414)</div>
+                <p><strong>Notification Timeline Requirements:</strong></p>
+                <ul>
+                    <li><strong>Individuals:</strong> 60 days of discovery</li>
+                    <li><strong>HHS Secretary:</strong> 60 days of discovery</li>
+                    <li><strong>Media (500+ individuals):</strong> 60 days of discovery</li>
+                    <li><strong>Annual Summary (less than 500):</strong> By March 1st of following year</li>
+                </ul>
+            </div>
+            
+            <h3>6.1 Breach Response Team</h3>
+            <table class="phi-table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Responsibility</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Privacy Officer</td>
+                        <td>Breach assessment and notification coordination</td>
+                        <td>privacy@organization.com</td>
+                    </tr>
+                    <tr>
+                        <td>Security Officer</td>
+                        <td>Technical investigation and containment</td>
+                        <td>security@organization.com</td>
+                    </tr>
+                    <tr>
+                        <td>Legal Counsel</td>
+                        <td>Legal analysis and regulatory guidance</td>
+                        <td>legal@organization.com</td>
+                    </tr>
+                    <tr>
+                        <td>Risk Management</td>
+                        <td>Risk assessment and mitigation planning</td>
+                        <td>risk@organization.com</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>7. Patient Rights Implementation</h2>
+            <h3>7.1 Individual Rights Under HIPAA</h3>
+            <ul>
+                <li><strong>Right of Access (§164.524):</strong> Patients may inspect and obtain copies of their PHI</li>
+                <li><strong>Right to Amendment (§164.526):</strong> Patients may request amendments to their PHI</li>
+                <li><strong>Right to Accounting (§164.528):</strong> Patients may request an accounting of disclosures</li>
+                <li><strong>Right to Restriction (§164.522):</strong> Patients may request restrictions on use/disclosure</li>
+                <li><strong>Right to Confidential Communications (§164.522):</strong> Patients may request alternative communication methods</li>
+            </ul>
+        </div>
+
+        <!-- Final Consultation Call-Out -->
+        <div class="consultation-call-out">
+            <h3>🏥 Ready to Implement Complete HIPAA Compliance?</h3>
+            <p>This sample shows just a fraction of our comprehensive HIPAA compliance documentation. Get the complete solution:</p>
+            <ul>
+                <li>Full Privacy and Security Rule implementation</li>
+                <li>Custom policies, procedures, and training materials</li>
+                <li>Risk assessment templates and breach response plans</li>
+                <li>Ongoing compliance monitoring and audit support</li>
+            </ul>
+            <a href="/contact" class="cta-button">Start Your Compliance Project</a>
+        </div>
+
+        <div class="footer">
+            <p><strong>Sample Document Created by Prism Writing</strong></p>
+            <p>This is a professional documentation sample demonstrating HIPAA Privacy and Security Rules compliance.<br>
+            Contact us for custom healthcare compliance documentation and privacy program services.</p>
+            <p><strong>📧 Email:</strong> ariel.pk@outlook.com</p>
+            <p><em>© 2024 Prism Writing Cooperative - Professional Technical Documentation</em></p>
+        </div>
+    </div>
+</body>
+</html>

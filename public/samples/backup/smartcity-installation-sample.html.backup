@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SmartCity IoT Installation Manual Sample</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #7C3AED;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 72px;
+            color: rgba(124, 58, 237, 0.1);
+            z-index: -1;
+            font-weight: bold;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #7C3AED;
+            margin-bottom: 10px;
+        }
+        h1 { color: #1F2937; font-size: 28px; margin-bottom: 10px; }
+        h2 { color: #374151; font-size: 20px; margin-top: 30px; border-bottom: 1px solid #E5E7EB; padding-bottom: 5px; }
+        h3 { color: #4B5563; font-size: 16px; margin-top: 20px; }
+        .installation-box {
+            background: #F5F3FF;
+            border: 1px solid #DDD6FE;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #FEF3C7;
+            border: 1px solid #FDE68A;
+            border-left: 4px solid #F59E0B;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .safety-box {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+            border-left: 4px solid #EF4444;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .step {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .step-number {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #7C3AED;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .diagram {
+            background: #F8FAFC;
+            border: 2px dashed #CBD5E1;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            color: #64748B;
+            font-style: italic;
+        }
+        .specs-table {
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #E5E7EB;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #F9FAFB;
+            font-weight: 600;
+        }
+        .code-block {
+            background: #1F2937;
+            color: #F9FAFB;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .checklist {
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 16px;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+            text-align: center;
+            color: #6B7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="watermark">PRISM WRITING SAMPLE</div>
+    
+    <div class="header">
+        <div class="logo">🔷 Prism Writing</div>
+        <h1>SmartCity IoT Sensor Network</h1>
+        <h2>Installation and Configuration Manual</h2>
+        <p style="color: #6B7280; margin: 0;">Municipal Infrastructure Documentation - Sample</p>
+    </div>
+
+    <div class="safety-box">
+        <h3>⚠️ SAFETY FIRST - READ BEFORE INSTALLATION</h3>
+        <p><strong>Electrical Hazard:</strong> All installations must be performed by certified electricians. Verify power is OFF before beginning work. Use proper PPE including insulated gloves and safety glasses.</p>
+    </div>
+
+    <h2>📋 Installation Overview</h2>
+    <p>The SmartCity IoT sensor network provides real-time environmental monitoring, traffic analysis, and infrastructure health assessment for municipal operations. This manual covers sensor installation, network configuration, and system integration procedures.</p>
+
+    <div class="installation-box">
+        <h3>🎯 System Components</h3>
+        <ul>
+            <li><strong>Environmental Sensors:</strong> Air quality, noise level, temperature, humidity</li>
+            <li><strong>Traffic Sensors:</strong> Vehicle count, speed detection, pedestrian flow</li>
+            <li><strong>Infrastructure Sensors:</strong> Vibration monitoring, structural health</li>
+            <li><strong>Gateway Units:</strong> Data aggregation and cellular/WiFi transmission</li>
+            <li><strong>Power Management:</strong> Solar panels with battery backup systems</li>
+        </ul>
+    </div>
+
+    <h2>📦 Pre-Installation Requirements</h2>
+
+    <div class="specs-table">
+        <h3>Hardware Specifications</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Model</th>
+                <th>Power Requirement</th>
+                <th>Operating Temperature</th>
+            </tr>
+            <tr>
+                <td>Air Quality Sensor</td>
+                <td>AQ-500X</td>
+                <td>12V DC, 2A</td>
+                <td>-20°C to +60°C</td>
+            </tr>
+            <tr>
+                <td>Traffic Counter</td>
+                <td>TC-200M</td>
+                <td>24V DC, 1.5A</td>
+                <td>-30°C to +70°C</td>
+            </tr>
+            <tr>
+                <td>IoT Gateway</td>
+                <td>GW-1000</td>
+                <td>12V DC, 5A</td>
+                <td>-20°C to +55°C</td>
+            </tr>
+            <tr>
+                <td>Solar Panel</td>
+                <td>SP-100W</td>
+                <td>N/A (Power Source)</td>
+                <td>-40°C to +85°C</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="checklist">
+        <h4>📋 Pre-Installation Checklist</h4>
+        <ul>
+            <li>Obtain all necessary municipal permits and approvals</li>
+            <li>Verify utility clearances (electrical, gas, water, fiber)</li>
+            <li>Confirm cellular coverage and signal strength at installation site</li>
+            <li>Schedule traffic control measures if street work required</li>
+            <li>Verify equipment delivery and inspect for shipping damage</li>
+            <li>Coordinate with IT department for network configuration</li>
+        </ul>
+    </div>
+
+    <h2>🔧 Installation Procedures</h2>
+
+    <div class="step">
+        <div class="step-number">1</div>
+        <h3>Site Preparation and Mounting</h3>
+        <p><strong>Time Required:</strong> 2-4 hours per location</p>
+        <p><strong>Personnel:</strong> 2 certified technicians + 1 traffic control officer</p>
+        
+        <h4>Site Survey:</h4>
+        <ol>
+            <li>Confirm GPS coordinates match work order specifications</li>
+            <li>Verify 10-foot clearance from power lines and telecommunications</li>
+            <li>Check for underground utilities using 811 location markings</li>
+            <li>Assess pedestrian and vehicle traffic patterns</li>
+            <li>Document site conditions with photos for record-keeping</li>
+        </ol>
+    </div>
+
+    <div class="diagram">
+        [INSTALLATION DIAGRAM]<br>
+        Pole-mounted sensor configuration showing:<br>
+        • Solar panel positioning (south-facing, 30° tilt)<br>
+        • Sensor height requirements (air quality: 3m, traffic: 5m)<br>
+        • Gateway placement and antenna orientation<br>
+        • Cable routing and weatherproofing details
+    </div>
+
+    <div class="step">
+        <div class="step-number">2</div>
+        <h3>Power System Installation</h3>
+        <p><strong>Safety Note:</strong> Only qualified electricians may perform electrical connections</p>
+        
+        <h4>Solar Panel Configuration:</h4>
+        <ol>
+            <li>Mount solar panel at optimal angle (latitude + 15°)</li>
+            <li>Install charge controller in weatherproof enclosure</li>
+            <li>Connect battery bank with appropriate fusing</li>
+            <li>Verify system voltage and charging parameters</li>
+            <li>Test backup power functionality</li>
+        </ol>
+    </div>
+
+    <div class="warning-box">
+        <h4>⚠️ Electrical Safety Requirements</h4>
+        <p>All electrical work must comply with National Electrical Code (NEC) and local electrical codes. Use only UL-listed components rated for outdoor use. Install appropriate overcurrent protection and grounding systems.</p>
+    </div>
+
+    <h2>🌐 Network Configuration</h2>
+
+    <div class="step">
+        <div class="step-number">3</div>
+        <h3>Gateway Setup and Connectivity</h3>
+        <p><strong>Network Protocol:</strong> LTE-M with WiFi backup</p>
+        
+        <h4>Configuration Steps:</h4>
+        <ol>
+            <li>Insert activated SIM card into gateway device</li>
+            <li>Configure APN settings for carrier network</li>
+            <li>Set up WiFi credentials for backup connectivity</li>
+            <li>Configure sensor polling intervals and data transmission schedule</li>
+            <li>Test connectivity and data transmission to cloud platform</li>
+        </ol>
+    </div>
+
+    <div class="code-block">
+# Gateway Configuration Commands
+configure terminal
+interface cellular 0
+  apn municipal.smartcity.net
+  username smartcity_device
+  password [provided_by_carrier]
+  ip dhcp
+exit
+
+interface wifi 0
+  ssid SmartCity_Backup
+  security wpa2 psk [wifi_password]
+  dhcp client
+exit
+
+sensor-config
+  poll-interval 300
+  transmission-interval 900
+  data-retention 72hours
+exit</div>
+
+    <h2>📊 Sensor Calibration and Testing</h2>
+
+    <div class="step">
+        <div class="step-number">4</div>
+        <h3>Air Quality Sensor Calibration</h3>
+        <p><strong>Equipment Required:</strong> Certified reference gases, flow meter, laptop with calibration software</p>
+        
+        <h4>Calibration Procedure:</h4>
+        <ol>
+            <li>Connect sensor to calibration gas supply (CO, NO2, PM2.5)</li>
+            <li>Allow 30-minute warm-up period for sensor stabilization</li>
+            <li>Perform zero-point calibration using filtered ambient air</li>
+            <li>Apply span gas at known concentrations (50%, 80% of full scale)</li>
+            <li>Verify linearity and adjust calibration coefficients if needed</li>
+            <li>Document calibration results and affix certification label</li>
+        </ol>
+    </div>
+
+    <div class="installation-box">
+        <h3>📈 Acceptance Testing</h3>
+        <p><strong>Duration:</strong> 48-hour monitoring period</p>
+        
+        <h4>Test Criteria:</h4>
+        <ul>
+            <li><strong>Data Transmission:</strong> 99% successful transmission rate</li>
+            <li><strong>Power System:</strong> Maintain operation through 48-hour cloudy period</li>
+            <li><strong>Sensor Accuracy:</strong> ±5% of reference measurements</li>
+            <li><strong>Network Connectivity:</strong> Automatic failover to backup connection</li>
+        </ul>
+    </div>
+
+    <h2>🔧 Maintenance and Troubleshooting</h2>
+
+    <div class="specs-table">
+        <h3>Maintenance Schedule</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Frequency</th>
+                <th>Maintenance Activity</th>
+                <th>Duration</th>
+            </tr>
+            <tr>
+                <td>Air Quality Sensors</td>
+                <td>Quarterly</td>
+                <td>Cleaning, calibration verification</td>
+                <td>2 hours</td>
+            </tr>
+            <tr>
+                <td>Solar Panels</td>
+                <td>Semi-annual</td>
+                <td>Cleaning, connection inspection</td>
+                <td>1 hour</td>
+            </tr>
+            <tr>
+                <td>Gateway Unit</td>
+                <td>Monthly</td>
+                <td>Firmware updates, log review</td>
+                <td>30 minutes</td>
+            </tr>
+            <tr>
+                <td>Battery System</td>
+                <td>Annual</td>
+                <td>Capacity test, replacement if needed</td>
+                <td>3 hours</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>📞 Support and Emergency Contacts</h2>
+    
+    <div class="installation-box">
+        <h3>🆘 Emergency Response</h3>
+        <p><strong>System Failure:</strong> Municipal IT Helpdesk (555) 123-4567</p>
+        <p><strong>Electrical Issues:</strong> City Electrician (555) 123-4568</p>
+        <p><strong>Traffic Safety:</strong> Traffic Control (555) 123-4569</p>
+        <p><strong>Environmental Concerns:</strong> Environmental Services (555) 123-4570</p>
+    </div>
+
+    <h3>Vendor Technical Support</h3>
+    <p><strong>SmartCity Solutions:</strong> support@smartcitysolutions.com | (800) 555-CITY</p>
+    <p><strong>Hours:</strong> 24/7 for critical issues | Business hours for routine support</p>
+    <p><strong>Remote Monitoring:</strong> Available via secure VPN connection</p>
+
+    <div class="footer">
+        <p><strong>📄 This is a sample document created by Prism Writing</strong></p>
+        <p>For complete technical documentation and IoT implementation guides, contact us at info@prismwriting.com</p>
+        <p>© 2024 Prism Writing Cooperative. All rights reserved.</p>
+        <br>
+        <p><em>Document Version: 1.3 | Last Updated: December 2024 | Next Review: June 2025</em></p>
+    </div>
+</body>
+</html>
