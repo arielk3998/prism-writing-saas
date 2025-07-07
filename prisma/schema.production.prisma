@@ -1,0 +1,173 @@
+// Production Prisma Schema for PostgreSQL
+// Use this when deploying to production with PostgreSQL database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management (Clean, Simple)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      UserRole @default(CLIENT)
+  status    UserStatus @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  leads     Lead[]
+  orders    Order[]
+  documents Document[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+// Lead Management (Transparent)
+model Lead {
+  id          String     @id @default(cuid())
+  email       String     @unique
+  name        String?
+  company     String?
+  message     String?
+  source      LeadSource @default(CONTACT_FORM)
+  status      LeadStatus @default(NEW)
+  priority    Priority   @default(MEDIUM)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  convertedAt DateTime?
+
+  // Relations
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@map("leads")
+}
+
+enum LeadSource {
+  CONTACT_FORM
+  NEWSLETTER
+  REFERRAL
+  SOCIAL_MEDIA
+  DIRECT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+// Document Management (Portfolio)
+model Document {
+  id          String         @id @default(cuid())
+  title       String
+  description String?
+  category    DocumentCategory
+  type        DocumentType
+  fileUrl     String?
+  isPublic    Boolean        @default(false)
+  isPremium   Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String?
+
+  @@map("documents")
+}
+
+enum DocumentCategory {
+  TECHNICAL_WRITING
+  BUSINESS_WRITING
+  CONTENT_WRITING
+  COPYWRITING
+  DOCUMENTATION
+  PROPOSAL
+  REPORT
+  OTHER
+}
+
+enum DocumentType {
+  SAMPLE
+  TEMPLATE
+  GUIDE
+  CASE_STUDY
+  PORTFOLIO_PIECE
+}
+
+// Order Management (Simple)
+model Order {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  status      OrderStatus @default(PENDING)
+  amount      Float?
+  dueDate     DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  completedAt DateTime?
+
+  // Relations
+  client   User   @relation(fields: [clientId], references: [id])
+  clientId String
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+// Analytics (Transparent)
+model Analytics {
+  id        String   @id @default(cuid())
+  metric    String
+  value     Float
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@map("analytics")
+}
+
+// Newsletter Subscribers
+model Newsletter {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  isActive    Boolean  @default(true)
+  subscribedAt DateTime @default(now())
+  unsubscribedAt DateTime?
+
+  @@map("newsletter")
+}
