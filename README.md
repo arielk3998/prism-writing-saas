@@ -58,7 +58,7 @@ A modern, transparent, and fully automated SaaS platform for professional writin
    Update the following variables:
    ```env
    DATABASE_URL="file:./dev.db"  # SQLite for development
-   NEXT_PUBLIC_APP_URL="http://localhost:3000"
+   NEXT_PUBLIC_APP_URL="https://prismwriting.com"
    BUSINESS_EMAIL="your-email@domain.com"
    ```
 
@@ -120,6 +120,12 @@ This platform is built with radical transparency:
 - **Honest Portfolio**: Only showcases actual client work
 - **Clear Pricing**: No hidden fees or inflated claims
 - **Open Communication**: Direct email integration for fast responses
+
+## 🌐 **Live Platform**
+
+**🎉 NOW LIVE AT: [https://prismwriting.com](https://prismwriting.com)**
+
+The Prism Writing enterprise SaaS platform is fully deployed and operational!
 
 ## 📞 **Contact & Support**
 
