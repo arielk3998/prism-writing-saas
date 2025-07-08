@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TranslationTool } from "@/components/translation-tool";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,18 +77,32 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              try {
-                const theme = localStorage.getItem('theme') || 'light';
-                if (theme === 'dark' || (theme === 'system' && 
-                     window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark')
-                } else {
-                  document.documentElement.classList.remove('dark')
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme');
+                  const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  const finalTheme = theme || systemPreference;
+                  
+                  const root = document.documentElement;
+                  root.classList.remove('light', 'dark');
+                  root.classList.add(finalTheme);
+                  root.setAttribute('data-theme', finalTheme);
+                  
+                  // Dispatch custom event for theme initialization
+                  window.dispatchEvent(new CustomEvent('theme-initialized', { detail: { theme: finalTheme } }));
+                } catch (e) {
+                  console.error('Theme initialization error:', e);
+                  document.documentElement.classList.add('light');
+                  document.documentElement.setAttribute('data-theme', 'light');
                 }
-              } catch (_) {}
+              })();
             `,
           }}
         />
@@ -98,6 +113,7 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="light">
           <ErrorBoundary>
             {children}
+            <TranslationTool />
           </ErrorBoundary>
         </ThemeProvider>
       </body>

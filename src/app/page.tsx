@@ -10,7 +10,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900">
       <Navigation currentPath="/" />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto text-center">
@@ -64,34 +64,34 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
+                  icon: FileText,
+                  title: 'Technical Writing',
+                  description: 'Expert technical documentation, user manuals, API documentation, and software specifications that communicate complex information clearly.'
+                },
+                {
                   icon: Shield,
-                  title: 'Multi-Factor Authentication',
-                  description: 'Advanced security with SMS, email, and authenticator app verification for comprehensive account protection.'
+                  title: 'Compliance Documentation',
+                  description: 'Regulatory compliance documents, policy manuals, and audit reports ensuring your business meets industry standards.'
                 },
                 {
                   icon: Users,
-                  title: 'Client Portal & AI Automation',
-                  description: 'Intelligent client interface with AI-powered document processing, project tracking, and automated workflows.'
+                  title: 'Business Content',
+                  description: 'Professional business proposals, marketing copy, white papers, and strategic communications that drive results.'
                 },
                 {
                   icon: BarChart3,
-                  title: 'Business Intelligence & Analytics',
-                  description: 'Real-time analytics dashboard with AI insights, project metrics, and performance reporting capabilities.'
-                },
-                {
-                  icon: FileText,
-                  title: 'AI Document Processing',
-                  description: 'Automated document analysis, translation, version control, and file format conversion using advanced AI.'
+                  title: 'Content Strategy',
+                  description: 'Comprehensive content planning, information architecture, and editorial workflows to optimize your content ecosystem.'
                 },
                 {
                   icon: Zap,
-                  title: 'Intelligent Automation',
-                  description: 'AI agents handle document review, compliance checking, and quality assurance with minimal human intervention.'
+                  title: 'Aviation Documentation',
+                  description: 'Specialized aviation manuals, maintenance procedures, and FAA-compliant documentation for aerospace industry.'
                 },
                 {
                   icon: Clock,
-                  title: 'Comprehensive Resources',
-                  description: 'Extensive library of technical writing standards, compliance guidelines, and industry-specific templates.'
+                  title: 'Quick Turnaround',
+                  description: 'Fast, reliable delivery with transparent timelines and regular updates throughout your project lifecycle.'
                 }
               ].map((feature, index) => (
                 <div
@@ -117,24 +117,24 @@ export default function HomePage() {
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Ready to Get Started?
+              Ready to Transform Your Content?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Experience the power of enterprise-grade tools designed for modern businesses.
+              Get professional writing services that communicate clearly and drive results for your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/client"
+                href="/contact"
                 className="inline-flex items-center px-8 py-4 bg-white text-blue-600 hover:bg-gray-50 rounded-lg font-medium transition-colors"
               >
-                Start as Customer
+                Start Your Project
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link
-                href="/contact"
+                href="/portfolio"
                 className="inline-flex items-center px-8 py-4 border border-white text-white hover:bg-white/10 rounded-lg font-medium transition-colors"
               >
-                Contact Sales
+                View Our Work
               </Link>
             </div>
           </div>

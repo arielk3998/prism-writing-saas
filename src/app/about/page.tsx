@@ -207,6 +207,182 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Team Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+              Meet Our Team
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Our cooperative brings together experienced writers with diverse backgrounds in technology, 
+              business, and communication to deliver exceptional results for our clients.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-md mx-auto">
+            {/* Team Member 1 - Lead Technical Writer (Ariel) */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+              <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold text-2xl">A</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Ariel Thompson
+              </h3>
+              <p className="text-blue-600 dark:text-blue-400 font-medium mb-3">
+                Founder & Lead Technical Writer
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                15+ years experience in API documentation, developer tools, and enterprise software. 
+                Previously led documentation teams at Fortune 500 tech companies. Expert in technical 
+                writing, content strategy, and documentation systems across multiple industries.
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                  API Documentation
+                </span>
+                <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                  DevTools
+                </span>
+                <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
+                  Team Leadership
+                </span>
+                <span className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 px-2 py-1 rounded text-xs">
+                  Content Strategy
+                </span>
+                <span className="bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 px-2 py-1 rounded text-xs">
+                  Enterprise Solutions
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Cooperative Network Section */}
+          <div className="mt-16 bg-gray-50 dark:bg-gray-800 rounded-xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+              Our Cooperative Network
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">👥</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Specialist Network</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Access to specialized writers across healthcare, finance, engineering, and technology sectors
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🌍</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Global Expertise</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  International compliance knowledge and multi-language documentation capabilities
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">⚡</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Scalable Resources</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Flexible team scaling based on project complexity and timeline requirements
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Cooperative Values */}
+          <div className="mt-16 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+              Why We Work as a Cooperative
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Shared Ownership & Decision Making
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300">
+                  As a cooperative, every team member has a voice in how we operate, what projects we take on, 
+                  and how we serve our clients. This ensures alignment between our values and our work.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Equitable Compensation & Growth
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Our cooperative structure ensures fair compensation for all members and reinvests profits 
+                  back into the business to support professional development and better client service.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Collaborative Excellence
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Working cooperatively means every project benefits from multiple perspectives and expertise areas, 
+                  resulting in higher quality outcomes than any individual could achieve alone.
+                </p>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Community & Sustainability
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300">
+                  We're committed to sustainable business practices that support both our team members and 
+                  the broader technical writing community through mentorship and knowledge sharing.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-16 bg-white dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+              Our Values
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Transparency
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                We believe in open communication, clear processes, and honest feedback throughout 
+                every project. Our clients always know what to expect and when.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Continuous Learning
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Technology evolves rapidly, and so do we. We invest in ongoing education and stay 
+                current with industry trends, tools, and best practices.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Inclusivity
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                We create documentation that is accessible to diverse audiences and reflect inclusive 
+                language and design principles in everything we produce.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="py-16 bg-blue-600 dark:bg-blue-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

@@ -23,23 +23,49 @@ export function ThemeProvider({ children, defaultTheme = 'light' }: ThemeProvide
 
   useEffect(() => {
     setMounted(true)
-    // Check localStorage for saved theme
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
-      setTheme(savedTheme)
-    } else {
-      // Check system preference
-      const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      setTheme(systemPreference)
+    
+    // Listen for theme initialization from layout script
+    const handleThemeInit = (event: CustomEvent) => {
+      const initialTheme = event.detail.theme
+      setTheme(initialTheme)
     }
-  }, [])
+    
+    window.addEventListener('theme-initialized', handleThemeInit as EventListener)
+    
+    // Check localStorage for saved theme (fallback)
+    try {
+      const savedTheme = localStorage.getItem('theme') as Theme
+      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+        setTheme(savedTheme)
+      } else {
+        // Check system preference
+        const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        setTheme(systemPreference)
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error)
+      setTheme(defaultTheme)
+    }
+    
+    return () => {
+      window.removeEventListener('theme-initialized', handleThemeInit as EventListener)
+    }
+  }, [defaultTheme])
 
   useEffect(() => {
     if (mounted) {
-      localStorage.setItem('theme', theme)
+      try {
+        localStorage.setItem('theme', theme)
+      } catch (error) {
+        console.error('Error saving theme to localStorage:', error)
+      }
+      
       const root = window.document.documentElement
       root.classList.remove('light', 'dark')
       root.classList.add(theme)
+      
+      // Also set data attribute for better CSS targeting
+      root.setAttribute('data-theme', theme)
     }
   }, [theme, mounted])
 

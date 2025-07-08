@@ -24,6 +24,9 @@ export function Navigation({
     { href: '/', label: 'Home', icon: Home },
     { href: '/services', label: 'Services', icon: FileText },
     { href: '/about', label: 'About', icon: Users },
+    { href: '/portfolio', label: 'Portfolio', icon: FileText },
+    { href: '/resources', label: 'Resources', icon: FileText },
+    { href: '/contact', label: 'Contact', icon: Users },
   ]
 
   const adminNavItems = [
@@ -62,7 +65,16 @@ export function Navigation({
   }
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <>
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-blue-600 text-white px-4 py-2 rounded-md z-50 transition-all"
+      >
+        Skip to main content
+      </a>
+      
+      <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -75,7 +87,7 @@ export function Navigation({
                 <span className="text-white font-bold text-lg">P</span>
               </div>
               <span className="text-xl font-bold text-gray-900 dark:text-white">
-                Prism Enterprise
+                Prism Writing
               </span>
             </Link>
           </div>
@@ -209,5 +221,6 @@ export function Navigation({
         )}
       </div>
     </nav>
+    </>
   )
 }

@@ -21,10 +21,10 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Services</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/portfolio#aviation" className="hover:text-white transition-colors">Aviation Documentation</Link></li>
-              <li><Link href="/portfolio#compliance" className="hover:text-white transition-colors">Compliance Documentation</Link></li>
-              <li><Link href="/portfolio#technical" className="hover:text-white transition-colors">Technical Writing</Link></li>
-              <li><Link href="/portfolio#quality" className="hover:text-white transition-colors">Quality Assurance</Link></li>
+              <li><Link href="/services#aviation" className="hover:text-white transition-colors">Aviation Documentation</Link></li>
+              <li><Link href="/services#compliance" className="hover:text-white transition-colors">Compliance Documentation</Link></li>
+              <li><Link href="/services#technical" className="hover:text-white transition-colors">Technical Writing</Link></li>
+              <li><Link href="/services#business" className="hover:text-white transition-colors">Business Content</Link></li>
             </ul>
           </div>
           
