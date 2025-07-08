@@ -100,12 +100,15 @@ export async function generateContent(
 // Version control integration (placeholder for GitHub API)
 export async function createGitCommit(
   repoName: string,
-  _fileName: string,
-  _content: string,
-  _commitMessage: string
+  fileName: string,
+  content: string,
+  commitMessage: string
 ): Promise<{ success: boolean; commitUrl?: string; error?: string }> {
   // This would integrate with GitHub API
   // Mock implementation
+  console.log(`Creating git commit in ${repoName} for ${fileName} with message: ${commitMessage}`);
+  console.log(`Content length: ${content.length} characters`);
+  
   return {
     success: true,
     commitUrl: `https://github.com/user/${repoName}/commit/abc123`,
