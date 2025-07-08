@@ -1,186 +1,185 @@
-import Link from "next/link"
-import { ArrowRight, CheckCircle, Users, Zap } from "lucide-react"
+'use client'
+
+import { Navigation } from '@/components/navigation'
+import Link from 'next/link'
+import { ArrowRight, Shield, Zap, Users, FileText, BarChart3, Clock } from 'lucide-react'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">P</span>
-                </div>
-                <span className="font-bold text-xl text-gray-900">Prism Writing</span>
-              </Link>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900">
+      <Navigation currentPath="/" />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto text-center">
+            <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
+              <span className="text-white font-bold text-3xl">P</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/portfolio" className="text-gray-600 hover:text-gray-900">
-                Portfolio
-              </Link>
-              <Link href="/contact" className="text-gray-600 hover:text-gray-900">
-                Contact
-              </Link>
-              <Link 
-                href="/admin" 
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              Prism Enterprise
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                SaaS Platform
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+              A comprehensive enterprise solution for client management, document handling, 
+              and business intelligence. Built for scale, security, and seamless user experience.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/client"
+                className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
               >
-                Admin
+                Customer Portal
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
+              <Link
+                href="/admin"
+                className="inline-flex items-center px-8 py-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg font-medium transition-colors"
+              >
+                Admin Access
+                <Shield className="ml-2 w-5 h-5" />
               </Link>
             </div>
           </div>
-        </div>
-      </nav>
+        </section>
 
-      {/* Hero Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Professional Writing Services
-              <span className="block text-blue-600">That Deliver Results</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Transform your ideas into compelling content with our transparent, 
-              quality-focused writing services. No inflated claims, just proven expertise.
+        {/* Features Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-800">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Enterprise Features
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Everything you need to manage your business operations efficiently and securely.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Shield,
+                  title: 'Secure Authentication',
+                  description: 'Multi-tier authentication system with role-based access control and session management.'
+                },
+                {
+                  icon: Users,
+                  title: 'Customer Portal',
+                  description: 'Dedicated customer interface for document access, project tracking, and communication.'
+                },
+                {
+                  icon: BarChart3,
+                  title: 'Business Intelligence',
+                  description: 'Comprehensive analytics dashboard with real-time insights and reporting capabilities.'
+                },
+                {
+                  icon: FileText,
+                  title: 'Document Management',
+                  description: 'Centralized document storage with version control and secure sharing capabilities.'
+                },
+                {
+                  icon: Zap,
+                  title: 'Real-time Updates',
+                  description: 'Live notifications and updates to keep all stakeholders informed and engaged.'
+                },
+                {
+                  icon: Clock,
+                  title: '24/7 Availability',
+                  description: 'Cloud-based platform with 99.9% uptime and reliable performance monitoring.'
+                }
+              ].map((feature, index) => (
+                <div
+                  key={index}
+                  className="p-6 bg-gray-50 dark:bg-gray-700 rounded-xl hover:shadow-lg transition-shadow"
+                >
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                    <feature.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Ready to Get Started?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Experience the power of enterprise-grade tools designed for modern businesses.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact"
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center group"
+                href="/client"
+                className="inline-flex items-center px-8 py-4 bg-white text-blue-600 hover:bg-gray-50 rounded-lg font-medium transition-colors"
               >
-                Start Your Project
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                Start as Customer
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link
-                href="/portfolio"
-                className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors"
+                href="/contact"
+                className="inline-flex items-center px-8 py-4 border border-white text-white hover:bg-white/10 rounded-lg font-medium transition-colors"
               >
-                View Portfolio
+                Contact Sales
               </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose Prism Writing?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We believe in transparency, quality, and honest communication. 
-              Here's what sets us apart.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Quality Guaranteed
-              </h3>
-              <p className="text-gray-600">
-                Every project undergoes rigorous quality checks and revisions 
-                until you're completely satisfied.
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Fast Turnaround
-              </h3>
-              <p className="text-gray-600">
-                We respect your deadlines with realistic timelines and 
-                consistent communication throughout the process.
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                Transparent Process
-              </h3>
-              <p className="text-gray-600">
-                No hidden fees, no inflated claims. Clear pricing, 
-                honest timelines, and upfront communication.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-blue-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to elevate your content?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Let's discuss your project and create content that truly represents your vision.
-          </p>
-          <Link
-            href="/contact"
-            className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors inline-flex items-center group"
-          >
-            Get Started Today
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
+      <footer className="bg-gray-900 dark:bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">P</span>
                 </div>
-                <span className="font-bold text-xl">Prism Writing</span>
+                <span className="text-xl font-bold">Prism Enterprise</span>
               </div>
-              <p className="text-gray-400">
-                Professional writing services with transparency and quality at the core.
+              <p className="text-gray-400 max-w-md">
+                Enterprise-grade SaaS platform for modern businesses. 
+                Secure, scalable, and built for success.
               </p>
             </div>
+            
             <div>
               <h3 className="font-semibold mb-4">Services</h3>
               <ul className="space-y-2 text-gray-400">
-                <li>Technical Writing</li>
-                <li>Business Content</li>
-                <li>Documentation</li>
-                <li>Content Strategy</li>
+                <li><Link href="/portfolio#aviation" className="hover:text-white transition-colors">Aviation Documentation</Link></li>
+                <li><Link href="/portfolio#compliance" className="hover:text-white transition-colors">Compliance Documentation</Link></li>
+                <li><Link href="/portfolio#technical" className="hover:text-white transition-colors">Technical Writing</Link></li>
+                <li><Link href="/portfolio#quality" className="hover:text-white transition-colors">Quality Assurance</Link></li>
               </ul>
             </div>
+            
             <div>
               <h3 className="font-semibold mb-4">Company</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/portfolio">Portfolio</Link></li>
-                <li><Link href="/contact">Contact</Link></li>
-                <li><Link href="/admin">Admin</Link></li>
+                <li><Link href="/portfolio" className="hover:text-white transition-colors">Portfolio</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href="/client" className="hover:text-white transition-colors">Client Portal</Link></li>
+                <li><Link href="/admin" className="hover:text-white transition-colors">Admin Access</Link></li>
               </ul>
             </div>
-            <div>
-              <h3 className="font-semibold mb-4">Contact</h3>
-              <p className="text-gray-400">
-                hello@prismwriting.com
-              </p>
-            </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Prism Writing. Built with transparency and quality.</p>
+          
+          <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+            <p>&copy; 2024 Prism Enterprise. All rights reserved.</p>
           </div>
         </div>
       </footer>

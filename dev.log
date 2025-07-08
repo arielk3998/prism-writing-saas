@@ -24,3 +24,4 @@ New lead created with email automation: cmctocr3b00007lngpfe0k9vr
  GET /api/client/projects 200 in 349ms
  ✓ Compiled /api/client/communications in 318ms
  GET /api/client/communications 200 in 343ms
+[?25h

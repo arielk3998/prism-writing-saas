@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { analyticsService } from '@/lib/analytics'
+import { verifyAdminAuth, createAuthResponse } from '@/lib/admin-auth'
 
 export async function GET(request: NextRequest) {
+  // Check admin authentication
+  if (!verifyAdminAuth(request)) {
+    return createAuthResponse()
+  }
+
   try {
     const url = new URL(request.url)
     const type = url.searchParams.get('type') || 'dashboard'

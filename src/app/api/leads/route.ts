@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { LeadStatus } from '@prisma/client'
+import { verifyAdminAuth, createAuthResponse } from '@/lib/admin-auth'
 
 export async function GET(request: NextRequest) {
+  // Check admin authentication
+  if (!verifyAdminAuth(request)) {
+    return createAuthResponse()
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const status = searchParams.get('status')
@@ -27,6 +33,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  // Check admin authentication
+  if (!verifyAdminAuth(request)) {
+    return createAuthResponse()
+  }
+
   try {
     const body = await request.json()
     const { id, status, priority } = body

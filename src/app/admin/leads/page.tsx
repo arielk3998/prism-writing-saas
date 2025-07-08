@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from "next/link"
+import { Navigation } from "@/components/navigation"
+import { authenticatedFetch } from "@/lib/admin-api"
 import { ArrowLeft, Mail, Building, Calendar, AlertCircle, CheckCircle, Clock, Star } from "lucide-react"
 
 interface Lead {
@@ -28,7 +30,7 @@ export default function AdminLeadsPage() {
 
   const fetchLeads = async () => {
     try {
-      const response = await fetch('/api/leads')
+      const response = await authenticatedFetch('/api/leads')
       const result = await response.json()
       
       if (result.success) {
@@ -46,11 +48,8 @@ export default function AdminLeadsPage() {
 
   const updateLeadStatus = async (id: string, status: string) => {
     try {
-      const response = await fetch('/api/leads', {
+      const response = await authenticatedFetch('/api/leads', {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({ id, status }),
       })
 
@@ -96,52 +95,38 @@ export default function AdminLeadsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Loading leads...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">Loading leads...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">P</span>
-                </div>
-                <span className="font-bold text-xl text-gray-900">Prism Writing</span>
-              </Link>
-              <span className="ml-4 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                Admin
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/admin" className="text-gray-600 hover:text-gray-900 flex items-center">
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                Back to Dashboard
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Navigation currentPath="/admin/leads" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Lead Management</h1>
-          <p className="text-gray-600 mt-2">Manage and respond to potential client inquiries.</p>
+          <div className="flex items-center space-x-4 mb-4">
+            <Link 
+              href="/admin/dashboard" 
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4 mr-1" />
+              Back to Dashboard
+            </Link>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Lead Management</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">Manage and respond to potential client inquiries.</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">{error}</p>
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+            <p className="text-red-800 dark:text-red-300">{error}</p>
           </div>
         )}
 

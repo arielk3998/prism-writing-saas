@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { verifyAdminAuth, createAuthResponse } from '@/lib/admin-auth'
 
 export async function POST(request: NextRequest) {
+  // Check admin authentication
+  if (!verifyAdminAuth(request)) {
+    return createAuthResponse()
+  }
+
   try {
     const body = await request.json()
     const { type, data, timestamp } = body

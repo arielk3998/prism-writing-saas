@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { emailService } from '@/lib/email-simple'
+import { emailService } from '@/lib/email'
 import { contactRateLimiter, applyRateLimit } from '@/lib/rate-limit'
 import { z } from 'zod'
 
