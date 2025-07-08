@@ -1,5 +1,6 @@
 'use client'
 
+// Force cache refresh - January 7, 2025
 import { Navigation } from '@/components/navigation'
 import Link from 'next/link'
 import { ArrowRight, Shield, Zap, Users, FileText, BarChart3, Clock } from 'lucide-react'
