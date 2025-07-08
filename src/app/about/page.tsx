@@ -220,14 +220,14 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-8 max-w-md mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Team Member 1 - Lead Technical Writer (Ariel) */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
               <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-2xl">A</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Ariel Thompson
+                Ariel Karagodskiy
               </h3>
               <p className="text-blue-600 dark:text-blue-400 font-medium mb-3">
                 Founder & Lead Technical Writer
@@ -252,6 +252,102 @@ export default function AboutPage() {
                 </span>
                 <span className="bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 px-2 py-1 rounded text-xs">
                   Enterprise Solutions
+                </span>
+              </div>
+            </div>
+
+            {/* Team Member 2 - Healthcare & Compliance Specialist (Merla) */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+              <div className="w-24 h-24 bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold text-2xl">M</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Merla Rodriguez
+              </h3>
+              <p className="text-green-600 dark:text-green-400 font-medium mb-3">
+                Healthcare & Compliance Documentation Specialist
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                12+ years in medical device documentation, FDA compliance, and healthcare regulations. 
+                Expertise in GxP documentation, clinical trial protocols, and regulatory submissions. 
+                Former quality assurance lead at top pharmaceutical companies.
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                  FDA Compliance
+                </span>
+                <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                  Medical Devices
+                </span>
+                <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
+                  GxP Documentation
+                </span>
+                <span className="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded text-xs">
+                  Clinical Trials
+                </span>
+              </div>
+            </div>
+
+            {/* Team Member 3 - Financial & Legal Documentation (Amber) */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+              <div className="w-24 h-24 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold text-2xl">A</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Amber Chen
+              </h3>
+              <p className="text-amber-600 dark:text-amber-400 font-medium mb-3">
+                Financial Services & Legal Documentation Expert
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                10+ years in financial compliance documentation, SEC filings, and banking regulations. 
+                Specializes in FINRA compliance, risk management documentation, and legal technical writing. 
+                Background in corporate law and financial services documentation.
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <span className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 px-2 py-1 rounded text-xs">
+                  FINRA Compliance
+                </span>
+                <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                  SEC Filings
+                </span>
+                <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                  Risk Management
+                </span>
+                <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
+                  Legal Writing
+                </span>
+              </div>
+            </div>
+
+            {/* Team Member 4 - Engineering & Scientific Documentation (Maria) */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+              <div className="w-24 h-24 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold text-2xl">M</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Maria Gonzalez
+              </h3>
+              <p className="text-purple-600 dark:text-purple-400 font-medium mb-3">
+                Engineering & Scientific Documentation Specialist
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                8+ years in aerospace and scientific documentation, including technical manuals, 
+                research publications, and engineering specifications. PhD in Aerospace Engineering 
+                with expertise in complex technical communication and scientific writing standards.
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">
+                  Aerospace Documentation
+                </span>
+                <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
+                  Scientific Writing
+                </span>
+                <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
+                  Engineering Specs
+                </span>
+                <span className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 px-2 py-1 rounded text-xs">
+                  Research Publications
                 </span>
               </div>
             </div>
@@ -335,6 +431,55 @@ export default function AboutPage() {
                   the broader technical writing community through mentorship and knowledge sharing.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Innovation Section */}
+          <div className="mt-16 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+              🚀 Advanced Quality Innovation
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 text-center mb-6 max-w-3xl mx-auto">
+              We've developed proprietary quality assurance systems that ensure the highest standards in documentation 
+              through comprehensive source verification and multi-stage review processes.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔬</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Research Excellence</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Advanced systems for finding and verifying peer-reviewed sources from academic databases and regulatory publications
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔄</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Iterative Review</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Content undergoes multiple review cycles until 100% accuracy is achieved, ensuring the highest quality output
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">✅</span>
+                </div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Complete Verification</h4>
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                  Only content that passes all accuracy and compliance checks is released, guaranteeing reliability
+                </p>
+              </div>
+            </div>
+            <div className="text-center mt-6">
+              <a
+                href="/contact"
+                className="inline-flex items-center px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
+              >
+                <span className="mr-2">�</span>
+                Learn About Our Process
+              </a>
             </div>
           </div>
         </div>

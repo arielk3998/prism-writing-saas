@@ -17,30 +17,30 @@ import {
 import { TranslationTool } from '@/components/translation-tool';
 
 export default function ResourcesPage() {
-  const writingTools = [
+  const qualityStandards = [
     {
-      name: 'Grammarly Business',
-      description: 'Advanced grammar and style checking for professional writing',
-      category: 'Writing Tools',
-      url: 'https://grammarly.com/business',
-      features: ['Grammar Check', 'Style Suggestions', 'Tone Detection'],
-      pricing: 'Free basic version'
+      name: 'Prism Writing Style Guide',
+      description: 'Comprehensive style guide covering our standards for technical writing excellence',
+      category: 'Quality Standards',
+      downloadUrl: '/downloads/standards/Prism_Writing_Style_Guide.pdf',
+      features: ['Voice & Tone Guidelines', 'Formatting Standards', 'Industry-Specific Requirements'],
+      type: 'Internal Resource'
     },
     {
-      name: 'Hemingway Editor',
-      description: 'Readability analyzer for clear, concise writing',
-      category: 'Writing Tools',
-      url: 'https://hemingwayapp.com/',
-      features: ['Readability Score', 'Sentence Structure', 'Clarity Analysis'],
-      pricing: 'Free online version'
+      name: 'Technical Writing Best Practices',
+      description: 'Our proprietary methodology for creating clear, effective technical documentation',
+      category: 'Quality Standards',
+      downloadUrl: '/downloads/standards/Technical_Writing_Best_Practices.pdf',
+      features: ['Document Structure', 'User Experience Focus', 'Accessibility Guidelines'],
+      type: 'Internal Resource'
     },
     {
-      name: 'Notion',
-      description: 'All-in-one workspace for notes, docs, and collaboration',
-      category: 'Documentation',
-      url: 'https://notion.so/',
-      features: ['Rich Text Editing', 'Templates', 'Team Collaboration'],
-      pricing: 'Free for personal use'
+      name: 'Quality Assurance Checklist',
+      description: 'Multi-stage quality review process ensuring 100% accuracy in all deliverables',
+      category: 'Quality Standards',
+      downloadUrl: '/downloads/standards/QA_Checklist.pdf',
+      features: ['Content Review', 'Technical Accuracy', 'Compliance Verification'],
+      type: 'Internal Resource'
     }
   ];
 
@@ -138,7 +138,7 @@ export default function ResourcesPage() {
             Technical Writing Resources
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive collection of tools, standards, and downloadable resources for technical writers and content professionals
+            Comprehensive collection of quality standards, industry guidelines, and downloadable resources for technical writing excellence
           </p>
         </div>
 
@@ -146,12 +146,12 @@ export default function ResourcesPage() {
         <Tabs defaultValue="tools" className="w-full">
           <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8">
             <TabsTrigger value="tools" className="flex items-center gap-2">
-              <Activity className="w-4 h-4" />
-              Tools
+              <Shield className="w-4 h-4" />
+              Quality Standards
             </TabsTrigger>
             <TabsTrigger value="standards" className="flex items-center gap-2">
-              <Shield className="w-4 h-4" />
-              Standards
+              <Activity className="w-4 h-4" />
+              Industry Standards
             </TabsTrigger>
             <TabsTrigger value="industries" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
@@ -167,24 +167,24 @@ export default function ResourcesPage() {
             </TabsTrigger>
           </TabsList>
 
-          {/* Tools Tab */}
+          {/* Quality Standards Tab */}
           <TabsContent value="tools">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {writingTools.map((tool, index) => (
+              {qualityStandards.map((standard, index) => (
                 <Card key={index} className="h-full hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg">{tool.name}</CardTitle>
-                      <Badge variant="secondary">{tool.category}</Badge>
+                      <CardTitle className="text-lg">{standard.name}</CardTitle>
+                      <Badge variant="secondary">{standard.category}</Badge>
                     </div>
-                    <CardDescription>{tool.description}</CardDescription>
+                    <CardDescription>{standard.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
                       <div>
                         <p className="text-sm font-medium mb-2">Features:</p>
                         <div className="flex flex-wrap gap-1">
-                          {tool.features.map((feature, idx) => (
+                          {standard.features.map((feature, idx) => (
                             <Badge key={idx} variant="outline" className="text-xs">
                               {feature}
                             </Badge>
@@ -192,20 +192,60 @@ export default function ResourcesPage() {
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-green-600 font-medium">{tool.pricing}</span>
+                        <span className="text-sm text-blue-600 font-medium">{standard.type}</span>
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => window.open(tool.url, '_blank')}
+                          onClick={() => window.open(standard.downloadUrl, '_blank')}
                         >
-                          <ExternalLink className="w-4 h-4 mr-2" />
-                          Visit
+                          <Download className="w-4 h-4 mr-2" />
+                          Download
                         </Button>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               ))}
+            </div>
+            
+            {/* Internal AI & Quality Systems */}
+            <div className="mt-12 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-8">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+                🤖 Proprietary Quality Systems
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-center mb-6 max-w-3xl mx-auto">
+                Our advanced AI-powered quality assurance systems ensure every document meets the highest standards 
+                of accuracy, compliance, and user experience.
+              </p>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🔍</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Automated Content Analysis</h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    Our proprietary systems analyze content structure, readability, and technical accuracy
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">⚡</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Real-time Quality Monitoring</h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    Continuous monitoring and improvement suggestions throughout the writing process
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">✅</span>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Compliance Verification</h4>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    Automated verification against industry standards and regulatory requirements
+                  </p>
+                </div>
+              </div>
             </div>
           </TabsContent>
 
@@ -828,6 +868,10 @@ export default function ResourcesPage() {
             <Button variant="outline" onClick={() => window.location.href = '/services'}>
               <FileText className="w-4 h-4 mr-2" />
               View Services
+            </Button>
+            <Button variant="outline" onClick={() => window.location.href = '/ai-content'}>
+              <Shield className="w-4 h-4 mr-2" />
+              AI Content Generation
             </Button>
           </div>
         </div>

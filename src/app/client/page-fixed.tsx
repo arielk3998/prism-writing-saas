@@ -10,16 +10,11 @@ import {
   FileText, 
   MessageSquare, 
   TrendingUp,
+  AlertCircle,
   Download,
   Shield,
   LogOut,
-  User,
-  Upload,
-  FolderOpen,
-  Search,
-  Filter,
-  Eye,
-  Plus
+  User
 } from 'lucide-react'
 
 interface Project {
@@ -29,7 +24,6 @@ interface Project {
   dueDate: string | null
   completedAt: string | null
   progress: number
-  workRequests: string[]
 }
 
 interface Document {
@@ -40,23 +34,12 @@ interface Document {
   uploadedAt: string
   url: string
   description?: string
-  scanStatus: 'pending' | 'scanning' | 'clean' | 'threat-detected' | 'quarantined'
-  category: 'source' | 'deliverable' | 'reference' | 'template' | 'work-request'
-  version?: string
-  securityScanDetails?: {
-    scanDate: string
-    scanEngine: string
-    threatsFound: number
-    fileIntegrity: boolean
-  }
 }
 
 interface Customer {
   id: string
   email: string
   name: string
-  company?: string
-  tier: 'basic' | 'professional' | 'enterprise'
 }
 
 export default function ClientPortalDashboard() {
@@ -64,10 +47,6 @@ export default function ClientPortalDashboard() {
   const [projects, setProjects] = useState<Project[]>([])
   const [documents, setDocuments] = useState<Document[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [uploadingFile, setUploadingFile] = useState(false)
-  const [filterIndustry, setFilterIndustry] = useState('all')
-  const [filterCategory, setFilterCategory] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     // Check for existing customer session
@@ -88,8 +67,7 @@ export default function ClientPortalDashboard() {
         status: 'ACTIVE',
         dueDate: '2025-07-15',
         completedAt: null,
-        progress: 75,
-        workRequests: ['wr-1', 'wr-2']
+        progress: 75
       },
       {
         id: '2',
@@ -97,8 +75,7 @@ export default function ClientPortalDashboard() {
         status: 'COMPLETED',
         dueDate: '2025-06-30',
         completedAt: '2025-06-28',
-        progress: 100,
-        workRequests: ['wr-3']
+        progress: 100
       }
     ])
 
@@ -110,16 +87,7 @@ export default function ClientPortalDashboard() {
         size: 2048000,
         uploadedAt: '2025-07-01',
         url: '/downloads/PaymentPro_API_Documentation_Sample.pdf',
-        description: 'Updated API documentation with new endpoints',
-        scanStatus: 'clean',
-        category: 'deliverable',
-        version: '2.0',
-        securityScanDetails: {
-          scanDate: '2025-07-01T10:00:00Z',
-          scanEngine: 'Prism Security Scanner v3.1',
-          threatsFound: 0,
-          fileIntegrity: true
-        }
+        description: 'Updated API documentation with new endpoints'
       },
       {
         id: '2',
@@ -128,16 +96,7 @@ export default function ClientPortalDashboard() {
         size: 1536000,
         uploadedAt: '2025-06-25',
         url: '/downloads/SmartCity_Installation_Manual_Sample.pdf',
-        description: 'Complete installation guide for SmartCity platform',
-        scanStatus: 'clean',
-        category: 'deliverable',
-        version: '1.3',
-        securityScanDetails: {
-          scanDate: '2025-06-25T14:30:00Z',
-          scanEngine: 'Prism Security Scanner v3.1',
-          threatsFound: 0,
-          fileIntegrity: true
-        }
+        description: 'Complete installation guide for SmartCity platform'
       }
     ])
   }
@@ -146,9 +105,7 @@ export default function ClientPortalDashboard() {
     const demoCustomer = {
       id: 'demo-customer-1',
       email: 'demo@example.com',
-      name: 'Demo Client',
-      company: 'Demo Company Inc.',
-      tier: 'professional' as const
+      name: 'Demo Client'
     }
     setCustomer(demoCustomer)
     sessionStorage.setItem('customer_data', JSON.stringify(demoCustomer))
@@ -163,49 +120,6 @@ export default function ClientPortalDashboard() {
     sessionStorage.removeItem('customer_data')
     sessionStorage.removeItem('customer_authenticated')
   }
-
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
-
-    setUploadingFile(true)
-    try {
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('category', 'source')
-      formData.append('description', `Uploaded by ${customer?.name || 'client'}`)
-      formData.append('industry', 'technology')
-
-      const response = await fetch('/api/client/documents', {
-        method: 'POST',
-        body: formData
-      })
-
-      if (response.ok) {
-        const result = await response.json()
-        setDocuments(prev => [result.document, ...prev])
-        alert('File uploaded successfully!')
-      } else {
-        throw new Error('Upload failed')
-      }
-    } catch (error) {
-      console.error('Upload error:', error)
-      alert('Upload failed. Please try again.')
-    } finally {
-      setUploadingFile(false)
-      // Reset file input
-      event.target.value = ''
-    }
-  }
-
-  const filteredDocuments = documents.filter(doc => {
-    const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         doc.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesIndustry = filterIndustry === 'all' || doc.category === filterIndustry
-    const matchesCategory = filterCategory === 'all' || doc.type.toLowerCase() === filterCategory.toLowerCase()
-    
-    return matchesSearch && matchesIndustry && matchesCategory
-  })
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -355,104 +269,6 @@ export default function ClientPortalDashboard() {
               </div>
             </div>
 
-            {/* Document Upload and Management Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-              {/* Upload Section */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center">
-                  <Upload className="w-5 h-5 mr-2 text-blue-600" />
-                  Upload Document
-                </h3>
-                <div className="space-y-4">
-                  <input
-                    type="file"
-                    id="file-upload"
-                    className="hidden"
-                    accept=".pdf,.doc,.docx,.txt"
-                    onChange={handleFileUpload}
-                    disabled={uploadingFile}
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
-                      uploadingFile 
-                        ? 'border-gray-300 bg-gray-50 cursor-not-allowed' 
-                        : 'border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:bg-blue-900/20 dark:hover:bg-blue-900/30'
-                    }`}
-                  >
-                    {uploadingFile ? (
-                      <div className="flex flex-col items-center">
-                        <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mb-2"></div>
-                        <span className="text-sm text-gray-600 dark:text-gray-300">Uploading...</span>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center">
-                        <Upload className="w-8 h-8 text-blue-600 mb-2" />
-                        <span className="text-sm font-medium text-blue-600">Choose file</span>
-                        <span className="text-xs text-gray-500 mt-1">PDF, DOC, DOCX, TXT</span>
-                      </div>
-                    )}
-                  </label>
-                </div>
-              </div>
-
-              {/* Filters */}
-              <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center">
-                  <Filter className="w-5 h-5 mr-2 text-green-600" />
-                  Filter Documents
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Search
-                    </label>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search documents..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Category
-                    </label>
-                    <select
-                      value={filterCategory}
-                      onChange={(e) => setFilterCategory(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    >
-                      <option value="all">All Categories</option>
-                      <option value="source">Source Files</option>
-                      <option value="deliverable">Deliverables</option>
-                      <option value="reference">Reference</option>
-                      <option value="template">Templates</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Type
-                    </label>
-                    <select
-                      value={filterIndustry}
-                      onChange={(e) => setFilterIndustry(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                    >
-                      <option value="all">All Types</option>
-                      <option value="PDF">PDF</option>
-                      <option value="DOC">Word Document</option>
-                      <option value="TXT">Text File</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Projects */}
@@ -494,20 +310,14 @@ export default function ClientPortalDashboard() {
                 </div>
               </div>
 
-              {/* Filtered Documents */}
+              {/* Recent Documents */}
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-                    Documents ({filteredDocuments.length})
-                  </h3>
-                  <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                    <Plus className="w-4 h-4 mr-1" />
-                    View All
-                  </button>
+                <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Recent Documents</h3>
                 </div>
                 <div className="p-6">
                   <div className="space-y-4">
-                    {filteredDocuments.slice(0, 3).map((doc) => (
+                    {documents.map((doc) => (
                       <div key={doc.id} className="border dark:border-gray-600 rounded-lg p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -519,27 +329,17 @@ export default function ClientPortalDashboard() {
                               <span>{new Date(doc.uploadedAt).toLocaleDateString()}</span>
                             </div>
                           </div>
-                          <div className="ml-4 flex items-center space-x-2">
-                            <button className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                              <Eye className="w-4 h-4" />
-                            </button>
-                            <a
-                              href={doc.url}
-                              download
-                              className="p-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-                            >
-                              <Download className="w-4 h-4" />
-                            </a>
-                          </div>
+                          <a
+                            href={doc.url}
+                            download
+                            className="ml-4 flex items-center space-x-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                          >
+                            <Download className="w-4 h-4" />
+                            <span className="text-sm">Download</span>
+                          </a>
                         </div>
                       </div>
                     ))}
-                    {filteredDocuments.length === 0 && (
-                      <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                        <FolderOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                        <p>No documents found matching your filters.</p>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

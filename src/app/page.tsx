@@ -32,17 +32,17 @@ export default function HomePage() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/client"
+                href="/login"
                 className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
               >
-                Client Portal
+                Login
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link
-                href="/contact"
+                href="/register"
                 className="inline-flex items-center px-8 py-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg font-medium transition-colors"
               >
-                Get Started
+                Create Account
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </div>

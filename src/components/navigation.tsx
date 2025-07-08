@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Home, Users, FileText, Settings, LogOut } from 'lucide-react'
+import { Menu, X, Book, Users, FileText, Settings, LogOut, Award, Mail } from 'lucide-react'
 import { ThemeToggle } from './theme-toggle'
 
 interface NavigationProps {
@@ -21,23 +21,21 @@ export function Navigation({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const publicNavItems = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/services', label: 'Services', icon: FileText },
-    { href: '/about', label: 'About', icon: Users },
-    { href: '/portfolio', label: 'Portfolio', icon: FileText },
-    { href: '/resources', label: 'Resources', icon: FileText },
-    { href: '/contact', label: 'Contact', icon: Users },
+    { href: '/gallery', label: 'Gallery', icon: FileText },
+    { href: '/about', label: 'About', icon: Award },
+    { href: '/resources', label: 'Resources', icon: Book },
+    { href: '/contact', label: 'Contact', icon: Mail },
   ]
 
   const adminNavItems = [
-    { href: '/admin/dashboard', label: 'Dashboard', icon: Home },
+    { href: '/admin/dashboard', label: 'Dashboard', icon: Settings },
     { href: '/admin/leads', label: 'Leads', icon: Users },
     { href: '/admin/analytics', label: 'Analytics', icon: FileText },
     { href: '/admin/settings', label: 'Settings', icon: Settings },
   ]
 
   const customerNavItems = [
-    { href: '/client', label: 'Dashboard', icon: Home },
+    { href: '/client', label: 'Dashboard', icon: Settings },
     { href: '/client/documents', label: 'Documents', icon: FileText },
     { href: '/client/projects', label: 'Projects', icon: Users },
   ]
@@ -132,16 +130,16 @@ export function Navigation({
             {!userRole && (
               <div className="flex items-center space-x-3">
                 <Link
-                  href="/client"
+                  href="/login"
                   className="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                 >
-                  Client Portal
+                  Login
                 </Link>
                 <Link
-                  href="/admin"
+                  href="/register"
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors"
                 >
-                  Admin Login
+                  Create Account
                 </Link>
               </div>
             )}
@@ -201,18 +199,18 @@ export function Navigation({
               {!userRole && (
                 <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
                   <Link
-                    href="/client"
+                    href="/login"
                     className="block px-3 py-2 text-base font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Client Portal
+                    Login
                   </Link>
                   <Link
-                    href="/admin"
+                    href="/register"
                     className="block px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-base font-medium transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Admin Login
+                    Create Account
                   </Link>
                 </div>
               )}

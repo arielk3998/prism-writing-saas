@@ -50,7 +50,7 @@ class EmailService {
 
     try {
       const info = await this.transporter.sendMail({
-        from: process.env.FROM_EMAIL || 'hello@prismwriting.com',
+        from: process.env.FROM_EMAIL || 'contact@prismwriting.com',
         to: options.to,
         subject: options.subject,
         html: options.html,
@@ -84,7 +84,7 @@ class EmailService {
     });
 
     const adminResult = await this.sendEmail({
-      to: process.env.ADMIN_EMAIL || 'hello@prismwriting.com',
+      to: process.env.ADMIN_EMAIL || 'Ariel.pk@outlook.com',
       subject: `🚨 New Contact Form Submission from ${data.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
