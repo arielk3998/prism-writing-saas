@@ -20,7 +20,8 @@ export async function POST(request: NextRequest) {
       name: 'Temp Admin',
       role: 'admin' as const,
       permissions: ['manage_customers'],
-      canBeRemoved: true
+      canBeRemoved: true,
+      mfaEnabled: false
     }
 
     const result = await createUser(tempAdmin, {

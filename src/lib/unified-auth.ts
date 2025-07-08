@@ -8,6 +8,7 @@ export interface User {
   company?: string
   permissions: string[]
   canBeRemoved: boolean
+  mfaEnabled: boolean
 }
 
 // Super admin configuration - this user cannot be removed
@@ -17,7 +18,8 @@ const SUPER_ADMIN: User = {
   name: 'Ariel',
   role: 'super_admin',
   permissions: ['*'], // All permissions
-  canBeRemoved: false
+  canBeRemoved: false,
+  mfaEnabled: true
 }
 
 const SUPER_ADMIN_PASSWORD = '$GoodTimes2025!'
@@ -33,7 +35,8 @@ const users: User[] = [
     role: 'customer',
     company: 'Demo Company',
     permissions: ['view_documents', 'view_projects', 'contact_support'],
-    canBeRemoved: true
+    canBeRemoved: true,
+    mfaEnabled: false
   }
 ]
 
@@ -109,7 +112,8 @@ export async function createUser(requester: User, userData: Partial<User>): Prom
     role: userData.role || 'customer',
     company: userData.company,
     permissions: userData.permissions || getDefaultPermissions(userData.role || 'customer'),
-    canBeRemoved: true
+    canBeRemoved: true,
+    mfaEnabled: false
   }
 
   // Check if email already exists
@@ -121,8 +125,10 @@ export async function createUser(requester: User, userData: Partial<User>): Prom
   return { success: true, user: newUser }
 }
 
-function getDefaultPermissions(role: 'admin' | 'customer'): string[] {
+function getDefaultPermissions(role: 'super_admin' | 'admin' | 'customer'): string[] {
   switch (role) {
+    case 'super_admin':
+      return ['*']
     case 'admin':
       return ['manage_leads', 'view_analytics', 'manage_customers', 'view_documents']
     case 'customer':

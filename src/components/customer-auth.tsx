@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User, Lock, Eye, EyeOff, Mail, ArrowLeft, UserPlus, Building } from 'lucide-react'
+import { User, Lock, Eye, EyeOff, Mail, ArrowLeft, UserPlus, Building, LogOut } from 'lucide-react'
 import Link from 'next/link'
 
 interface Customer {
@@ -413,6 +413,35 @@ export function CustomerAuth({ children }: CustomerAuthProps) {
   // Authenticated view
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* User header with logout */}
+      <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              </div>
+              {customer && (
+                <div>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    {customer.name}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {customer.email}
+                  </p>
+                </div>
+              )}
+            </div>
+            <button
+              onClick={handleLogout}
+              className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center"
+            >
+              <LogOut className="w-4 h-4 mr-1" />
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
       {children}
     </div>
   )

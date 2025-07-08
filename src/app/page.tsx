@@ -63,34 +63,34 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  icon: FileText,
-                  title: 'Technical Documentation',
-                  description: 'Comprehensive technical manuals, procedures, and documentation for complex systems and processes.'
-                },
-                {
                   icon: Shield,
-                  title: 'Compliance Documentation',
-                  description: 'Regulatory compliance documentation for aviation, healthcare, and other regulated industries.'
+                  title: 'Multi-Factor Authentication',
+                  description: 'Advanced security with SMS, email, and authenticator app verification for comprehensive account protection.'
                 },
                 {
                   icon: Users,
-                  title: 'Training Materials',
-                  description: 'Interactive training manuals, e-learning content, and instructional materials for your team.'
+                  title: 'Client Portal & AI Automation',
+                  description: 'Intelligent client interface with AI-powered document processing, project tracking, and automated workflows.'
                 },
                 {
                   icon: BarChart3,
-                  title: 'Quality Assurance',
-                  description: 'Quality control processes, documentation review, and content validation services.'
+                  title: 'Business Intelligence & Analytics',
+                  description: 'Real-time analytics dashboard with AI insights, project metrics, and performance reporting capabilities.'
+                },
+                {
+                  icon: FileText,
+                  title: 'AI Document Processing',
+                  description: 'Automated document analysis, translation, version control, and file format conversion using advanced AI.'
                 },
                 {
                   icon: Zap,
-                  title: 'Fast Turnaround',
-                  description: 'Efficient project delivery with clear timelines and regular progress updates.'
+                  title: 'Intelligent Automation',
+                  description: 'AI agents handle document review, compliance checking, and quality assurance with minimal human intervention.'
                 },
                 {
                   icon: Clock,
-                  title: 'Ongoing Support',
-                  description: 'Continuous support and updates to keep your documentation current and compliant.'
+                  title: 'Comprehensive Resources',
+                  description: 'Extensive library of technical writing standards, compliance guidelines, and industry-specific templates.'
                 }
               ].map((feature, index) => (
                 <div
