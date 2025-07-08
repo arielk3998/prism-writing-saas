@@ -5,10 +5,10 @@ import { existsSync } from 'fs'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { sampleId: string } }
+  { params }: { params: Promise<{ sampleId: string }> }
 ) {
   try {
-    const { sampleId } = params
+    const { sampleId } = await params
     
     // Map sample IDs to actual file names
     const fileMap: Record<string, { filename: string; name: string; contentType: string }> = {
@@ -84,10 +84,10 @@ export async function GET(
 
 export async function HEAD(
   request: NextRequest,
-  { params }: { params: { sampleId: string } }
+  { params }: { params: Promise<{ sampleId: string }> }
 ) {
   try {
-    const { sampleId } = params
+    const { sampleId } = await params
     
     const fileMap: Record<string, { filename: string; contentType: string }> = {
       'meditech-sops': {
