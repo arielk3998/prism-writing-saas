@@ -10,6 +10,24 @@
     },
     "src/app/api/leads/route.ts": {
       "maxDuration": 10
+    },
+    "src/app/api/email/send/route.ts": {
+      "maxDuration": 15
+    },
+    "src/app/api/payments/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/client/documents/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/client/documents/download/*/route.ts": {
+      "maxDuration": 15
+    },
+    "src/app/api/hebrew-translations/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/contracts/route.ts": {
+      "maxDuration": 15
     }
   },
   "env": {
