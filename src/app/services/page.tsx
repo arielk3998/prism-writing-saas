@@ -1,6 +1,7 @@
 'use client'
 
 import { Navigation } from '@/components/navigation'
+import { Footer } from '@/components/footer'
 import { FileText, Code, BookOpen, Settings, Users, Shield } from 'lucide-react'
 
 export default function ServicesPage() {
@@ -270,6 +271,8 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   )
 }

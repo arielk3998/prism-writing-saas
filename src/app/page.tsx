@@ -18,15 +18,15 @@ export default function HomePage() {
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Prism Enterprise
+              Prism Writing
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                SaaS Platform
+                Professional Services
               </span>
             </h1>
             
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              A comprehensive enterprise solution for client management, document handling, 
-              and business intelligence. Built for scale, security, and seamless user experience.
+              Professional technical writing, documentation, and compliance services. 
+              Specializing in aviation, healthcare, and regulatory documentation for modern businesses.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -34,15 +34,15 @@ export default function HomePage() {
                 href="/client"
                 className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
               >
-                Customer Portal
+                Client Portal
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <Link
-                href="/admin"
+                href="/contact"
                 className="inline-flex items-center px-8 py-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg font-medium transition-colors"
               >
-                Admin Access
-                <Shield className="ml-2 w-5 h-5" />
+                Get Started
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -53,44 +53,44 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                Enterprise Features
+                Professional Services
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Everything you need to manage your business operations efficiently and securely.
+                Comprehensive technical writing and documentation services tailored to your industry needs.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
+                  icon: FileText,
+                  title: 'Technical Documentation',
+                  description: 'Comprehensive technical manuals, procedures, and documentation for complex systems and processes.'
+                },
+                {
                   icon: Shield,
-                  title: 'Secure Authentication',
-                  description: 'Multi-tier authentication system with role-based access control and session management.'
+                  title: 'Compliance Documentation',
+                  description: 'Regulatory compliance documentation for aviation, healthcare, and other regulated industries.'
                 },
                 {
                   icon: Users,
-                  title: 'Customer Portal',
-                  description: 'Dedicated customer interface for document access, project tracking, and communication.'
+                  title: 'Training Materials',
+                  description: 'Interactive training manuals, e-learning content, and instructional materials for your team.'
                 },
                 {
                   icon: BarChart3,
-                  title: 'Business Intelligence',
-                  description: 'Comprehensive analytics dashboard with real-time insights and reporting capabilities.'
-                },
-                {
-                  icon: FileText,
-                  title: 'Document Management',
-                  description: 'Centralized document storage with version control and secure sharing capabilities.'
+                  title: 'Quality Assurance',
+                  description: 'Quality control processes, documentation review, and content validation services.'
                 },
                 {
                   icon: Zap,
-                  title: 'Real-time Updates',
-                  description: 'Live notifications and updates to keep all stakeholders informed and engaged.'
+                  title: 'Fast Turnaround',
+                  description: 'Efficient project delivery with clear timelines and regular progress updates.'
                 },
                 {
                   icon: Clock,
-                  title: '24/7 Availability',
-                  description: 'Cloud-based platform with 99.9% uptime and reliable performance monitoring.'
+                  title: 'Ongoing Support',
+                  description: 'Continuous support and updates to keep your documentation current and compliant.'
                 }
               ].map((feature, index) => (
                 <div
@@ -149,11 +149,11 @@ export default function HomePage() {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">P</span>
                 </div>
-                <span className="text-xl font-bold">Prism Enterprise</span>
+                <span className="text-xl font-bold">Prism Writing</span>
               </div>
               <p className="text-gray-400 max-w-md">
-                Enterprise-grade SaaS platform for modern businesses. 
-                Secure, scalable, and built for success.
+                Professional technical writing and documentation services. 
+                Specialized expertise for aviation, healthcare, and compliance industries.
               </p>
             </div>
             
@@ -179,7 +179,7 @@ export default function HomePage() {
           </div>
           
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; 2024 Prism Enterprise. All rights reserved.</p>
+            <p>&copy; 2024 Prism Writing. All rights reserved.</p>
           </div>
         </div>
       </footer>

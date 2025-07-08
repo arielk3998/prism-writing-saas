@@ -63,32 +63,38 @@ export async function GET(request: NextRequest) {
       }
     ]
 
-    // Mock some additional documents for demo
+    // Mock some additional documents for demo with real downloadable samples
     const mockDocuments = [
       {
         id: 'doc_1',
-        title: 'API Documentation v2.1',
-        type: 'TECHNICAL',
+        title: 'MediTech SOPs Healthcare Sample',
+        type: 'COMPLIANCE',
         status: 'COMPLETED',
-        fileUrl: '/documents/api-docs-v2.1.pdf',
+        fileUrl: '/downloads/MediTech_SOPs_Healthcare_Sample.pdf',
+        description: 'Healthcare standard operating procedures documentation',
+        size: 2048000,
         createdAt: new Date('2024-12-01'),
         updatedAt: new Date('2024-12-15')
       },
       {
         id: 'doc_2', 
-        title: 'User Manual - Customer Portal',
-        type: 'DOCUMENTATION',
+        title: 'PaymentPro API Documentation Sample',
+        type: 'TECHNICAL',
         status: 'COMPLETED',
-        fileUrl: '/documents/user-manual.pdf',
+        fileUrl: '/downloads/PaymentPro_API_Documentation_Sample.pdf',
+        description: 'Complete API integration documentation with examples',
+        size: 1536000,
         createdAt: new Date('2024-11-15'),
         updatedAt: new Date('2024-11-20')
       },
       {
         id: 'doc_3',
-        title: 'Business Proposal Draft',
-        type: 'PROPOSAL',
-        status: 'IN_REVIEW',
-        fileUrl: '/documents/business-proposal-draft.docx',
+        title: 'SmartCity Installation Manual Sample',
+        type: 'TECHNICAL',
+        status: 'COMPLETED',
+        fileUrl: '/downloads/SmartCity_Installation_Manual_Sample.pdf',
+        description: 'Technical installation and setup guide',
+        size: 3072000,
         createdAt: new Date('2024-12-20'),
         updatedAt: new Date('2024-12-22')
       }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User, Lock, Eye, EyeOff, Mail, ArrowLeft } from 'lucide-react'
+import { User, Lock, Eye, EyeOff, Mail, ArrowLeft, UserPlus, Building } from 'lucide-react'
 import Link from 'next/link'
 
 interface Customer {
@@ -9,6 +9,7 @@ interface Customer {
   email: string
   name: string
   company?: string
+  role?: string
 }
 
 interface CustomerAuthProps {
@@ -19,11 +20,13 @@ export function CustomerAuth({ children }: CustomerAuthProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [customer, setCustomer] = useState<Customer | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [showLogin, setShowLogin] = useState(false)
+  const [currentView, setCurrentView] = useState<'welcome' | 'login' | 'signup'>('welcome')
 
-  // Login form state
+  // Form state
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [company, setCompany] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -56,10 +59,11 @@ export function CustomerAuth({ children }: CustomerAuthProps) {
 
       if (result.success) {
         setIsAuthenticated(true)
-        setCustomer(result.customer)
+        setCustomer(result.customer || result.user)
         sessionStorage.setItem('customer_authenticated', 'true')
-        sessionStorage.setItem('customer_data', JSON.stringify(result.customer))
-        setShowLogin(false)
+        sessionStorage.setItem('customer_data', JSON.stringify(result.customer || result.user))
+        sessionStorage.setItem('auth_token', result.token)
+        setCurrentView('welcome')
       } else {
         setError(result.message || 'Invalid credentials')
       }
@@ -71,12 +75,58 @@ export function CustomerAuth({ children }: CustomerAuthProps) {
     }
   }
 
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError('')
+
+    try {
+      const response = await fetch('/api/customer/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, name, company }),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setIsAuthenticated(true)
+        setCustomer(result.customer || result.user)
+        sessionStorage.setItem('customer_authenticated', 'true')
+        sessionStorage.setItem('customer_data', JSON.stringify(result.customer || result.user))
+        sessionStorage.setItem('auth_token', result.token)
+        setCurrentView('welcome')
+      } else {
+        setError(result.message || 'Registration failed')
+      }
+    } catch (error) {
+      console.error('Signup error:', error)
+      setError('Registration failed. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   const handleLogout = () => {
     setIsAuthenticated(false)
     setCustomer(null)
     sessionStorage.removeItem('customer_authenticated')
     sessionStorage.removeItem('customer_data')
-    setShowLogin(false)
+    sessionStorage.removeItem('auth_token')
+    setCurrentView('welcome')
+    setEmail('')
+    setPassword('')
+    setName('')
+    setCompany('')
+  }
+
+  const resetForm = () => {
+    setEmail('')
+    setPassword('')
+    setName('')
+    setCompany('')
+    setError('')
+    setShowPassword(false)
   }
 
   if (isLoading) {
@@ -88,7 +138,7 @@ export function CustomerAuth({ children }: CustomerAuthProps) {
   }
 
   if (!isAuthenticated) {
-    if (!showLogin) {
+    if (currentView === 'welcome') {
       return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
           <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
@@ -96,151 +146,273 @@ export function CustomerAuth({ children }: CustomerAuthProps) {
               <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                 <User className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Customer Portal</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Client Portal</h1>
               <p className="text-gray-600 dark:text-gray-400 mt-2">
-                Access your documents and project information
+                Access your projects, documents, and communicate with our team.
               </p>
             </div>
 
             <div className="space-y-4">
               <button
-                onClick={() => setShowLogin(true)}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                onClick={() => {
+                  resetForm()
+                  setCurrentView('login')
+                }}
+                className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center"
               >
-                Login to Your Account
+                <User className="w-5 h-5 mr-2" />
+                Sign In
               </button>
-              
-              <div className="text-center">
-                <Link
-                  href="/"
-                  className="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-1" />
-                  Back to Homepage
-                </Link>
-              </div>
+
+              <button
+                onClick={() => {
+                  resetForm()
+                  setCurrentView('signup')
+                }}
+                className="w-full py-3 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium transition-colors flex items-center justify-center"
+              >
+                <UserPlus className="w-5 h-5 mr-2" />
+                Create Account
+              </button>
+            </div>
+
+            <div className="mt-6 text-center">
+              <Link
+                href="/"
+                className="text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-center"
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                Back to Home
+              </Link>
             </div>
           </div>
         </div>
       )
     }
 
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-              <Lock className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Login</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">Enter your credentials to continue</p>
-          </div>
-
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="your@email.com"
-                  required
-                />
+    if (currentView === 'login') {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                <Lock className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  placeholder="Enter your password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Sign In</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">Enter your credentials to continue</p>
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
               </div>
             )}
 
-            <div className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    placeholder="your@email.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
+                </div>
+              </div>
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
               >
                 {isSubmitting ? 'Signing In...' : 'Sign In'}
               </button>
+            </form>
 
+            <div className="mt-6 text-center space-y-2">
               <button
-                type="button"
-                onClick={() => setShowLogin(false)}
-                className="w-full text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                onClick={() => setCurrentView('signup')}
+                className="text-blue-600 dark:text-blue-400 hover:underline"
               >
-                ← Back
+                Don't have an account? Create one
               </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Customer Header */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">P</span>
-                </div>
-                <span className="font-bold text-xl text-gray-900 dark:text-white">Prism Writing</span>
-              </Link>
-              <span className="text-gray-400 dark:text-gray-500">|</span>
-              <span className="text-sm text-gray-600 dark:text-gray-400">Customer Portal</span>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                Welcome, {customer?.name || customer?.email}
-              </span>
+              <br />
               <button
-                onClick={handleLogout}
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                onClick={() => setCurrentView('welcome')}
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center"
               >
-                Logout
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                Back
               </button>
             </div>
           </div>
         </div>
-      </div>
+      )
+    }
 
+    if (currentView === 'signup') {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                <UserPlus className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Account</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">Join Prism Writing today</p>
+            </div>
+
+            {error && (
+              <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-red-600 dark:text-red-400 text-sm">{error}</p>
+              </div>
+            )}
+
+            <form onSubmit={handleSignup} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="signup-email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="email"
+                    id="signup-email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    placeholder="your@email.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="company" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Company (Optional)
+                </label>
+                <div className="relative">
+                  <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    id="company"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    placeholder="Your Company"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="signup-password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="signup-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  >
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+              >
+                {isSubmitting ? 'Creating Account...' : 'Create Account'}
+              </button>
+            </form>
+
+            <div className="mt-6 text-center space-y-2">
+              <button
+                onClick={() => setCurrentView('login')}
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Already have an account? Sign in
+              </button>
+              <br />
+              <button
+                onClick={() => setCurrentView('welcome')}
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center"
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                Back
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  // Authenticated view
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {children}
     </div>
   )
