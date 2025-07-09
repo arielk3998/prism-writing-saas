@@ -23,8 +23,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      clientSecret: result.paymentIntent.client_secret,
-      paymentIntentId: result.paymentIntent.id
+      clientSecret: result.paymentIntent?.client_secret,
+      paymentIntentId: result.paymentIntent?.id
     });
   } catch (error) {
     console.error('Payment intent creation error:', error);

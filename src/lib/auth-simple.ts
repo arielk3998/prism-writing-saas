@@ -46,6 +46,7 @@ export class AuthService {
       );
       
       // Remove password from response
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password: userPassword, ...userWithoutPassword } = user;
       
       return { 
@@ -99,9 +100,9 @@ export class AuthService {
   
   static async verifyToken(token: string): Promise<{ valid: boolean; userId?: string; email?: string }> {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as { userId: string; email: string };
       return { valid: true, userId: decoded.userId, email: decoded.email };
-    } catch (error) {
+    } catch {
       return { valid: false };
     }
   }

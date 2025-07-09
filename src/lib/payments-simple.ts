@@ -65,7 +65,7 @@ export class PaymentService {
           amount: data.amount,
           currency: data.currency,
           stripePaymentId: data.stripePaymentId,
-          status: data.status as any,
+          status: data.status as 'PENDING' | 'PROCESSING' | 'SUCCEEDED' | 'FAILED' | 'CANCELLED' | 'REFUNDED',
           processedAt: new Date(),
         }
       });

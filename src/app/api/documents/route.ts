@@ -32,9 +32,9 @@ export async function POST(request: NextRequest) {
       data: {
         title: data.title,
         content: data.content || '',
+        category: data.category || 'BUSINESS',
         type: data.type || 'CONTENT',
         authorId: data.authorId,
-        projectId: data.projectId || null,
       },
       include: {
         author: {
