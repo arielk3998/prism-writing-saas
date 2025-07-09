@@ -328,7 +328,7 @@ export default function GalleryPage() {
     return accessLevels[userAccess as keyof typeof accessLevels] >= accessLevels[item.accessibility as keyof typeof accessLevels]
   }
 
-  const handleDownload = async (item: GalleryItem, format?: string) => {
+  const handleDownload = (item: GalleryItem, format?: string) => {
     if (!canAccessItem(item)) {
       alert('Please log in to access this content')
       return
@@ -347,42 +347,16 @@ export default function GalleryPage() {
       
       // Show security notice for samples
       if (item.watermarked) {
-        const confirmed = confirm('This sample contains watermarks and tracking. By downloading, you agree to our terms of use. Continue?')
-        if (!confirmed) return
+        alert('This sample contains watermarks and tracking. By downloading, you agree to our terms of use.')
       }
     }
     
-    try {
-      // Use our API route for sample downloads
-      if (item.category === 'sample') {
-        const response = await fetch(`/api/download/${item.id}`, {
-          method: 'GET',
-          credentials: 'include',
-        })
-        
-        if (!response.ok) {
-          throw new Error(`Download failed: ${response.status}`)
-        }
-        
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `${item.title}.pdf`
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-      } else if (format && item.conversionFormats?.includes(format)) {
-        // Handle format conversion
-        const convertedUrl = item.downloadUrl?.replace(/\.[^/.]+$/, '') + '_converted.' + format.toLowerCase()
-        window.open(convertedUrl, '_blank')
-      } else if (item.downloadUrl) {
-        window.open(item.downloadUrl, '_blank')
-      }
-    } catch (error) {
-      console.error('Download error:', error)
-      alert('Download failed. Please try again or contact support.')
+    if (format && item.conversionFormats?.includes(format)) {
+      // Handle format conversion
+      const convertedUrl = item.downloadUrl?.replace(/\.[^/.]+$/, '') + '_converted.' + format.toLowerCase()
+      window.open(convertedUrl, '_blank')
+    } else if (item.downloadUrl) {
+      window.open(item.downloadUrl, '_blank')
     }
   }
 

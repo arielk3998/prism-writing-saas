@@ -10,13 +10,34 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-// User Management (Clean, Simple)
+// User Management (Enhanced Authentication)
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
+  password  String   // Hashed password
   role      UserRole @default(CLIENT)
   status    UserStatus @default(ACTIVE)
+  
+  // Authentication fields
+  emailVerified   Boolean @default(false)
+  emailVerifyToken String?
+  passwordResetToken String?
+  passwordResetExpires DateTime?
+  lastLoginAt     DateTime?
+  failedLoginAttempts Int @default(0)
+  lockedUntil     DateTime?
+  
+  // 2FA
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+  
+  // Profile
+  phone       String?
+  company     String?
+  timezone    String? @default("UTC")
+  preferences String? // JSON
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -24,6 +45,10 @@ model User {
   leads     Lead[]
   orders    Order[]
   documents Document[]
+  sessions  UserSession[]
+  subscriptions Subscription[]
+  payments  Payment[]
+  invoices  Invoice[]
   
   // Phase 6 Relations
   projects         Project[]
@@ -34,6 +59,21 @@ model User {
   blogPosts        BlogPost[]
 
   @@map("users")
+}
+
+// Enhanced Authentication Models
+model UserSession {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_sessions")
 }
 
 enum UserRole {
@@ -47,29 +87,118 @@ enum UserStatus {
   SUSPENDED
 }
 
-// Lead Management (Transparent)
+// Enhanced Lead Management (CRM)
 model Lead {
   id          String     @id @default(cuid())
   email       String     @unique
   name        String?
   company     String?
+  phone       String?
+  jobTitle    String?
+  website     String?
+  industry    String?
+  employees   String?
+  revenue     String?
   message     String?
   source      LeadSource @default(CONTACT_FORM)
   status      LeadStatus @default(NEW)
   priority    Priority   @default(MEDIUM)
+  score       Int?       @default(0)
+  temperature String?    @default("COLD") // COLD, WARM, HOT
+  assignedTo  String?
+  nextFollowUp DateTime?
+  lastContactedAt DateTime?
+  convertedAt DateTime?
+  tags        String?    // JSON array
+  customFields String?   // JSON object
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  convertedAt DateTime?
 
   // Relations
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
   
-  // Phase 6 Relations
+  // Enhanced CRM Relations
   activities LeadActivity[]
   scores     LeadScore[]
+  notes      LeadNote[]
+  deals      Deal[]
 
   @@map("leads")
+}
+
+// Enhanced CRM Models
+model Deal {
+  id              String      @id @default(cuid())
+  title           String
+  description     String?
+  value           Float?
+  currency        String      @default("USD")
+  stage           DealStage   @default(PROSPECTING)
+  probability     Int?        @default(0) // 0-100
+  expectedCloseDate DateTime?
+  actualCloseDate DateTime?
+  lostReason      String?
+  source          String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  // Relations
+  lead   Lead   @relation(fields: [leadId], references: [id])
+  leadId String
+  activities DealActivity[]
+  
+  @@map("deals")
+}
+
+model LeadNote {
+  id        String   @id @default(cuid())
+  content   String
+  isPrivate Boolean  @default(false)
+  createdAt DateTime @default(now())
+  authorId  String
+  
+  // Relations
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId String
+  
+  @@map("lead_notes")
+}
+
+model DealActivity {
+  id           String       @id @default(cuid())
+  type         ActivityType
+  description  String
+  scheduledFor DateTime?
+  completedAt  DateTime?
+  result       String?
+  metadata     String?      // JSON
+  createdAt    DateTime     @default(now())
+  
+  // Relations
+  deal   Deal   @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  dealId String
+  
+  @@map("deal_activities")
+}
+
+enum DealStage {
+  PROSPECTING
+  QUALIFICATION
+  PROPOSAL
+  NEGOTIATION
+  CLOSED_WON
+  CLOSED_LOST
+}
+
+enum ActivityType {
+  CALL
+  EMAIL
+  MEETING
+  DEMO
+  PROPOSAL
+  FOLLOW_UP
+  NOTE
 }
 
 enum LeadSource {
@@ -95,24 +224,122 @@ enum Priority {
   URGENT
 }
 
-// Document Management (Portfolio)
+// Enhanced Document Management (Collaboration)
 model Document {
   id          String         @id @default(cuid())
   title       String
   description String?
+  content     String?        // Rich text content for online editing
   category    DocumentCategory
   type        DocumentType
   fileUrl     String?
+  fileName    String?
+  fileSize    Int?
+  mimeType    String?
   isPublic    Boolean        @default(false)
   isPremium   Boolean        @default(false)
+  
+  // Collaboration features
+  isLocked    Boolean        @default(false)
+  lockedBy    String?
+  lockedAt    DateTime?
+  
+  // Version control
+  version     String         @default("1.0")
+  parentDocumentId String?
+  isTemplate  Boolean        @default(false)
+  
+  // Workflow
+  status      DocumentStatus @default(DRAFT)
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  approvedBy  String?
+  approvedAt  DateTime?
+  
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 
   // Relations
   author   User?   @relation(fields: [authorId], references: [id])
   authorId String?
+  
+  // Collaboration relations
+  versions    DocumentVersion[]
+  comments    DocumentComment[]
+  shares      DocumentShare[]
+  revisions   DocumentRevision[]
 
   @@map("documents")
+}
+
+// Document Collaboration Models
+model DocumentVersion {
+  id          String   @id @default(cuid())
+  documentId  String
+  versionNumber String
+  title       String
+  content     String?
+  changeLog   String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  
+  @@map("document_versions")
+}
+
+model DocumentComment {
+  id         String   @id @default(cuid())
+  documentId String
+  content    String
+  authorId   String
+  isResolved Boolean  @default(false)
+  parentId   String?  // For replies
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  replies  DocumentComment[] @relation("CommentReplies")
+  parent   DocumentComment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  
+  @@map("document_comments")
+}
+
+model DocumentShare {
+  id           String       @id @default(cuid())
+  documentId   String
+  sharedWith   String       // User ID or email
+  permissions  String       // JSON: read, write, comment, admin
+  expiresAt    DateTime?
+  accessCount  Int          @default(0)
+  lastAccessedAt DateTime?
+  createdBy    String
+  createdAt    DateTime     @default(now())
+  
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  
+  @@map("document_shares")
+}
+
+model DocumentRevision {
+  id          String   @id @default(cuid())
+  documentId  String
+  operation   String   // INSERT, DELETE, RETAIN
+  delta       String   // JSON delta for operational transform
+  authorId    String
+  timestamp   DateTime @default(now())
+  
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  
+  @@map("document_revisions")
+}
+
+enum DocumentStatus {
+  DRAFT
+  IN_REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
 }
 
 enum DocumentCategory {
@@ -134,7 +361,7 @@ enum DocumentType {
   PORTFOLIO_PIECE
 }
 
-// Order Management (Simple)
+// Order Management (Enhanced with Payments)
 model Order {
   id          String      @id @default(cuid())
   title       String
@@ -149,8 +376,106 @@ model Order {
   // Relations
   client   User   @relation(fields: [clientId], references: [id])
   clientId String
+  payments Payment[]
+  invoices Invoice[]
 
   @@map("orders")
+}
+
+// PAYMENT PROCESSING SYSTEM
+model Subscription {
+  id                String             @id @default(cuid())
+  userId            String
+  planId            String
+  stripeCustomerId  String?
+  stripeSubscriptionId String?        @unique
+  status            SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean           @default(false)
+  trialStart        DateTime?
+  trialEnd          DateTime?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments Payment[]
+  
+  @@map("subscriptions")
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  userId            String
+  orderId           String?
+  subscriptionId    String?
+  stripePaymentId   String?       @unique
+  amount            Float
+  currency          String        @default("USD")
+  status            PaymentStatus @default(PENDING)
+  paymentMethod     String?
+  description       String?
+  metadata          String?       // JSON
+  processedAt       DateTime?
+  refundedAt        DateTime?
+  refundAmount      Float?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  user User @relation(fields: [userId], references: [id])
+  order Order? @relation(fields: [orderId], references: [id])
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id])
+  
+  @@map("payments")
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  userId        String
+  orderId       String?
+  invoiceNumber String        @unique
+  amount        Float
+  tax           Float?        @default(0)
+  total         Float
+  currency      String        @default("USD")
+  status        InvoiceStatus @default(DRAFT)
+  dueDate       DateTime?
+  paidAt        DateTime?
+  sentAt        DateTime?
+  description   String?
+  lineItems     String        // JSON array of line items
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  user User @relation(fields: [userId], references: [id])
+  order Order? @relation(fields: [orderId], references: [id])
+  
+  @@map("invoices")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+  UNPAID
+  TRIALING
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
 }
 
 enum OrderStatus {

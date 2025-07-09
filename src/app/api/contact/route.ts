@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
+import { emailService } from '@/lib/email'
+import { contactRateLimiter, applyRateLimit } from '@/lib/rate-limit'
 import { z } from 'zod'
 
 const contactSchema = z.object({
@@ -10,70 +13,80 @@ const contactSchema = z.object({
 })
 
 export async function POST(request: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = await applyRateLimit(request, contactRateLimiter)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const body = await request.json()
     
     // Validate the data
     const validatedData = contactSchema.parse(body)
     
-    // Create the email content
-    const subject = `Contact Form: ${validatedData.project ? validatedData.project : 'General Inquiry'}`
-    const text = `
-Name: ${validatedData.name}
-Email: ${validatedData.email}
-Company: ${validatedData.company || 'Not provided'}
-Project Type: ${validatedData.project || 'Not specified'}
-
-Message:
-${validatedData.message}
-    `
-
-    // Send email using our email service
-    const emailResponse = await fetch(`${request.nextUrl.origin}/api/email/send`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    // Create lead in database
+    const lead = await prisma.lead.create({
+      data: {
+        name: validatedData.name,
+        email: validatedData.email,
+        company: validatedData.company,
+        message: validatedData.message,
+        source: 'CONTACT_FORM',
+        status: 'NEW',
+        priority: 'MEDIUM',
       },
-      body: JSON.stringify({
-        to: 'ariel.pk@outlook.com',
-        from: validatedData.email,
-        subject,
-        text,
-        type: 'contact'
-      })
     })
 
-    if (!emailResponse.ok) {
-      throw new Error('Failed to send email')
+    // Send automated emails (client confirmation + admin notification)
+    const emailData = {
+      name: validatedData.name,
+      email: validatedData.email,
+      company: validatedData.company,
+      message: validatedData.message,
+      submittedAt: new Date().toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        dateStyle: 'full',
+        timeStyle: 'short'
+      })
     }
 
-    // Log contact form submission for analytics
-    const userAgent = request.headers.get('user-agent') || 'unknown'
-    const forwardedFor = request.headers.get('x-forwarded-for') || 'unknown'
-    console.log(`Contact form submission: ${validatedData.email} - IP: ${forwardedFor} - UA: ${userAgent}`)
+    try {
+      const emailResults = await emailService.sendContactFormEmails(emailData)
+      console.log('Email automation results:', emailResults)
+    } catch (emailError) {
+      console.error('Email sending failed (non-critical):', emailError)
+      // Don't fail the API call if emails fail - log for admin review
+    }
 
-    return NextResponse.json({
-      success: true,
-      message: "Thank you for your message! I'll get back to you within 24 hours."
-    })
+    console.log('New lead created with email automation:', lead.id)
 
+    return NextResponse.json(
+      { 
+        success: true, 
+        message: 'Thank you for your message! We\'ll get back to you within 24 hours.',
+        leadId: lead.id 
+      },
+      { status: 201 }
+    )
   } catch (error) {
+    console.error('Contact form error:', error)
+    
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { 
-          success: false,
+          success: false, 
           message: 'Please check your form data',
-          errors: error.errors
+          errors: error.errors 
         },
         { status: 400 }
       )
     }
 
-    console.error('Contact form error:', error)
     return NextResponse.json(
       { 
-        success: false,
-        message: 'Sorry, there was an error sending your message. Please try again or contact us directly.' 
+        success: false, 
+        message: 'Something went wrong. Please try again later.' 
       },
       { status: 500 }
     )
