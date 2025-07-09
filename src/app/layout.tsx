@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TranslationTool } from "@/components/translation-tool";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: 'Prism Writing - Professional Content & Technical Writing Services',
@@ -108,7 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className="antialiased font-sans"
       >
         <ThemeProvider defaultTheme="light">
           <ErrorBoundary>

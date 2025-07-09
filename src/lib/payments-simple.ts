@@ -1,13 +1,26 @@
 import Stripe from 'stripe';
 import { prisma } from './prisma';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-06-20'
-});
+// Check if we have a valid Stripe key (not placeholder or empty)
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const isValidStripeKey = stripeKey && 
+  stripeKey !== 'sk_test_YOUR_STRIPE_SECRET_KEY_HERE' && 
+  stripeKey.startsWith('sk_');
+
+const stripe = isValidStripeKey 
+  ? new Stripe(stripeKey, { apiVersion: '2025-06-30.basil' })
+  : null;
 
 export class PaymentService {
   static async createPaymentIntent(amount: number, currency = 'usd') {
     try {
+      if (!stripe) {
+        return { 
+          success: false, 
+          error: 'Stripe not configured. Please set STRIPE_SECRET_KEY in environment variables.' 
+        };
+      }
+      
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount * 100, // Stripe uses cents
         currency,
@@ -24,6 +37,13 @@ export class PaymentService {
   
   static async createSubscription(customerId: string, priceId: string) {
     try {
+      if (!stripe) {
+        return { 
+          success: false, 
+          error: 'Stripe not configured. Please set STRIPE_SECRET_KEY in environment variables.' 
+        };
+      }
+      
       const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [{ price: priceId }],
@@ -40,6 +60,13 @@ export class PaymentService {
   
   static async createCustomer(email: string, name: string) {
     try {
+      if (!stripe) {
+        return { 
+          success: false, 
+          error: 'Stripe not configured. Please set STRIPE_SECRET_KEY in environment variables.' 
+        };
+      }
+      
       const customer = await stripe.customers.create({
         email,
         name,
