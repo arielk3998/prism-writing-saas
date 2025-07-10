@@ -4,6 +4,16 @@
 "# Code Citations.md"
 **/Code Citations.md
 
+# Development logs and temporary files
+*.log
+*.tmp
+*.cache
+dev.log
+
+# Archive and old documentation
+archive/
+old-docs/
+
 # dependencies
 /node_modules
 /.pnp
