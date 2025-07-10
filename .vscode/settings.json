@@ -1,0 +1,242 @@
+{
+  "typescript.preferences.quoteStyle": "single",
+  "typescript.preferences.semicolons": "insert",
+  "typescript.preferences.trailingComma": "all",
+  "typescript.preferences.organizeImports": true,
+  "typescript.preferences.includeCompletionsForImportStatements": true,
+  "typescript.preferences.includeCompletionsForModuleExports": true,
+  "typescript.preferences.includeCompletionsWithSnippetText": true,
+  "typescript.preferences.includeAutomaticOptionalChainCompletions": true,
+  "typescript.preferences.includeCompletionsWithInsertText": true,
+  "typescript.preferences.includeCompletionsWithClassMemberSnippets": true,
+  "typescript.preferences.allowRenameOfImportPath": true,
+  "typescript.preferences.allowTextChangesInNewFiles": true,
+  "typescript.preferences.providePrefixAndSuffixTextForRename": true,
+  "typescript.preferences.allowIncompleteCompletions": true,
+  "typescript.preferences.jsxAttributeCompletionStyle": "auto",
+  "typescript.preferences.displayPartsForJSDoc": true,
+  "typescript.preferences.generateReturnInDocTemplate": true,
+  
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.removeUnusedImports": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "editor.trimAutoWhitespace": true,
+  "editor.renderWhitespace": "trailing",
+  "editor.rulers": [80, 120],
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 120,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.suggestSelection": "first",
+  
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.next": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/coverage": true,
+    "**/.nyc_output": true,
+    "**/tmp": true,
+    "**/temp": true,
+    "**/*.tmp": true,
+    "**/*.log": true,
+    "**/archive": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/coverage/**": true,
+    "**/.nyc_output/**": true,
+    "**/tmp/**": true,
+    "**/temp/**": true,
+    "**/archive/**": true
+  },
+  
+  "search.exclude": {
+    "**/.git": true,
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/.nyc_output": true,
+    "**/tmp": true,
+    "**/temp": true,
+    "**/*.tmp": true,
+    "**/*.log": true,
+    "**/archive": true,
+    "**/package-lock.json": true,
+    "**/yarn.lock": true,
+    "**/pnpm-lock.yaml": true
+  },
+  
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.format.enable": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.run": "onSave",
+  "eslint.options": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
+  
+  "prettier.requireConfig": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.semi": true,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.printWidth": 120,
+  "prettier.bracketSpacing": true,
+  "prettier.bracketSameLine": false,
+  "prettier.arrowParens": "avoid",
+  "prettier.endOfLine": "lf",
+  
+  "emmet.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on",
+    "editor.rulers": []
+  },
+  
+  "tailwindCSS.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.followTagsWhenSync": true,
+  
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontWeight": "normal",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line",
+  
+  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.iconTheme": "vs-seti",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.closeOnFileDelete": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always",
+  
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.compactFolders": false,
+  "explorer.sortOrder": "type",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
+    ".eslintrc.*": ".eslintignore",
+    ".prettierrc.*": ".prettierignore",
+    "tailwind.config.*": "tailwind.config.*.js",
+    "next.config.*": "next-env.d.ts",
+    ".env": ".env.*",
+    "README.*": "AUTHORS, AUTHORS.*, BACKERS.*, CHANGELOG.*, CITATION.*, CODE_OF_CONDUCT.*, CONTRIBUTING.*, CONTRIBUTORS, COPYING.*, CREDITS, GOVERNANCE.*, HISTORY.*, INSTALL.*, LICENSE.*, MAINTAINERS, MANIFEST.*, NEWS.*, NOTICE, SPONSORS.*"
+  },
+  
+  "debug.console.fontSize": 14,
+  "debug.console.fontFamily": "monospace",
+  "debug.openDebug": "openOnDebugBreak",
+  
+  "extensions.ignoreRecommendations": false,
+  
+  "problems.showCurrentInStatus": true,
+  "problems.sortOrder": "severity",
+  
+  "breadcrumbs.enabled": true,
+  "breadcrumbs.showFiles": true,
+  "breadcrumbs.showSymbols": true,
+  
+  "outline.showFiles": false,
+  "outline.showModules": true,
+  "outline.showClasses": true,
+  "outline.showFunctions": true,
+  "outline.showVariables": true
+}
