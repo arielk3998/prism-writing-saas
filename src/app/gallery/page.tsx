@@ -341,7 +341,7 @@ export default function GalleryPage() {
         userId: sessionStorage.getItem('customer_data') ? JSON.parse(sessionStorage.getItem('customer_data')!).email : 'anonymous',
         timestamp: new Date().toISOString(),
         format: format || item.format,
-        ipAddress: 'tracked', // Would be implemented server-side
+        ipAddress: 'tracked' // Would be implemented server-side
       }
       console.log('Sample download logged:', downloadLog)
       
@@ -364,6 +364,12 @@ export default function GalleryPage() {
     if (item.previewUrl) {
       window.open(item.previewUrl, '_blank')
     }
+  }
+
+  const handleQuote = (item: GalleryItem) => {
+    // Redirect to contact page with service pre-selected
+    const contactUrl = `/contact?service=${encodeURIComponent(item.title)}&type=${encodeURIComponent(item.type)}`
+    window.location.href = contactUrl
   }
 
   const industries = ['all', ...Array.from(new Set(items.flatMap(item => item.industry)))]
@@ -563,7 +569,10 @@ export default function GalleryPage() {
                     {/* Action Buttons */}
                     <div className="flex gap-3">
                       {item.category === 'service' ? (
-                        <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        <button 
+                          onClick={() => handleQuote(item)}
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                        >
                           Get Quote
                         </button>
                       ) : item.category === 'template' && item.conversionFormats ? (
@@ -655,7 +664,10 @@ export default function GalleryPage() {
                     
                     <div className="flex items-center gap-3 ml-6">
                       {item.category === 'service' ? (
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                        <button 
+                          onClick={() => handleQuote(item)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                        >
                           Get Quote
                         </button>
                       ) : (

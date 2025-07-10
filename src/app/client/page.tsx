@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
@@ -13,35 +13,8 @@ import {
   Download,
   Shield,
   LogOut,
-  User,
-  Upload,
-  FolderOpen,
-  Clock,
-  AlertCircle,
-  Search,
-  Filter,
-  Eye,
-  Edit3,
-  Plus,
-  Paperclip,
-  Send,
-  Bell,
-  Settings
+  User
 } from 'lucide-react'
-
-interface WorkRequest {
-  id: string
-  title: string
-  description: string
-  type: 'Technical Writing' | 'Documentation Review' | 'Translation' | 'Compliance Check' | 'Custom'
-  priority: 'low' | 'medium' | 'high' | 'urgent'
-  status: 'draft' | 'submitted' | 'in-progress' | 'review' | 'completed'
-  submittedAt: string
-  dueDate?: string
-  assignedTo?: string
-  estimatedHours?: number
-  actualHours?: number
-}
 
 interface Project {
   id: string

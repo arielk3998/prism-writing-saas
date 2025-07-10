@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from "next/link"
 import { Navigation } from '@/components/navigation'
 import { ArrowLeft, Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react"
@@ -12,11 +12,37 @@ export default function ContactPage() {
     email: '',
     company: '',
     project: '',
-    message: ''
+    message: '',
+    service: '',
+    action: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [statusMessage, setStatusMessage] = useState('')
+
+  // Handle URL parameters
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search)
+      const service = urlParams.get('service')
+      const type = urlParams.get('type') 
+      const action = urlParams.get('action')
+      
+      let message = ''
+      if (action === 'start-project') {
+        message = 'I would like to start a new project with Prism Writing. Please contact me to discuss my requirements.'
+      } else if (service) {
+        message = `I am interested in ${service}${type ? ` (${type})` : ''}. Please provide more information and a quote.`
+      }
+      
+      setFormData(prev => ({
+        ...prev,
+        service: service || '',
+        action: action || '',
+        message: message || prev.message
+      }))
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,7 +63,7 @@ export default function ContactPage() {
       if (result.success) {
         setSubmitStatus('success')
         setStatusMessage(result.message)
-        setFormData({ name: '', email: '', company: '', project: '', message: '' })
+        setFormData({ name: '', email: '', company: '', project: '', message: '', service: '', action: '' })
       } else {
         setSubmitStatus('error')
         setStatusMessage(result.message || 'Something went wrong. Please try again.')

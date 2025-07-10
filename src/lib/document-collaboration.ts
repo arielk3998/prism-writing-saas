@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { Document, DocumentVersion, DocumentComment, DocumentShare, DocumentRevision } from '@prisma/client';
+import { Document, DocumentVersion, DocumentComment, DocumentShare } from '@prisma/client';
 
 export interface CreateDocumentRequest {
   title: string;

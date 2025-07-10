@@ -106,4 +106,68 @@ export class AuthService {
       return { valid: false };
     }
   }
+
+  static async resetPassword(email: string): Promise<AuthResponse> {
+    try {
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (!user) {
+        // Return success even if user not found for security
+        return { success: true };
+      }
+      
+      // Generate reset token
+      const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      const resetExpiry = new Date(Date.now() + 3600000); // 1 hour
+      
+      await prisma.user.update({
+        where: { email },
+        data: {
+          passwordResetToken: resetToken,
+          passwordResetExpires: resetExpiry
+        }
+      });
+      
+      // TODO: Send email with reset link
+      // For now, just log the reset token
+      console.log(`Password reset token for ${email}: ${resetToken}`);
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Reset password error:', error);
+      return { success: false, error: 'Password reset failed' };
+    }
+  }
+
+  static async confirmResetPassword(token: string, newPassword: string): Promise<AuthResponse> {
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          passwordResetToken: token,
+          passwordResetExpires: {
+            gt: new Date()
+          }
+        }
+      });
+
+      if (!user) {
+        return { success: false, error: 'Invalid or expired reset token' };
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          password: hashedPassword,
+          passwordResetToken: null,
+          passwordResetExpires: null
+        }
+      });
+
+      return { success: true };
+    } catch (error) {
+      console.error('Confirm reset password error:', error);
+      return { success: false, error: 'Password reset confirmation failed' };
+    }
+  }
 }

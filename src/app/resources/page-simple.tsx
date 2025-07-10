@@ -12,10 +12,6 @@ import {
   BookOpen, 
   FileText, 
   Shield,
-  Award,
-  CheckCircle,
-  PenTool,
-  GraduationCap,
   Activity
 } from 'lucide-react';
 

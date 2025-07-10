@@ -54,7 +54,7 @@ export class AuthService {
   static verifyToken(token: string): any {
     try {
       return jwt.verify(token, JWT_SECRET);
-    } catch (error) {
+    } catch {
       throw new Error('Invalid token');
     }
   }
@@ -255,7 +255,7 @@ export class AuthService {
         success: true,
         message: 'Logged out successfully'
       };
-    } catch (error) {
+    } catch {
       return {
         success: false,
         message: 'Logout failed'
@@ -283,7 +283,7 @@ export class AuthService {
         role: user.role,
         status: user.status
       };
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -311,7 +311,7 @@ export class AuthService {
       }
 
       return { user };
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { error: 'Authentication failed' },
         { status: 401 }
@@ -371,7 +371,7 @@ export class AuthService {
         success: true,
         message: 'If the email exists, you will receive a reset link'
       };
-    } catch (error) {
+    } catch {
       return {
         success: false,
         message: 'Password reset request failed'
@@ -423,7 +423,7 @@ export class AuthService {
         success: true,
         message: 'Password reset successful'
       };
-    } catch (error) {
+    } catch {
       return {
         success: false,
         message: 'Password reset failed'

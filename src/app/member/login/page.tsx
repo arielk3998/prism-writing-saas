@@ -81,7 +81,7 @@ export default function MemberLoginPage() {
       // Redirect to internal dashboard
       window.location.href = '/member/dashboard'
 
-    } catch (error) {
+    } catch {
       setError('Login failed. Please try again.')
     } finally {
       setIsLoading(false)
@@ -111,7 +111,7 @@ export default function MemberLoginPage() {
       } else {
         setError('Invalid authentication code')
       }
-    } catch (error) {
+    } catch {
       setError('Authentication failed')
     } finally {
       setIsLoading(false)

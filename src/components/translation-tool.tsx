@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Globe, Languages, CheckCircle, AlertCircle, Loader2, Search, ChevronDown } from 'lucide-react'
+import { Globe, CheckCircle, AlertCircle, Loader2, Search, ChevronDown } from 'lucide-react'
 
 interface TranslationToolProps {
   className?: string
@@ -48,7 +48,6 @@ const SUPPORTED_LANGUAGES = [
 
 export function TranslationTool({ className = '', showInline = false }: TranslationToolProps) {
   const [isTranslating, setIsTranslating] = useState(false)
-  const [isPageTranslated, setIsPageTranslated] = useState(false)
   const [currentLanguage, setCurrentLanguage] = useState('en')
   const [translationStatus, setTranslationStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [searchTerm, setSearchTerm] = useState('')
@@ -59,7 +58,6 @@ export function TranslationTool({ className = '', showInline = false }: Translat
     // Check if page has been translated
     const htmlLang = document.documentElement.lang || 'en'
     setCurrentLanguage(htmlLang)
-    setIsPageTranslated(htmlLang !== 'en')
   }, [])
 
   useEffect(() => {
@@ -98,7 +96,6 @@ export function TranslationTool({ className = '', showInline = false }: Translat
       await simulateTranslation()
       
       setCurrentLanguage(targetLang)
-      setIsPageTranslated(true)
       setTranslationStatus('success')
       document.documentElement.lang = targetLang
       

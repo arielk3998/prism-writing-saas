@@ -10,7 +10,6 @@ import {
   FileText, 
   MessageSquare, 
   TrendingUp,
-  AlertCircle,
   Download,
   Shield,
   LogOut,
