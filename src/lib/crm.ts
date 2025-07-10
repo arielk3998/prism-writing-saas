@@ -14,7 +14,7 @@ export interface CreateLeadRequest {
   message?: string;
   source?: 'CONTACT_FORM' | 'NEWSLETTER' | 'REFERRAL' | 'SOCIAL_MEDIA' | 'DIRECT';
   tags?: string[];
-  customFields?: Record<string, any>;
+  customFields?: Record<string, unknown>;
 }
 
 export interface UpdateLeadRequest {
@@ -32,7 +32,7 @@ export interface UpdateLeadRequest {
   assignedTo?: string;
   nextFollowUp?: Date;
   tags?: string[];
-  customFields?: Record<string, any>;
+  customFields?: Record<string, unknown>;
 }
 
 export interface CreateDealRequest {
@@ -172,7 +172,7 @@ export class CRMService {
       const limit = filters.limit || 20;
       const skip = (page - 1) * limit;
 
-      const where: any = {};
+      const where: Record<string, unknown> = {};
 
       // Apply filters
       if (filters.status) where.status = filters.status;
@@ -273,7 +273,7 @@ export class CRMService {
       const deal = await prisma.deal.update({
         where: { id: dealId },
         data: { 
-          stage: stage as any,
+          stage: stage as 'PROSPECTING' | 'QUALIFICATION' | 'PROPOSAL' | 'NEGOTIATION' | 'CLOSED_WON' | 'CLOSED_LOST',
           ...(stage === 'CLOSED_WON' && { actualCloseDate: new Date() }),
           ...(stage === 'CLOSED_LOST' && { actualCloseDate: new Date() }),
         }
@@ -301,7 +301,7 @@ export class CRMService {
   }
 
   // LOG LEAD ACTIVITY
-  static async logLeadActivity(leadId: string, type: string, description: string, metadata?: any): Promise<LeadActivity> {
+  static async logLeadActivity(leadId: string, type: string, description: string, metadata?: Record<string, unknown>): Promise<LeadActivity> {
     try {
       return await prisma.leadActivity.create({
         data: {
@@ -533,7 +533,7 @@ export class CRMService {
         acc[deal.stage].totalValue += deal.value || 0;
         acc[deal.stage].count += 1;
         return acc;
-      }, {} as Record<string, any>);
+      }, {} as Record<string, { deals: unknown[]; totalValue: number; count: number }>);
 
       return pipeline;
     } catch (error) {

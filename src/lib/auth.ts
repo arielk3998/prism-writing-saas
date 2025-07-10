@@ -36,7 +36,7 @@ export class AuthService {
   static generateToken(user: AuthUser, expiresIn: string = '24h'): string {
     return jwt.sign(
       { 
-        id: user.id, 
+        userId: user.id, 
         email: user.email, 
         role: user.role 
       },
@@ -51,9 +51,9 @@ export class AuthService {
   }
 
   // Verify JWT token
-  static verifyToken(token: string): any {
+  static verifyToken(token: string): { userId: string } {
     try {
-      return jwt.verify(token, JWT_SECRET);
+      return jwt.verify(token, JWT_SECRET) as { userId: string };
     } catch {
       throw new Error('Invalid token');
     }
@@ -167,7 +167,7 @@ export class AuthService {
       if (!isValidPassword) {
         // Increment failed login attempts
         const failedAttempts = user.failedLoginAttempts + 1;
-        const updateData: any = {
+        const updateData: { failedLoginAttempts: number; lockedUntil?: Date } = {
           failedLoginAttempts: failedAttempts
         };
 
@@ -269,7 +269,7 @@ export class AuthService {
       const decoded = this.verifyToken(token);
       
       const user = await prisma.user.findUnique({
-        where: { id: decoded.id }
+        where: { id: decoded.userId }
       });
 
       if (!user || user.status !== 'ACTIVE') {

@@ -448,7 +448,7 @@ export class DocumentCollaborationService {
       const limit = filters.limit || 20;
       const skip = (page - 1) * limit;
 
-      const where: any = {
+      const where: Record<string, unknown> = {
         OR: [
           { title: { contains: query, mode: 'insensitive' } },
           { description: { contains: query, mode: 'insensitive' } },
@@ -520,7 +520,7 @@ export class DocumentCollaborationService {
   // GET DOCUMENT TEMPLATES
   static async getTemplates(category?: string) {
     try {
-      const where: any = {
+      const where: Record<string, unknown> = {
         isTemplate: true,
         isPublic: true,
       };
