@@ -11,6 +11,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
+  output: 'standalone',
   images: {
     domains: ['localhost'],
     unoptimized: process.env.NODE_ENV === 'development',

@@ -465,10 +465,10 @@ export class DocumentCollaborationService {
 
       // Add access control
       if (filters.userId) {
-        where.OR.push(
+        where.OR = [
           { authorId: filters.userId }, // Own documents
           { shares: { some: { sharedWith: filters.userId } } } // Shared documents
-        );
+        ];
       } else {
         where.isPublic = true; // Only public documents for anonymous users
       }

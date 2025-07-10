@@ -57,6 +57,7 @@ model User {
   sentCommunications Communication[] @relation("SentCommunications")
   receivedCommunications Communication[] @relation("ReceivedCommunications")
   blogPosts        BlogPost[]
+  documentComments DocumentComment[] @relation("DocumentCommentAuthor")
 
   @@map("users")
 }
@@ -299,6 +300,7 @@ model DocumentComment {
   updatedAt  DateTime @updatedAt
   
   document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  author   User     @relation("DocumentCommentAuthor", fields: [authorId], references: [id])
   replies  DocumentComment[] @relation("CommentReplies")
   parent   DocumentComment?  @relation("CommentReplies", fields: [parentId], references: [id])
   

@@ -7,6 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:seed": "npx tsx scripts/seed.ts",
@@ -14,7 +15,15 @@
     "db:reset": "prisma migrate reset --force",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "postinstall": "prisma generate"
+    "format:check": "prettier --check .",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "validate": "npm run type-check && npm run lint && npm run format:check && npm run test:run",
+    "clean": "rm -rf .next && rm -rf node_modules/.cache",
+    "postinstall": "prisma generate",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.23.3",
@@ -46,12 +55,28 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.6.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
+    "jsdom": "^26.1.0",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   }
 }

@@ -122,6 +122,7 @@ async function main() {
         name: 'Admin User',
         role: 'ADMIN',
         status: 'ACTIVE',
+        password: 'admin123', // This would be hashed in production
       },
     }),
     prisma.user.create({
@@ -130,6 +131,7 @@ async function main() {
         name: 'Demo Client',
         role: 'CLIENT',
         status: 'ACTIVE',
+        password: 'client123', // This would be hashed in production
       },
     })
   ])
