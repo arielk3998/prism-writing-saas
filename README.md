@@ -133,6 +133,42 @@ The Prism Writing enterprise SaaS platform is fully deployed and operational!
 - **Portfolio**: View our work at `/portfolio`
 - **Get Started**: Contact us at `/contact`
 
+## 📋 Repository Management
+
+### 🎯 **Primary Repository**
+This is the **main production repository** for Prism Writing SaaS platform:
+- **Live Site**: https://prismwriting.com
+- **Branch**: `main` (primary development branch)
+- **Focus**: All feature development and production deployments
+
+### 🔧 **Workspace Organization**
+To avoid confusion with multiple repositories:
+
+1. **Use the provided workspace file**:
+   ```bash
+   code prism-enterprise.code-workspace
+   ```
+
+2. **Run workspace organization script**:
+   ```bash
+   ./scripts/organize-workspace.sh
+   ```
+
+3. **Focus on this repository** for all main development work
+
+### 🚀 **Development Workflow**
+1. Check status: `git status`
+2. Create feature branch: `git checkout -b feature/name`
+3. Make changes and commit: `git commit -m "description"`
+4. Test: `npm run validate`
+5. Push and deploy: `git push origin main`
+
+### ⚠️ **Important Notes**
+- Always work in this repository for production features
+- Other repositories (prism-writing-website, etc.) are for experiments/archive
+- Use the workspace organization script to maintain clean state
+- Run `npm run validate` before pushing changes
+
 ---
 
 **Built with ❤️ and transparency by Prism Writing**

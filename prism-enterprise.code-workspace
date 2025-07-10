@@ -1,0 +1,210 @@
+{
+  "folders": [
+    {
+      "name": "🚀 Prism Enterprise (MAIN)",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "git.openRepositoryInParentFolders": "never",
+    "git.autoRepositoryDetection": false,
+    "git.defaultCloneDirectory": "./",
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/.next": true,
+      "**/build": true,
+      "**/dist": true,
+      "**/coverage": true,
+      "**/archive": true,
+      "**/*.log": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.next": true,
+      "**/build": true,
+      "**/dist": true,
+      "**/coverage": true,
+      "**/archive": true
+    },
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.suggest.autoImports": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "eslint.workingDirectories": ["."],
+    "prettier.configPath": "./.prettierrc.json",
+    "git.repositories": ["."],
+    "scm.defaultViewMode": "tree",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "breadcrumbs.enabled": true,
+    "workbench.startupEditor": "readme"
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss",
+      "ms-vscode.vscode-typescript-next",
+      "ms-vscode.vscode-json",
+      "ms-vscode-remote.remote-containers",
+      "github.vscode-pull-request-github",
+      "ms-vscode.vscode-github-issue-notebooks"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "🏗️  Build",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "build"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": ["$tsc"]
+      },
+      {
+        "label": "🧹 Lint",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "lint"],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": ["$eslint-stylish"]
+      },
+      {
+        "label": "🔍 Type Check",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "type-check"],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": ["$tsc"]
+      },
+      {
+        "label": "✅ Validate All",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "validate"],
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "dependsOrder": "sequence",
+        "dependsOn": ["🔍 Type Check", "🧹 Lint"]
+      },
+      {
+        "label": "🚀 Dev Server",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "dev"],
+        "group": "build",
+        "isBackground": true,
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": {
+          "owner": "typescript",
+          "pattern": {
+            "regexp": ".",
+            "file": 1,
+            "line": 1,
+            "column": 1,
+            "message": 1
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".*",
+            "endsPattern": ".*"
+          }
+        }
+      },
+      {
+        "label": "📦 Install Dependencies",
+        "type": "shell",
+        "command": "npm",
+        "args": ["install"],
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "🗄️  Database Studio",
+        "type": "shell",
+        "command": "npm",
+        "args": ["run", "db:studio"],
+        "group": "build",
+        "isBackground": true,
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        }
+      },
+      {
+        "label": "🔧 Organize Workspace",
+        "type": "shell",
+        "command": "./scripts/organize-workspace.sh",
+        "group": "test",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": true,
+          "panel": "shared"
+        }
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🐛 Debug Next.js",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/.bin/next",
+        "args": ["dev"],
+        "cwd": "${workspaceFolder}",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "dev"],
+        "env": {
+          "NODE_ENV": "development"
+        },
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen"
+      }
+    ]
+  }
+}
